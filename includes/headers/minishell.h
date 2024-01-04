@@ -32,17 +32,17 @@ int						minishell(char **env);
 
 // strings
 
-size_t					ft_strlen(char const *str);
+// size_t					ft_strlen(char const *str);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t					ft_strlcpy(char *dest, const char *src, size_t size);
-char					*ft_substr(char const *s, unsigned int start,
-							size_t len);
-char					*ft_strjoin(char const *s1, char const *s2);
+// size_t					ft_strlcpy(char *dest, const char *src, size_t size);
+// char					*ft_substr(char const *s, unsigned int start,
+							// size_t len);
+// char					*ft_strjoin(char const *s1, char const *s2);
 char					*ft_strjoin_f1(char *s1, char const *s2);
 char					*ft_strjoin_f2(char const *s1, char *s2);
 char					*ft_strjoin_f12(char *s1, char *s2);
-char					**ft_split(char const *s, char c);
-char					*ft_strdup(const char *str);
+// char					**ft_split(char const *s, char c);
+// char					*ft_strdup(const char *str);
 void					clean_astr(char **astr);
 char					**ft_astr_dup(char **astr);
 char					**ft_astr_dup_add(char **astr, char *nw);
