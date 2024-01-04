@@ -10,6 +10,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <unistd.h>
+# include "../libft/libft.h"
 
 typedef struct s_shell_list
 {
@@ -49,7 +50,7 @@ char					**ft_astr_extend(char **astr, char *nw);
 
 // numeric
 
-long					ft_atoi(char *str);
+// long					ft_atoi(char *str);
 
 // memory
 
