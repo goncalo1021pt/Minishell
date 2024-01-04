@@ -5,7 +5,7 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main 
+S = main read_input
 
 COMPRESS = ar rcs
 RM = rm -f
@@ -64,8 +64,6 @@ fclean: clean
 
 fcount:
 	@echo "you wrote $(RED)$(shell cat $(SRCS) | wc -l)$(NC)lines of code"
-#	@echo "you wrote quite some lines of code"
-#	@cat $(SRCS) | wc -l | 
 
 run: all
 	./$(NAME) 
