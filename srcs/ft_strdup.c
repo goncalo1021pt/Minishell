@@ -5,6 +5,8 @@ char	*ft_strdup(const char *str)
 	char	*aux;
 	size_t	size;
 
+	if (!str)
+		return (NULL);
 	size = ft_strlen(str);
 	aux = (char *)malloc(sizeof(char) * (size + 1));
 	if (aux == NULL)

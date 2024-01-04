@@ -12,6 +12,8 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
+#define MAX_PATH_SIZE 4096
+
 typedef struct s_shell_list
 {
 	int					cmd_id;
@@ -29,6 +31,7 @@ typedef struct s_shell_list
 // core
 
 int						minishell(char **env);
+char					*get_current_pwd();
 
 // strings
 

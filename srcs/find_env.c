@@ -60,10 +60,18 @@ int	change_env(char *name, char *new, char ***env)
     {
         free(*where);
         *where = ft_strjoin(name, new);
-		return (0);
+		if (where)
+			return (0);
+		else
+			return(1);
     }
     else
     {
         return (add_env(ft_strjoin(name, new), *env));
     }
+}
+
+int	remove_env(char *name, char ***env)
+{
+
 }
