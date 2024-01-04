@@ -65,9 +65,10 @@ void					clean_list(t_shell_list **begining);
 // env
 
 char					*get_env(char *name, char **env);
-void					remove_env(char *name, char **env);
-void					add_env(char *new_env, char **env);
-void					change_env(char *new_env, char **env);
+char					**get_env2(char *name, char **env);
+int						remove_env(char *name, char ***env);
+int						add_env(char *new_env, char ***env);
+int						change_env(char *new_env, char **env);
 
 // execs
 
@@ -94,5 +95,7 @@ void					set_fds(int fd_in, int fd_out);
 // list execution
 
 // exit
+
+int						minishell_exit();
 
 #endif
