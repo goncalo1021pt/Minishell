@@ -52,13 +52,28 @@ char	**ft_astr_dup_add(char **astr, char *new)
 
 char	**ft_astr_extend(char **astr, char *new)
 {
-	char	**ret;
+	char	**aux;
+	size_t	count;
+	size_t	len;
 
-	ret = NULL;
-	ret = ft_astr_dup_add(astr, new);
-	if (ret)
-		clean_astr(astr);
-	return (ret);
+	len = 0;
+	while (astr && astr[len])
+		len++;
+	if (my_alloc(sizeof(char *), len + 2, (void **)(&aux)))
+		return (NULL);
+	count = 0;
+	while (count < len)
+	{
+		aux[count] = astr[count];
+		if (!aux[count])
+		{
+			free(aux);
+			return (NULL);
+		}
+		count++;
+	}
+	aux[count] = new;
+	return (aux);
 }
 
 /*
