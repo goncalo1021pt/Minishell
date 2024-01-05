@@ -45,28 +45,27 @@ int	ft_export(char ***env, char **args)
 	char	*name;
 	char	*aux;
 
+	if (!args || !args[0])
+		return (1);
 	if (!args[1])
 	{
 		print_export(*env);
 		return (0);
 	}
-	else
+	i = 1;
+	while (args[i])
 	{
-		i = 1;
-		while (args[i])
+		name = get_env_name(args[i]);
+		aux = ft_strdup(args[i]);
+		if (!aux)
+			return (2);
+		if (change_env(name, aux, env))
 		{
-			name = get_env_name(args[i]);
-			aux = ft_strdup(args[i]);
-			if (!aux)
-				return (1);
-			if (change_env(name, aux, env))
-			{
-				free(name);
-				return (2);
-			}
 			free(name);
-			i++;
+			return (3);
 		}
-		return (0);
+		free(name);
+		i++;
 	}
+	return (0);
 }

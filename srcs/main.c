@@ -11,7 +11,7 @@ int main (int argc, char **argv ,char **env)
 	return (0);
 }
 */
-
+/*
 int main (int argc, char **argv ,char **env)
 {
 	char	**my_env;
@@ -22,12 +22,21 @@ int main (int argc, char **argv ,char **env)
 	my_env = ft_astr_dup(env);
 	print_astr(my_env);
 	printf("/////////////////////////////////\n");
-	ft_export(&my_env, argv);
+	ft_unset(&my_env, argv);
 	//change_env(NULL, "abc", &my_env);
 	printf("/////////////////////////////////\n");
 	print_astr(my_env);
-	printf("/////////////////////////////////\n");
-	ft_export(&my_env, null);
 	
 	return (0);
+}
+*/
+
+int main (int argc, char **argv ,char **env)
+{
+	char	**my_env;
+
+	my_env = ft_astr_dup(env);
+	ft_pwd(my_env);
+	clean_astr(my_env);
+	return(0);
 }
