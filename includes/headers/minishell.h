@@ -52,6 +52,7 @@ char					**ft_astr_dup_add(char **astr, char *nw);
 char					**ft_astr_extend(char **astr, char *nw);
 char					**ft_astr_reduce(char **astr, size_t n_remove);
 void					print_astr(char ** astr);
+char					*ft_strchr(const char *str, int c);
 
 // numeric
 
@@ -83,10 +84,11 @@ int						local_exec(char **args, char **env);
 // built ins
 
 int						ft_echo(char *arg, char **env);
-int						ft_cd(char *arg, char **env);
+int						ft_cd(char *arg, char ***env);
 int						ft_pwd(char **env);
-int						ft_export(char **env);
-int						ft_unset(char **env);
+int						ft_env(char **env, char **args);
+int						ft_export(char ***env, char **args);
+int						ft_unset(char ***env, char **args);
 int						ft_exit(char **env);
 
 // fds

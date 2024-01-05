@@ -15,15 +15,19 @@ int main (int argc, char **argv ,char **env)
 int main (int argc, char **argv ,char **env)
 {
 	char	**my_env;
+	char	*null[2] = {0 , 0};
 
 	(void)argv;
-	if (argc != 1)
-		return (1);
 	
 	my_env = ft_astr_dup(env);
 	print_astr(my_env);
-	remove_env("PATH=",&my_env);
+	printf("/////////////////////////////////\n");
+	ft_export(&my_env, argv);
+	//change_env(NULL, "abc", &my_env);
+	printf("/////////////////////////////////\n");
 	print_astr(my_env);
+	printf("/////////////////////////////////\n");
+	ft_export(&my_env, null);
 	
 	return (0);
 }

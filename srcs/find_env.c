@@ -55,6 +55,8 @@ int	change_env(char *name, char *new, char ***env)
 {
     char    **where;
 
+	if (!name)
+		return (add_env(new, env));
     where = get_env2(name, *env);
     if (where)
     {

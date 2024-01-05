@@ -14,8 +14,8 @@ char	*ft_strdup(const char *str)
 	aux[size] = '\0';
 	while (size > 0)
 	{
-		aux[size - 1] = str[size - 1];
 		size --;
+		aux[size] = str[size];
 	}
 	return (aux);
 }
