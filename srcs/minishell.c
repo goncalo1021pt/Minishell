@@ -1,5 +1,5 @@
 #include "../includes/headers/minishell.h"
-
+/**
 int	minishell(char **env)
 {
 	while (1)
@@ -8,3 +8,4 @@ int	minishell(char **env)
 	}
 	
 }
+*/

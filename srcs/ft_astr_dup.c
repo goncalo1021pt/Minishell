@@ -76,6 +76,37 @@ char	**ft_astr_extend(char **astr, char *new)
 	return (aux);
 }
 
+char	**ft_astr_reduce(char **astr, size_t n_remove)
+{
+	char	**aux;
+	size_t	count;
+	size_t	len;
+	size_t  count_aux;
+
+	len = 0;
+	while (astr && astr[len])
+		len++;
+	if (my_alloc(sizeof(char *), len, (void **)(&aux)))
+		return (NULL);
+	count = 0;
+	count_aux = 0;
+	while (astr[count])
+	{
+		if (count != n_remove)
+		{
+			aux[count - count_aux] = astr[count];
+			if (!aux[count - count_aux])
+			{
+				free(aux);
+				return (NULL);
+			}
+		}
+		else
+			count_aux = 1;
+		count++;
+	}
+	return (aux);
+}
 /*
 int main (int argc, char **argv, char **env)
 {

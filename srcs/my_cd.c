@@ -48,7 +48,7 @@ int	change_dir(char *path, char **env)
 		return (1);
 	if (chdir(path) == 0)
 	{
-		change_env("OLDPWD=", find_env("PWD=", env), &env);
+		change_env("OLDPWD=", get_env("PWD=", env), &env);
 		change_env("PWD=", path, &env);
 		return (0);
 	}

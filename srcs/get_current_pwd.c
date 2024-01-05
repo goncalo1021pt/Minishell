@@ -7,7 +7,7 @@ char	*get_current_pwd()
 	int		i;
 
 	i = 0;
-	while (i < size)
+	while (i < MAX_PATH_SIZE)
 	{
 		buffer[i] = 0;
 		i ++;

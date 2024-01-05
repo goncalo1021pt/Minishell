@@ -59,7 +59,7 @@ int	change_env(char *name, char *new, char ***env)
     if (where)
     {
         free(*where);
-        *where = ft_strjoin(name, new);
+        *where = new;
 		if (where)
 			return (0);
 		else
@@ -67,11 +67,26 @@ int	change_env(char *name, char *new, char ***env)
     }
     else
     {
-        return (add_env(ft_strjoin(name, new), *env));
+        return (add_env(new, env));
     }
 }
 
 int	remove_env(char *name, char ***env)
 {
+	char 	**aux;
+	size_t	out;
 
+	out = 0;
+	while(ft_strncmp(name, (*env)[out], ft_strlen(name)))
+		out++;
+	aux = ft_astr_reduce(*env, out);
+	if (aux)
+	{
+		free((*env)[out]);
+		free(*env);
+		*env = aux;
+		return (0);
+	}
+	else
+		return (1);
 }

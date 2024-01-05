@@ -12,3 +12,15 @@ void	clean_astr(char **astr)
 	}
 	free(astr);
 }
+
+void	print_astr(char ** astr)
+{
+    int		i;
+
+    i = 0;
+    while (astr && astr[i] != NULL)
+    {
+        printf("%s\n", astr[i]);
+        i ++;
+    }
+}
