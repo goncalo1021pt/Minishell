@@ -10,7 +10,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+//# include "../libft/libft.h"
 
 #define MAX_PATH_SIZE 4096
 
@@ -30,26 +30,28 @@ typedef struct s_shell_list
 
 // core
 
-int						minishell(char **env);
+//int						minishell(char **env);
 char					*get_current_pwd();
 
-// strings
+//strings
 
-// size_t					ft_strlen(char const *str);
+size_t					ft_strlen(char const *str);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
-// size_t					ft_strlcpy(char *dest, const char *src, size_t size);
-// char					*ft_substr(char const *s, unsigned int start,
-							// size_t len);
-// char					*ft_strjoin(char const *s1, char const *s2);
+size_t					ft_strlcpy(char *dest, const char *src, size_t size);
+char					*ft_substr(char const *s, unsigned int start,
+							size_t len);
+char					*ft_strjoin(char const *s1, char const *s2);
 char					*ft_strjoin_f1(char *s1, char const *s2);
 char					*ft_strjoin_f2(char const *s1, char *s2);
 char					*ft_strjoin_f12(char *s1, char *s2);
-// char					**ft_split(char const *s, char c);
-// char					*ft_strdup(const char *str);
+char					**ft_split(char const *s, char c);
+char					*ft_strdup(const char *str);
 void					clean_astr(char **astr);
 char					**ft_astr_dup(char **astr);
 char					**ft_astr_dup_add(char **astr, char *nw);
 char					**ft_astr_extend(char **astr, char *nw);
+char					**ft_astr_reduce(char **astr, size_t n_remove);
+void					print_astr(char ** astr);
 
 // numeric
 
@@ -71,7 +73,7 @@ char					*get_env(char *name, char **env);
 char					**get_env2(char *name, char **env);
 int						remove_env(char *name, char ***env);
 int						add_env(char *new_env, char ***env);
-int						change_env(char *new_env, char **env);
+int						change_env(char *name, char *new_env, char ***env);
 
 // execs
 
