@@ -25,7 +25,6 @@ typedef struct s_shell_list
 
 	struct s_shell_list	*next;
 	struct s_shell_list	*prev;
-
 }						t_shell_list;
 
 // core
@@ -86,15 +85,20 @@ int						local_exec(char **args, char **env);
 
 int						ft_echo(char *arg, char **env);
 int						ft_cd(char *arg, char ***env);
-int						ft_pwd(char **env);
-int						ft_env(char **env, char **args);
-int						ft_export(char ***env, char **args);
+int						ft_pwd(char **env, int fd_out);
+int						ft_env(char **env, char **args, int fd_out);
+int						ft_export(char ***env, char **args, int fd_out);
 int						ft_unset(char ***env, char **args);
 int						ft_exit(char **env);
 
 // fds
 
 void					set_fds(int fd_in, int fd_out);
+
+// output
+
+void					ft_output(char *str, int fd);
+void					ft_output_nl(char *str, int fd);
 
 // signals
 

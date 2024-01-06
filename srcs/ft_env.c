@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-int	ft_env(char **env, char **args)
+int	ft_env(char **env, char **args, int fd_out)
 {
 	int		i;
 
@@ -10,7 +10,7 @@ int	ft_env(char **env, char **args)
     while (env && env[i] != NULL)
     {
 		if (ft_strchr(env[i], '='))
-        	printf("%s\n", env[i]);
+        	ft_output_nl(env[i], fd_out);
         i ++;
     }
 	return (0);

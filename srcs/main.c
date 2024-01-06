@@ -36,7 +36,7 @@ int main (int argc, char **argv ,char **env)
 	char	**my_env;
 
 	my_env = ft_astr_dup(env);
-	ft_pwd(my_env);
+	ft_pwd(my_env, 1);
 	clean_astr(my_env);
 	return(0);
 }

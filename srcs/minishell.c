@@ -6,6 +6,5 @@ int	minishell(char **env)
 	{
 		read_input();
 	}
-	
 }
 */

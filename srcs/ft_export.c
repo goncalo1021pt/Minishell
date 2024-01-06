@@ -1,13 +1,14 @@
 #include "../includes/headers/minishell.h"
 
-static void	print_export(char **env)
+static void	print_export(char **env, int fd_out)
 {
 	int		i;
 
     i = 0;
     while (env && env[i] != NULL)
     {
-        printf("declare -x %s\n", env[i]);
+		ft_output("declare -x", fd_out);
+        ft_output_nl(env[i], fd_out);
         i ++;
     }
 }
@@ -39,7 +40,7 @@ char	*get_env_name(char *env)
 	return (aux);
 }
 
-int	ft_export(char ***env, char **args)
+int	ft_export(char ***env, char **args, int fd_out)
 {
 	size_t	i;
 	char	*name;
@@ -49,7 +50,7 @@ int	ft_export(char ***env, char **args)
 		return (1);
 	if (!args[1])
 	{
-		print_export(*env);
+		print_export(*env, fd_out);
 		return (0);
 	}
 	i = 1;
