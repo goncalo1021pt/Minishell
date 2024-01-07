@@ -1,3 +1,4 @@
+
 #include "../includes/headers/minishell.h"
 
 static int	test_path(char *path, char *pname)

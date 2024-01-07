@@ -26,7 +26,7 @@ char	*get_env_name(char *env)
 			return (NULL);
 		size ++;
 	}
-	size ++;
+	size ++;G
 	aux = (char *)malloc(sizeof(char) * (size + 1));
 	if (aux == NULL)
 		return (NULL);
