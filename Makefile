@@ -10,6 +10,7 @@ S = main read_input minishell get_current_pwd signal_handler
 COMPRESS = ar rcs
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
+rd_ln = -lreadline
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
@@ -40,7 +41,7 @@ $(OBJS_DIR_BONUS)/%.o: bonus/%.c
 
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(GREEN)$(NAME)$(NC) compiling..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(rd_ln)
 	@echo "$(GREEN)$(NAME)$(NC) ready!"
 
 $(BONUS_NAME): $(BONUS_OBJS) $(LIBFT)

@@ -11,6 +11,8 @@
 # include <unistd.h>
 # include <unistd.h>
 # include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 
 # define MAX_PATH_SIZE 4096
@@ -31,7 +33,7 @@ typedef struct s_shell_list
 // core
 
 int						minishell(char **env);
-void					display_prompt(void);
+char					*get_prompt(void);
 
 char					*get_current_pwd();
 
@@ -107,11 +109,11 @@ void					ft_output_nl(char *str, int fd);
 
 void	change_signals(void);
 void	signal_handler(int signal, siginfo_t *info, void *context);
-
+void	ignore_signal(struct sigaction *sa, int signal);
 
 // pharsing
 
-void					*read_input(t_shell_list *shell);
+void	*read_input(t_shell_list *shell, char *promt);
 
 // list execution
 

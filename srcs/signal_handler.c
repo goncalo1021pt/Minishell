@@ -7,15 +7,17 @@ void signal_handler(int signal, siginfo_t *info, void *context)
 	(void)context;
 
 	if (signal == SIGINT)
+	{
 		ft_printf("\n");
-	else if (signal == SIGQUIT)
-		ft_printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 	else if (signal == SIGPIPE)
 	{
 		ft_printf("SIGPIPE\n");
-		ft_printf("\n");
+		ft_printf("\0");
 	}
-		
 }
 
 void	change_signals(void)
@@ -23,9 +25,13 @@ void	change_signals(void)
 	struct sigaction	sa;
 
 	sa.sa_sigaction = signal_handler;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	ignore_signal(&sa, SIGQUIT);
 	sigaction(SIGPIPE, &sa, NULL);
+}
+
+void ignore_signal(struct sigaction *sa, int signal)
+{
+	sa->sa_handler = SIG_IGN;
+	sigaction(signal, sa, NULL);
 }

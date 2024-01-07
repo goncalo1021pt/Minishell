@@ -9,11 +9,9 @@ int	minishell(char **env)
 	change_signals();
 	while (1)
 	{
-		display_prompt();
-		read_input(shell);
+		read_input(shell, get_prompt());
 	}
 }
-
 
 
 char	*trim_path(char *path)
@@ -30,12 +28,16 @@ char	*trim_path(char *path)
 	return (new_path);
 }
 
-void	display_prompt(void)
+char	*get_prompt(void)
 {
 	char	*pwd;
+	char	*prompt;
 
 	pwd = get_current_pwd();
 	pwd = trim_path(pwd);
-	ft_printf("%s> Minishell$ ", pwd);
+	prompt = ft_strjoin(pwd, "> Minishell$ ");
 	free(pwd);
+	return (prompt);
 }
+
+
