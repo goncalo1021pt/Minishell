@@ -52,7 +52,7 @@ int	change_dir(char *path, char **env)
 		change_env("PWD=", path, &env);
 		return (0);
 	}
-	else 
+	else
 		return (-1);
 }
 

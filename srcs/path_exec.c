@@ -60,7 +60,7 @@ static char	*find_path(char *pname, char **env)
 	return (ret);
 }
 
-int    path_exec(char **args, char **env)
+int	path_exec(char **args, char **env)
 {
 	pid_t	pid;
 	int		status;
@@ -85,7 +85,7 @@ int    path_exec(char **args, char **env)
 	}
 	waitpid(pid, &status, 0);
 	free(path);
-    return (0);
+	return (0);
 }
 /*
 int	main(int argc, char **argv, char **env)

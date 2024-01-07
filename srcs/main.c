@@ -1,16 +1,15 @@
 #include "../includes/headers/minishell.h"
 
-/*
-int main (int argc, char **argv ,char **env)
+
+int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
 	if (argc != 1)
 		return (1);
 	minishell(env);
-	
 	return (0);
 }
-*/
+
 /*
 int main (int argc, char **argv ,char **env)
 {
@@ -31,12 +30,12 @@ int main (int argc, char **argv ,char **env)
 }
 */
 
-int main (int argc, char **argv ,char **env)
+/* int	main(int argc, char **argv, char **env)
 {
 	char	**my_env;
 
 	my_env = ft_astr_dup(env);
-	ft_pwd(my_env);
+	ft_pwd(my_env, 1);
 	clean_astr(my_env);
 	return(0);
-}
+} */
