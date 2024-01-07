@@ -1,4 +1,3 @@
-
 #include "../includes/headers/minishell.h"
 
 static int	test_path(char *path, char *pname)
@@ -60,7 +59,7 @@ static char	*find_path(char *pname, char **env)
 	return (ret);
 }
 
-int	path_exec(char **args, char **env)
+int    path_exec(char **args, char **env, int fd_in, int fd_out)
 {
 	pid_t	pid;
 	int		status;
@@ -77,7 +76,7 @@ int	path_exec(char **args, char **env)
 		return (2);
 	else if (pid == 0)
 	{
-		if (execve(path, args, env) == -1)
+		if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)
 		{
 			perror(args[0]);
 			exit(0);
@@ -85,13 +84,17 @@ int	path_exec(char **args, char **env)
 	}
 	waitpid(pid, &status, 0);
 	free(path);
-	return (0);
+    return (0);
 }
 /*
 int	main(int argc, char **argv, char **env)
 {
+	int	fd;
+
+	fd = open("teste", O_RDONLY);
     if (argv[1])
-	    my_exec(&argv[1], env);
+	    path_exec(&argv[1], env, fd, STDOUT_FILENO);
+	close (fd);
 	return (0);
 }
 */

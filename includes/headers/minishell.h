@@ -83,8 +83,8 @@ char					*get_env_name(char *env);
 
 // execs
 
-int						path_exec(char **args, char **env);
-int						local_exec(char **args, char **env);
+int    					path_exec(char **args, char **env, int fd_in, int fd_out);
+int						local_exec(char **args, char **env, int fd_in, int fd_out);
 
 // built ins
 
@@ -98,7 +98,9 @@ int						ft_exit(char **env);
 
 // fds
 
-void					set_fds(int fd_in, int fd_out);
+int						set_fd_in(int fd_in);
+int						set_fd_out(int fd_out);
+int						set_fds(int fd_in, int fd_out);
 
 // output
 
