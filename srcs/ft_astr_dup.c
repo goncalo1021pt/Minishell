@@ -81,7 +81,7 @@ char	**ft_astr_reduce(char **astr, size_t n_remove)
 	char	**aux;
 	size_t	count;
 	size_t	len;
-	size_t  count_aux;
+	size_t	count_aux;
 
 	len = 0;
 	while (astr && astr[len])

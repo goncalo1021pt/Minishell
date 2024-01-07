@@ -10,9 +10,10 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <unistd.h>
-//# include "../libft/libft.h"
+# include <signal.h>
+# include "../libft/libft.h"
 
-#define MAX_PATH_SIZE 4096
+# define MAX_PATH_SIZE 4096
 
 typedef struct s_shell_list
 {
@@ -29,7 +30,9 @@ typedef struct s_shell_list
 
 // core
 
-//int						minishell(char **env);
+int						minishell(char **env);
+void					display_prompt(void);
+
 char					*get_current_pwd();
 
 //strings
@@ -50,7 +53,7 @@ char					**ft_astr_dup(char **astr);
 char					**ft_astr_dup_add(char **astr, char *nw);
 char					**ft_astr_extend(char **astr, char *nw);
 char					**ft_astr_reduce(char **astr, size_t n_remove);
-void					print_astr(char ** astr);
+void					print_astr(char **astr);
 char					*ft_strchr(const char *str, int c);
 
 // numeric
@@ -102,7 +105,13 @@ void					ft_output_nl(char *str, int fd);
 
 // signals
 
+void	change_signals(void);
+void	signal_handler(int signal, siginfo_t *info, void *context);
+
+
 // pharsing
+
+void					*read_input(t_shell_list *shell);
 
 // list execution
 

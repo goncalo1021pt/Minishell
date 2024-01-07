@@ -5,7 +5,7 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main read_input
+S = main read_input minishell get_current_pwd signal_handler
 
 COMPRESS = ar rcs
 RM = rm -f
