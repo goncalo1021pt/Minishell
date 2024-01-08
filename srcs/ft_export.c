@@ -24,18 +24,18 @@ char	*get_env_name(char *env)
 	while (env[size] != '=')
 	{
 		if (env[size] == 0)
-			return (NULL);
+			return (ft_strdup(env));
 		size ++;
 	}
-	size ++;G
-	aux = (char *)malloc(sizeof(char) * (size + 1));
+	aux = (char *)malloc(sizeof(char) * (size));
 	if (aux == NULL)
 		return (NULL);
-	aux[size] = '\0';
+	aux[size - 1] = '\0';
+	size --;
 	while (size > 0)
 	{
-		aux[size - 1] = env[size - 1];
 		size --;
+		aux[size] = env[size];
 	}
 	return (aux);
 }

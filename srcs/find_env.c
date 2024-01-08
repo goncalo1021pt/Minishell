@@ -1,8 +1,5 @@
 #include "../includes/headers/minishell.h"
-
 /*
-returns the env variable corresponding to name (starting after name)
-*/
 
 char	*get_env(char *name, char **env)
 {
@@ -18,10 +15,6 @@ char	*get_env(char *name, char **env)
 	return (NULL);
 }
 
-/*
-returns a pointer to the env variable corresponding to name
-*/
-
 char	**get_env2(char *name, char **env)
 {
 	size_t	i;
@@ -35,6 +28,7 @@ char	**get_env2(char *name, char **env)
 	}
 	return (NULL);
 }
+*/
 
 int	add_env(char *new_env, char ***env)
 {
@@ -76,11 +70,23 @@ int	change_env(char *name, char *new, char ***env)
 int	remove_env(char *name, char ***env)
 {
 	char	**aux;
+	char	*name_e;
 	size_t	out;
 
 	out = 0;
-	while (ft_strncmp(name, (*env)[out], ft_strlen(name)))
+	name_e = ft_strjoin(name, "=");
+	if (!env || !(*env) || !(*env)[out])
+		return (0);
+	while (ft_strcmp(name, (*env)[out]) && ft_strncmp(name_e, (*env)[out], ft_strlen(name_e)))
+	{
+		if (!(*env)[out])
+		{
+			free(name_e);
+			return(0);
+		}
 		out++;
+	}
+	free(name_e);
 	aux = ft_astr_reduce(*env, out);
 	if (aux)
 	{
