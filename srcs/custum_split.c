@@ -1,5 +1,12 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include "../includes/headers/minishell.h"
+
+static int	skip_quotes(const char *str, int ctd, char quote_type)
+{
+	ctd++;
+	while (str[ctd] && str[ctd] != quote_type)
+		ctd++;
+	return (ctd + 1);
+}
 
 static int	count_word(const char *str, char c)
 {
@@ -17,21 +24,13 @@ static int	count_word(const char *str, char c)
 		while (str[ctd] && str[ctd] != c)
 		{
 			if (str[ctd] == '\'')
-			{
+				ctd = skip_quotes(str, ctd, '\'');
+			else if (str[ctd] == '\"')
+				ctd = skip_quotes(str, ctd, '\"');
+			else
 				ctd++;
-				while (str[ctd] && (str[ctd] != '\''))
-					ctd++;
-			}
-			else if (str[ctd] == '\"' )
-			{
-				ctd++;
-				while (str[ctd] && str[ctd] != '\"')
-					ctd++;
-			}
-			ctd++;
 		}
 	}
-	printf("%d\n", total);
 	return (total);
 }
 
@@ -44,7 +43,14 @@ static char	*word_aloc(const char *str, char c)
 	ctd = -1;
 	word_len = 0;
 	while (str[word_len] && str[word_len] != c)
-		word_len++;
+	{
+		if (str[word_len] == '\'')
+			word_len = skip_quotes(str, word_len, '\'');
+		else if (str[word_len] == '\"')
+			word_len = skip_quotes(str, word_len, '\"');
+		else
+			word_len++;
+	}
 	word = (char *)malloc(word_len + 1);
 	if (!word)
 		return (NULL);
@@ -62,7 +68,7 @@ static	void	*free_str(char **out, int ctd)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_quotes(char const *s, char c)
 {
 	char	**out;
 	int		ctd;
@@ -78,37 +84,20 @@ char	**ft_split(char const *s, char c)
 		if (*s)
 		{
 			out[ctd] = word_aloc(s, c);
-			if (!out[ctd++])
-				return (free_str(out, ctd));
-		}
-		while (*s && *s != c)
-		{
-			if (*s == '\'')
+			if (!out[ctd])
+				return (free_str(out, ctd - 1));
+			while (*s && *s != c)
 			{
-				s++;
-				while (*s && *s != '\'')
+				if (*s == '\'')
+					s = s + skip_quotes(s, 0, '\'');
+				else if (*s == '\"')
+					s = s + skip_quotes(s, 0, '\"');
+				else
 					s++;
 			}
-			else if (*s == '\"' )
-			{
-				s++;
-				while (*s && *s != '\"')
-					s++;
-			}
-			s++;
+			ctd++;
 		}
-			s++;
 	}
 	out[ctd] = 0;
 	return (out);
-}
-
-int main()
-{
-	char **out;
-	char *str = "hello world 'teste de varias palavras'";
-	out = ft_split(str, ' ');
-	printf("%s\n", out[0]);
-	printf("%s\n", out[1]);
-	return (0);
 }
