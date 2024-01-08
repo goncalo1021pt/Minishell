@@ -25,6 +25,7 @@ void	root_signals(void)
 	struct sigaction	sa;
 
 	sa.sa_sigaction = signal_handler;
+	
 	sigaction(SIGINT, &sa, NULL);
 	ignore_signal(&sa, SIGQUIT);
 }

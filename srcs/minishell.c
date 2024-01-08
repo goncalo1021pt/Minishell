@@ -47,5 +47,3 @@ char	*get_prompt(void)
 	free(pwd);
 	return (prompt);
 }
-
-
