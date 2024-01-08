@@ -1,6 +1,5 @@
 #include "../includes/headers/minishell.h"
 
-
 int	main(int argc, char **argv, char **env)
 {
 	(void)argv;

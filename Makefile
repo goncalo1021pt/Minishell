@@ -5,7 +5,7 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main read_input minishell get_current_pwd signal_handler
+S = main minishell get_current_pwd root_signals
 
 COMPRESS = ar rcs
 RM = rm -f
@@ -57,11 +57,13 @@ clean:
 	@$(RM) -r $(OBJS_DIR)
 	@$(RM) -r $(OBJS_DIR_BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
+	@echo "$(RED)$(NAME)$(NC)OBJS cleaned!"
 
 fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) $(BONUS_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
+	@echo "$(RED)$(NAME)$(NC)cleaned!"
 
 fcount:
 	@echo "you wrote $(RED)$(shell cat $(SRCS) | wc -l)$(NC)lines of code"

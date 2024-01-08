@@ -3,16 +3,24 @@
 int	minishell(char **env)
 {
 	t_shell_list	*shell;
+	char			*line;
+	char			*promt;
 
 	(void)env;
-	shell = NULL;
-	change_signals();
+	(void)shell;
+	root_signals();
 	while (1)
 	{
-		read_input(shell, get_prompt());
+		promt = get_prompt();
+		line = readline(promt);
+		if (!line)
+			exit(0);
+		if (line[0] != '\0')
+			add_history(line);
+		free(promt);
+		free(line);
 	}
 }
-
 
 char	*trim_path(char *path)
 {

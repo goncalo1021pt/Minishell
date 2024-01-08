@@ -1,19 +1,18 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <unistd.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
 
 # define MAX_PATH_SIZE 4096
 
@@ -35,7 +34,7 @@ typedef struct s_shell_list
 int						minishell(char **env);
 char					*get_prompt(void);
 
-char					*get_current_pwd();
+char					*get_current_pwd(void);
 
 //strings
 
@@ -83,8 +82,10 @@ char					*get_env_name(char *env);
 
 // execs
 
-int    					path_exec(char **args, char **env, int fd_in, int fd_out);
-int						local_exec(char **args, char **env, int fd_in, int fd_out);
+int						path_exec(char **args, char **env, int fd_in,
+							int fd_out);
+int						local_exec(char **args, char **env, int fd_in,
+							int fd_out);
 
 // built ins
 
@@ -109,18 +110,19 @@ void					ft_output_nl(char *str, int fd);
 
 // signals
 
-void	change_signals(void);
-void	signal_handler(int signal, siginfo_t *info, void *context);
-void	ignore_signal(struct sigaction *sa, int signal);
+void					root_signals(void);
+void					signal_handler(int signal, siginfo_t *info,
+							void *context);
+void					ignore_signal(struct sigaction *sa, int signal);
 
 // pharsing
 
-void	*read_input(t_shell_list *shell, char *promt);
+void					*read_input(t_shell_list *shell, char *promt);
 
 // list execution
 
 // exit
 
-int						minishell_exit();
+int						minishell_exit(void);
 
 #endif

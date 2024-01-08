@@ -20,17 +20,16 @@ void signal_handler(int signal, siginfo_t *info, void *context)
 	}
 }
 
-void	change_signals(void)
+void	root_signals(void)
 {
 	struct sigaction	sa;
 
 	sa.sa_sigaction = signal_handler;
 	sigaction(SIGINT, &sa, NULL);
 	ignore_signal(&sa, SIGQUIT);
-	sigaction(SIGPIPE, &sa, NULL);
 }
 
-void ignore_signal(struct sigaction *sa, int signal)
+void	ignore_signal(struct sigaction *sa, int signal)
 {
 	sa->sa_handler = SIG_IGN;
 	sigaction(signal, sa, NULL);
