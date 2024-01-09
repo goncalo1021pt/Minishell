@@ -92,7 +92,7 @@ int						local_exec(char **args, char **env, int fd_in,
 
 int						ft_echo(char *arg, char **env);
 int						ft_cd(char **arg, char ***env);
-int						ft_pwd(char **env, int fd_out);
+int						ft_pwd(int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
 int						ft_export(char ***env, char **args, int fd_out);
 int						ft_unset(char ***env, char **args);

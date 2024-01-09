@@ -27,11 +27,10 @@ char	*get_env_name(char *env)
 			return (ft_strdup(env));
 		size ++;
 	}
-	aux = (char *)malloc(sizeof(char) * (size));
+	aux = (char *)malloc(sizeof(char) * (size + 1));
 	if (aux == NULL)
 		return (NULL);
-	aux[size - 1] = '\0';
-	size --;
+	aux[size] = '\0';
 	while (size > 0)
 	{
 		size --;
@@ -63,6 +62,7 @@ int	ft_export(char ***env, char **args, int fd_out)
 		if (change_env(name, aux, env))
 		{
 			free(name);
+			free(aux);
 			return (3);
 		}
 		free(name);

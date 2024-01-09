@@ -8,7 +8,7 @@ int	minishell(char **env)
 
 	(void)env;
 	(void)shell;
-	root_signals();
+	//root_signals();
 	while (1)
 	{
 		promt = get_prompt();

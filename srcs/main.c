@@ -1,5 +1,5 @@
 #include "../includes/headers/minishell.h"
-/*
+
 int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
@@ -8,7 +8,7 @@ int	main(int argc, char **argv, char **env)
 	minishell(env);
 	return (0);
 }
-*/
+
 /*
 int main (int argc, char **argv ,char **env)
 {
