@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
+//# include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -39,6 +39,7 @@ char					*get_current_pwd(void);
 //strings
 
 size_t					ft_strlen(char const *str);
+int						ft_strcmp(const char *s1, const char *s2);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t					ft_strlcpy(char *dest, const char *src, size_t size);
 char					*ft_substr(char const *s, unsigned int start,
@@ -90,7 +91,7 @@ int						local_exec(char **args, char **env, int fd_in,
 // built ins
 
 int						ft_echo(char *arg, char **env);
-int						ft_cd(char *arg, char ***env);
+int						ft_cd(char **arg, char ***env);
 int						ft_pwd(char **env, int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
 int						ft_export(char ***env, char **args, int fd_out);

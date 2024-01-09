@@ -21,7 +21,7 @@ char	*get_env(char *name, char **env)
 		else if (ft_strcmp(name, env[i]) == 0)
 		{
 			free(name_e);
-			return (&(env[i][0]));
+			return (&(env[i][ft_strlen(name)]));
 		}
 		i++;
 	}

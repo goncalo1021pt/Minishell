@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-
+/*
 void signal_handler(int signal, siginfo_t *info, void *context)
 {
 	(void)info;
@@ -35,3 +35,4 @@ void	ignore_signal(struct sigaction *sa, int signal)
 	sa->sa_handler = SIG_IGN;
 	sigaction(signal, sa, NULL);
 }
+*/
