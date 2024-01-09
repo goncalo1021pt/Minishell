@@ -49,11 +49,13 @@ int	change_env(char *name, char *new, char ***env)
 {
 	char	**where;
 
-	if (!name)
+	if (!name && !strchr(new ,'='))
 		return (add_env(new, env));
 	where = get_env2(name, *env);
 	if (where)
 	{
+		if(!strchr(new,'=') && strchr(*where,'='))
+			return (0);
 		free(*where);
 		*where = new;
 		if (where)
@@ -79,7 +81,7 @@ int	remove_env(char *name, char ***env)
 		return (0);
 	while (ft_strcmp(name, (*env)[out]) && ft_strncmp(name_e, (*env)[out], ft_strlen(name_e)))
 	{
-		if (!(*env)[out])
+		if ((*env)[out] == NULL)
 		{
 			free(name_e);
 			return(0);
