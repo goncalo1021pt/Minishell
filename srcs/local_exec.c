@@ -17,5 +17,5 @@ int    local_exec(char **args, char **env, int fd_in, int fd_out)
 		}
 	}
 	waitpid(pid, &status, 0);
-    return (0);
+	return (0);
 }

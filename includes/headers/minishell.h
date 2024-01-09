@@ -15,10 +15,19 @@
 # include <unistd.h>
 
 # define MAX_PATH_SIZE 4096
+# define TOKEN_LIST "'\"&|;<>,"
+
+// typedef struct s_args 
+// {
+// 	char *str;
+// 	struct s_args *next;
+
+// } t_args
 
 typedef struct s_shell_list
 {
 	int					cmd_id;
+	// t_args				*args;
 	char				**args;
 	int					conex;
 	int					fd_in;
@@ -28,6 +37,8 @@ typedef struct s_shell_list
 	struct s_shell_list	*next;
 	struct s_shell_list	*prev;
 }						t_shell_list;
+
+
 
 // core
 
@@ -49,13 +60,14 @@ char					*ft_strjoin_f2(char const *s1, char *s2);
 char					*ft_strjoin_f12(char *s1, char *s2);
 char					**ft_split(char const *s, char c);
 char					*ft_strdup(const char *str);
-void					clean_astr(char **astr);
+void					clean_arr_str(char **astr);
 char					**ft_astr_dup(char **astr);
 char					**ft_astr_dup_add(char **astr, char *nw);
 char					**ft_astr_extend(char **astr, char *nw);
 char					**ft_astr_reduce(char **astr, size_t n_remove);
-void					print_astr(char **astr);
+void					print_arr_str(char **astr);
 char					*ft_strchr(const char *str, int c);
+char					**ft_split_quotes(char const *s, char c);
 
 // numeric
 

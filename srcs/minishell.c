@@ -2,7 +2,7 @@
 
 int	minishell(char **env)
 {
-	t_shell_list	*shell;
+	t_shell_list	shell;
 	char			*line;
 	char			*promt;
 
@@ -17,8 +17,12 @@ int	minishell(char **env)
 			exit(0);
 		if (line[0] != '\0')
 			add_history(line);
+		shell.args = ft_split_quotes(line, ' ');
+		print_arr_str(shell.args);
 		free(promt);
 		free(line);
+		if (shell.args[0] != NULL)
+			clean_arr_str(shell.args);
 	}
 }
 

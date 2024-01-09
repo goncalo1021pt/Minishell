@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-void	clean_astr(char **astr)
+void	clean_arr_str(char **astr)
 {
 	int	i;
 
@@ -13,7 +13,7 @@ void	clean_astr(char **astr)
 	free(astr);
 }
 
-void	print_astr(char **astr)
+void	print_arr_str(char **astr)
 {
 	int		i;
 
