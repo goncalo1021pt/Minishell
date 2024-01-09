@@ -8,7 +8,7 @@ static int	change_dir(char *path, char ***env)
 	{
 		if (get_env("PWD", *env))
 		{
-			change_env("OLDPWD", ft_str_join("OLDPWD", get_env("PWD", env), env));
+			change_env("OLDPWD", ft_strjoin("OLDPWD", get_env("PWD", *env)), env);
 			change_env("PWD", ft_strjoin_f2("PWD", get_current_pwd()), env);
 		}
 		return (0);
@@ -23,10 +23,10 @@ int	ft_cd(char **arg, char ***env)
 {
 	char	*where;
 
-	where == NULL;
+	where = NULL;
 	if (!arg)
 		return (1);
-	else if (!(arg[1]) || (ft_strlen(arg[1]) == 1 && arg[1][1] == '~'))
+	else if (!(arg[1]))
 	{
 		where = get_env("HOME", *env);
 		if (!where)
@@ -35,11 +35,11 @@ int	ft_cd(char **arg, char ***env)
 			return (2);
 		}
 	}
-	else if (ft_strlen(arg) == 1 && *arg == '-')
+	else if (ft_strlen(arg[1]) == 1 && arg[1][0] == '-')
 	{
 		where = get_env("OLDPWD", *env);
 		if (where)
-			ft_output_nl(where);
+			ft_output_nl(where, STDOUT_FILENO);
 		else
 		{
 			ft_output_nl("cd: OLDPWD not set", STDERR_FILENO);
@@ -47,6 +47,6 @@ int	ft_cd(char **arg, char ***env)
 		}
 	}
 	else
-		where = arg;
+		where = arg[1];
 	return (change_dir(where, env));
 }

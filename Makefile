@@ -5,7 +5,9 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main minishell get_current_pwd root_signals costum_split str_utils
+S = main minishell get_current_pwd root_signals clean_astr find_env ft_astr_dup ft_cd ft_env ft_export ft_output ft_pwd ft_split \
+	ft_strchr ft_strcmp ft_strdup ft_strjoin ft_strlcpy ft_strlen ft_strncmp ft_substr ft_unset get_env my_alloc \
+	local_exec path_exec set_fds
 
 COMPRESS = ar rcs
 RM = rm -f

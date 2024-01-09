@@ -11,7 +11,6 @@ int	ft_unset(char ***env, char **args)
 	i = 1;
 	while (args[i])
 	{
-
 		if (remove_env(args[i], env))
 		{
 			return (2);

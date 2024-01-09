@@ -24,6 +24,28 @@
 
 // } t_args
 
+
+typedef enum e_node_type
+{
+	NODE_COMMAND,
+	NODE_ARGUMENT,
+	NODE_PIPE,
+	NODE_REDIRECT,
+	NODE_UNKNOWN,
+}						t_node_type;
+
+typedef struct s_ast_node
+{
+	char				*value;
+	char				**args;
+	t_node_type			type;
+	int					fd_in;
+	char				*file_in;
+	char				*file_out;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}						t_ast_node;
+
 typedef struct s_shell_list
 {
 	int					cmd_id;
@@ -50,6 +72,7 @@ char					*get_current_pwd(void);
 //strings
 
 size_t					ft_strlen(char const *str);
+int						ft_strcmp(const char *s1, const char *s2);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t					ft_strlcpy(char *dest, const char *src, size_t size);
 char					*ft_substr(char const *s, unsigned int start,
@@ -102,8 +125,8 @@ int						local_exec(char **args, char **env, int fd_in,
 // built ins
 
 int						ft_echo(char *arg, char **env);
-int						ft_cd(char *arg, char ***env);
-int						ft_pwd(char **env, int fd_out);
+int						ft_cd(char **arg, char ***env);
+int						ft_pwd(int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
 int						ft_export(char ***env, char **args, int fd_out);
 int						ft_unset(char ***env, char **args);

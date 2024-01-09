@@ -4,11 +4,12 @@ int	minishell(char **env)
 {
 	t_shell_list	shell;
 	char			*line;
+	char 			**args;
 	char			*promt;
 
 	(void)env;
 	(void)shell;
-	root_signals();
+	//root_signals();
 	while (1)
 	{
 		promt = get_prompt();

@@ -20,7 +20,7 @@ void	print_arr_str(char **astr)
 	i = 0;
 	while (astr && astr[i] != NULL)
 	{
-		ft_printf("%s\n", astr[i]);
+		ft_output_nl(astr[i], STDOUT_FILENO);
 		i ++;
 	}
 }
