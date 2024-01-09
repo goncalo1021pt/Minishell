@@ -1,21 +1,5 @@
 #include "../includes/headers/minishell.h"
 
-typedef enum e_node_type
-{
-	NODE_COMMAND,
-	NODE_ARGUMENT,
-	NODE_PIPE,
-	NODE_REDIRECT,
-}						t_node_type;
-
-typedef struct s_ast_node
-{
-	t_node_type			type;
-	char				*value;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-}						t_ast_node;
-
 t_ast_node	*ast_create_node(t_node_type type, char *value)
 {
 	t_ast_node	*node;
@@ -75,7 +59,7 @@ void	ast_add_node(t_ast_node *root, t_ast_node *node)
 		ast_add_node(root->right, node);
 }
 
-/* int	main(void)
+int	main(void)
 {
 	t_ast_node *root;
 	t_ast_node *node;
@@ -97,4 +81,3 @@ void	ast_add_node(t_ast_node *root, t_ast_node *node)
 	ast_free(root);
 	return (0);
 }
- */

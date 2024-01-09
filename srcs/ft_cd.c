@@ -28,9 +28,7 @@ int	ft_cd(char **arg, char ***env)
 		return (1);
 	else if (!(arg[1]))
 	{
-		printf("HEREREQHGJHGJFH\n");
 		where = get_env("HOME", *env);
-		printf("HEREREQHGJHGJFH:  %s\n", where);
 		if (!where)
 		{
 			ft_output_nl("cd: HOME not set", STDERR_FILENO);

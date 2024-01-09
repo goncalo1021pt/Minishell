@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//# include "../libft/libft.h"
+# include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -15,6 +15,28 @@
 # include <unistd.h>
 
 # define MAX_PATH_SIZE 4096
+
+
+typedef enum e_node_type
+{
+	NODE_COMMAND,
+	NODE_ARGUMENT,
+	NODE_PIPE,
+	NODE_REDIRECT,
+	NODE_UNKNOWN,
+}						t_node_type;
+
+typedef struct s_ast_node
+{
+	char				*value;
+	char				**args;
+	t_node_type			type;
+	int					fd_in;
+	char				*file_in;
+	char				*file_out;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}						t_ast_node;
 
 typedef struct s_shell_list
 {

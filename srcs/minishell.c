@@ -4,6 +4,7 @@ int	minishell(char **env)
 {
 	t_shell_list	*shell;
 	char			*line;
+	char 			**args;
 	char			*promt;
 
 	(void)env;
@@ -17,6 +18,7 @@ int	minishell(char **env)
 			exit(0);
 		if (line[0] != '\0')
 			add_history(line);
+		args = ft_
 		free(promt);
 		free(line);
 	}

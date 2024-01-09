@@ -56,5 +56,6 @@ char	**get_env2(char *name, char **env)
 		}
 		i++;
 	}
+	free (name_e);
 	return (NULL);
 }
