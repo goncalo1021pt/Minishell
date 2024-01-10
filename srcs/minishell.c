@@ -71,8 +71,9 @@ char **split_args2(char **args, int ctd)
 	return (new_args);
 }
 
-// ls -l && echo "hard big of shit" || echo bye world
+// ls -l && echo "hard big piece of shit" || echo bye world
 
+//fix cases of impossible syntax example : echo |
 void parser(char **args, t_ast_node *ast, char add_direction)
 {
 	int			ctd;
@@ -80,15 +81,32 @@ void parser(char **args, t_ast_node *ast, char add_direction)
 	ctd = 0;
 	while (args[ctd])
 	{
-		if (args[ctd] && ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2))
+		if (args[ctd] && (ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2)))
 		{
 			ast_add_node(ast, ast_new_node(NODE_LOGICAL, args[ctd]), add_direction);
 			parser(split_args1(args, ctd), ast, 'l');
 			parser(split_args2(args, ctd), ast, 'r' );
+			clean_arr_str(args);
 			break;
 		}
 	}
-	clean_arr_str(args);
+	while (args[ctd])
+	{
+		if (args[ctd] && ft_strncmp(args[ctd], "|", 2))
+		{
+			ast_add_node(ast, ast_new_node(NODE_PIPE, args[ctd]), add_direction);
+			parser(split_args1(args, ctd), ast, 'l');
+			parser(split_args2(args, ctd), ast, 'r' );
+			clean_arr_str(args);
+			break;
+		}
+	}
+	if ()
+	{
+
+	}
+	
+
 }
 
 char	*trim_path(char *path)

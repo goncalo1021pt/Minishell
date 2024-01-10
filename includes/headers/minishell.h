@@ -113,9 +113,9 @@ int						my_alloc(size_t size, size_t len, void **dst);
 
 // lists
 
-t_shell_list			new_node(int id, char **args, int conex);
-void					set_node_fds(int fd_in, int fd_out, char file_in);
-void					clean_list(t_shell_list **begining);
+// t_shell_list			new_node(int id, char **args, int conex);
+// void					set_node_fds(int fd_in, int fd_out, char file_in);
+// void					clean_list(t_shell_list **begining);
 
 // env
 
@@ -173,7 +173,6 @@ void					ignore_signal(struct sigaction *sa, int signal);
 
 // pharsing
 
-void					*read_input(t_shell_list *shell, char *promt);
 
 // list execution
 
