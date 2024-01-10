@@ -26,19 +26,56 @@ int	minishell(char **env)
 	}
 }
 
-void parser(char **args, t_ast_node *ast)
+char **split_args1(char **args, int ctd)
+{
+	char	**new_args;
+	int		ctd2;
+
+	ctd2 = 0;
+	new_args = malloc(sizeof(char *) * (ctd + 1));
+	if (!new_args)
+		return (NULL);
+	while (ctd2 < ctd)
+	{
+		new_args[ctd2] = ft_strdup(args[ctd2]);
+		ctd2++;
+	}
+	new_args[ctd2] = NULL;
+	return (new_args);
+}
+
+char **split_args2(char **args, int ctd)
+{
+	char	**new_args;
+	int		ctd2;
+
+	ctd2 = 0;
+	new_args = malloc(sizeof(char *) * (ctd + 1));
+	while (args[ctd])
+	{
+		new_args[ctd2] = ft_strdup(args[ctd]);
+		ctd2++;
+		ctd++;
+	}
+	new_args[ctd2] = NULL;
+	return (new_args);
+}
+
+// ls -l && echo "hard big of shit" || echo bye world
+
+void parser(char **args, t_ast_node *ast, char add_direction)
 {
 	int			ctd;
-	t_ast_node	*temp;
+
 	ctd = 0;
 	while (args[ctd])
 	{
 		if (args[ctd] && ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2))
 		{
-			ast_add_node(ast, ast_new_node(NODE_LOGICAL, args[ctd]), 'r');
-			if (ast->right)
-				temp = ast->right;
-			parser(new_args(args, ctd), temp); 
+			ast_add_node(ast, ast_new_node(NODE_LOGICAL, args[ctd]), add_direction);
+			parser(split_args1(args, ctd), ast, 'l');
+			parser(split_args2(args, ctd), ast, 'l' );
+			break;
 		}
 	}
 	clean_arr_str(args);

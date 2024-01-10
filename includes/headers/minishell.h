@@ -55,6 +55,7 @@ typedef struct s_ast_node
 	
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
+	struct s_ast_node	*parent;
 }						t_ast_node;
 
 // typedef struct s_shell_list

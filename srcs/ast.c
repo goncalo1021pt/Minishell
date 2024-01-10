@@ -37,15 +37,22 @@ void	ast_free(t_ast_node *node)
 
 const char	*nodeTypeToString(t_node_type type)
 {
-	
 	if (type == NODE_COMMAND) 
 		return ("NODE_COMMAND");
 	else if (type == NODE_ARGUMENT)
 		return ("NODE_ARGUMENT");
 	else if (type == NODE_PIPE)
 		return ("NODE_PIPE");
-	else if (type == NODE_REDIRECT)
-		return ("NODE_REDIRECT");
+	else if (type == NODE_REDIRECT_IN_HERE)
+		return ("NODE_REDIRECT IN HERE");
+	else if (type == NODE_REDIRECT_IN)
+		return ("NODE_REDIRECT IN");
+	else if (type == NODE_REDIRECT_OUT)
+		return ("NODE_REDIRECT OUT");
+	else if (type == NODE_REDIRECT_OUT_APPENDS)
+		return ("NODE_REDIRECT OUT APPENDS");
+	else if (type == NODE_LOGICAL)
+		return ("NODE_LOGICAL");
 	else
 		return ("NODE_UNKNOWN");
 }
