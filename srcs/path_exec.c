@@ -68,7 +68,8 @@ int    path_exec(char **args, char **env, int fd_in, int fd_out)
 	path = find_path(args[0], env);
 	if (!path)
 	{
-		printf("%s: command not found\n", args[0]);
+		ft_output(args[0], STDERR_FILENO);
+		ft_output_nl(": command not found", STDERR_FILENO);
 		return (1);
 	}
 	pid = fork();

@@ -40,8 +40,8 @@ typedef struct s_ast_node
 	char				**args;
 	t_node_type			type;
 	int					fd_in;
-	char				*file_in;
-	char				*file_out;
+	int					fd_out;
+	
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }						t_ast_node;
