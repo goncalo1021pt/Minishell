@@ -44,13 +44,23 @@ char **split_args1(char **args, int ctd)
 	return (new_args);
 }
 
+int ft_arrlen(char **arr)
+{
+	int		ctd;
+
+	ctd = 0;
+	while (arr && arr[ctd])
+		ctd++;
+	return (ctd);
+}
+
 char **split_args2(char **args, int ctd)
 {
 	char	**new_args;
 	int		ctd2;
 
 	ctd2 = 0;
-	new_args = malloc(sizeof(char *) * (ctd + 1));
+	new_args = malloc(sizeof(char *) * (ft_arrlen(args) - ctd + 1));
 	while (args[ctd])
 	{
 		new_args[ctd2] = ft_strdup(args[ctd]);
@@ -74,7 +84,7 @@ void parser(char **args, t_ast_node *ast, char add_direction)
 		{
 			ast_add_node(ast, ast_new_node(NODE_LOGICAL, args[ctd]), add_direction);
 			parser(split_args1(args, ctd), ast, 'l');
-			parser(split_args2(args, ctd), ast, 'l' );
+			parser(split_args2(args, ctd), ast, 'r' );
 			break;
 		}
 	}
