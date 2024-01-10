@@ -1,34 +1,69 @@
 #include "../includes/headers/minishell.h"
 
+int	call_process(t_ast_node *node, char ***env)
+{
+	int	ret;
+
+	ret = ft_process(node, env);
+	if (ret == -1)
+	{
+		ft_output_nl("syntax error", STDERR_FILENO);
+		return (-1);
+	}
+	return (0);
+}
+
 // process a node
 
 int	ft_process(t_ast_node *node, char ***env)
 {
-	if (node->type == NODE_COMMAND)
-		return(ft_run(node, env));
+	if (!node || !node->type || node->type == NODE_UNKNOWN)
+		return (-1);
+	else if (node->type == NODE_LOGICAL)
+		return(wich_logical(node, env));
 	else if (node->type == NODE_PIPE)
 		return (ft_pipe(node, env));
 	else if (node->type == NODE_REDIRECT)
 		return (wich_redirect(node, env));
+	else if (node->type == NODE_COMMAND)
+		return(ft_run(node, env));
 	else if (node->type == NODE_ARGUMENT)
 		return (0);
-	else if (node->type == NODE_UNKNOWN)
-		return (-1);
+	return (0);
+}
+
+char	**ft_get_args(t_ast_node *node)
+{
+
 }
 
 //runs a program or a built in
 
 int	ft_run(t_ast_node *node, char ***env)
 {
+	char	**args;
+	int		ret;
 
+	args = ft_get_args(node);
 	if ((node->value)[0] == '/' || (node->value)[0] == '.')
-		return(local_exec(node->args, env,node->fd_in, node->fd_out));
+		ret = local_exec(args, *env, node->fd_in, node->fd_out);
 	else if (ft_strcmp(node->value, "echo") == 0)
-		return(ft_echo());
+		ret = ft_echo();
 	else if (ft_strcmp(node->value, "cd") == 0)
-		return(ft_cd(node->args, env));
-	
-
+		ret = ft_cd(args, env);
+	else if (ft_strcmp(node->value, "pwd") == 0)
+		ret = ft_pwd(node->fd_out);
+	else if (ft_strcmp(node->value, "export") == 0)
+		ret = ft_export(env, args, node->fd_out);
+	else if (ft_strcmp(node->value, "unset") == 0)
+		ret = ft_unset(env, args);
+	else if (ft_strcmp(node->value, "env") == 0)
+		ret = ft_env(*env, args, node->fd_out);
+	else if (ft_strcmp(node->value, "exit") == 0)
+		ret = ft_exit();
+	else
+		ret = path_exec(args, *env, node->fd_in, node->fd_out);
+	return (ret);
 }
 
 //forka o programa com um pipe
@@ -80,12 +115,22 @@ int	ft_pipe(t_ast_node *node, char ***env)
 	return(status);
 }
 
+int	wich_logical(t_ast_node *node, char ***env)
+{
+	if (ft_strcmp(node->value, "&&") == 0)
+		return(ft_and(node, env));
+	else if (ft_strcmp(node->value, "||") == 0)
+		return(ft_or(node, env));
+	else
+		return (-1);
+}
+
 // processes right if left is valid
 int	ft_and(t_ast_node *node, char ***env)
 {
 	if (!process(node->left, env))
 		return(process(node->right, env))
-	return(-1);
+	return(1);
 }
 
 // processes right if left is invalid
