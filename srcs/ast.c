@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-t_ast_node	*ast_create_node(t_node_type type, char *value)
+t_ast_node	*ast_new_node(t_node_type type, char *value)
 {
 	t_ast_node	*node;
 
@@ -8,10 +8,22 @@ t_ast_node	*ast_create_node(t_node_type type, char *value)
 	if (!node)
 		return (NULL);
 	node->type = type;
-	node->value = value;
+	node->value = ft_strdup(value);
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
+}
+
+void	ast_add_node(t_ast_node *current, t_ast_node *node, char dir)
+{
+	if (!node)
+		return ;
+	if (!current)
+		current = node;
+	else if (dir == 'l')
+		current->left = node;
+	else if(dir == 'r')
+		current->right = node;
 }
 
 void	ast_free(t_ast_node *node)
@@ -45,18 +57,6 @@ void	ast_print(t_ast_node *node)
 	printf("type: %s, value: %s\n", nodeTypeToString(node->type), node->value);
 	ast_print(node->left);
 	ast_print(node->right);
-}
-
-void	ast_add_node(t_ast_node *root, t_ast_node *node)
-{
-	if (!root || !node)
-		return ;
-	if (!root->left)
-		root->left = node;
-	else if (!root->right)
-		root->right = node;
-	else
-		ast_add_node(root->right, node);
 }
 
 // int	main(void)

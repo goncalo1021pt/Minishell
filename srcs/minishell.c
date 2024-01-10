@@ -22,9 +22,26 @@ int	minishell(char **env)
 		print_arr_str(args);
 		free(promt);
 		free(line);
-		if (args[0] != NULL)
-			clean_arr_str(args);
+		clean_arr_str(args);
 	}
+}
+
+void parser(char **args, t_ast_node *ast)
+{
+	int			ctd;
+	t_ast_node	*temp;
+	ctd = 0;
+	while (args[ctd])
+	{
+		if (args[ctd] && ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2))
+		{
+			ast_add_node(ast, ast_new_node(NODE_LOGICAL, args[ctd]), 'r');
+			if (ast->right)
+				temp = ast->right;
+			parser(new_args(args, ctd), temp); 
+		}
+	}
+	clean_arr_str(args);
 }
 
 char	*trim_path(char *path)

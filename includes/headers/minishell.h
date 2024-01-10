@@ -16,6 +16,13 @@
 
 # define MAX_PATH_SIZE 4096
 # define TOKEN_LIST "'\"&|;<>,"
+# define SPACE_LIST " \t\n\v\f\r"
+# define TRUE 1
+# define FALSE 0
+
+typedef unsigned char	t_bool;
+
+
 
 // typedef struct s_args 
 // {
@@ -27,18 +34,19 @@
 
 typedef enum e_node_type
 {
-	NODE_COMMAND,
-	NODE_ARGUMENT,
+	NODE_LOGICAL,
 	NODE_PIPE,
+	NODE_COMMAND,
 	NODE_REDIRECT,
+	NODE_ARGUMENT,
 	NODE_UNKNOWN,
 }						t_node_type;
 
 typedef struct s_ast_node
 {
 	char				*value;
-	char				**args;
 	t_node_type			type;
+	// char				**args;
 	int					fd_in;
 	char				*file_in;
 	char				*file_out;
@@ -46,20 +54,19 @@ typedef struct s_ast_node
 	struct s_ast_node	*right;
 }						t_ast_node;
 
-typedef struct s_shell_list
-{
-	int					cmd_id;
-	// t_args				*args;
-	char				**args;
-	int					conex;
-	int					fd_in;
-	char				*file_in;
-	char				*file_out;
+// typedef struct s_shell_list
+// {
+// 	int					cmd_id;
+// 	// t_args				*args;
+// 	char				**args;
+// 	int					conex;
+// 	int					fd_in;
+// 	char				*file_in;
+// 	char				*file_out;
 
-	struct s_shell_list	*next;
-	struct s_shell_list	*prev;
-}						t_shell_list;
-
+// 	struct s_shell_list	*next;
+// 	struct s_shell_list	*prev;
+// }						t_shell_list;
 
 
 // core
@@ -131,6 +138,16 @@ int						ft_env(char **env, char **args, int fd_out);
 int						ft_export(char ***env, char **args, int fd_out);
 int						ft_unset(char ***env, char **args);
 int						ft_exit(char **env);
+
+// ast
+
+t_ast_node				*ast_new_node(t_node_type type, char *value);
+void					ast_add_node(t_ast_node *current, t_ast_node *node,
+							char dir);
+void					ast_free(t_ast_node *node);
+void					ast_print(t_ast_node *node);
+
+
 
 // fds
 
