@@ -55,7 +55,7 @@ static char	*find_path(char *pname, char **env)
 		}
 		i++;
 	}
-	clean_astr(path_ar);
+	clean_arr_str(path_ar);
 	return (ret);
 }
 

@@ -59,25 +59,25 @@ void	ast_add_node(t_ast_node *root, t_ast_node *node)
 		ast_add_node(root->right, node);
 }
 
-int	main(void)
-{
-	t_ast_node *root;
-	t_ast_node *node;
+// int	main(void)
+// {
+// 	t_ast_node *root;
+// 	t_ast_node *node;
 
-	root = ast_create_node(NODE_COMMAND, "echo");
-	node = ast_create_node(NODE_ARGUMENT, "hello");
-	ast_add_node(root, node);
-	node = ast_create_node(NODE_ARGUMENT, "world");
-	ast_add_node(root, node);
-	node = ast_create_node(NODE_PIPE, "|");
-	ast_add_node(root, node);
-	node = ast_create_node(NODE_COMMAND, "wc");
-	ast_add_node(root, node);
-	node = ast_create_node(NODE_REDIRECT, ">");
-	ast_add_node(root, node);
-	node = ast_create_node(NODE_ARGUMENT, "file.txt");
-	ast_add_node(root, node);
-	ast_print(root);
-	ast_free(root);
-	return (0);
-}
+// 	root = ast_create_node(NODE_COMMAND, "echo");
+// 	node = ast_create_node(NODE_ARGUMENT, "hello");
+// 	ast_add_node(root, node);
+// 	node = ast_create_node(NODE_ARGUMENT, "world");
+// 	ast_add_node(root, node);
+// 	node = ast_create_node(NODE_PIPE, "|");
+// 	ast_add_node(root, node);
+// 	node = ast_create_node(NODE_COMMAND, "wc");
+// 	ast_add_node(root, node);
+// 	node = ast_create_node(NODE_REDIRECT, ">");
+// 	ast_add_node(root, node);
+// 	node = ast_create_node(NODE_ARGUMENT, "file.txt");
+// 	ast_add_node(root, node);
+// 	ast_print(root);
+// 	ast_free(root);
+// 	return (0);
+// }

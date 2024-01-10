@@ -16,7 +16,7 @@ char	**ft_astr_dup(char **astr)
 		aux[count] = ft_strdup(astr[count]);
 		if (!aux[count])
 		{
-			clean_astr(aux);
+			clean_arr_str(aux);
 			return (NULL);
 		}
 		count++;
@@ -41,7 +41,7 @@ char	**ft_astr_dup_add(char **astr, char *new)
 		aux[count] = ft_strdup(astr[count]);
 		if (!aux[count])
 		{
-			clean_astr(aux);
+			clean_arr_str(aux);
 			return (NULL);
 		}
 		count++;

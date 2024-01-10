@@ -26,13 +26,13 @@ int main (int argc, char **argv ,char **env)
 	(void)argc;
 	
 	my_env = ft_astr_dup(env);
-	print_astr(my_env);
+	print_arr_str(my_env);
 	printf("/////////////////////////////////\n");
 	//ft_(&my_env, argv);
 	//ft_export(&my_env, argv, 1);
 	ft_cd(argv, &my_env);
 	printf("/////////////////////////////////\n");
-	print_astr(my_env);
+	print_arr_str(my_env);
 	printf("/////////////////////////////////\n");
 	ft_pwd(1);
 	

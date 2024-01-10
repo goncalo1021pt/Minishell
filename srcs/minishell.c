@@ -2,13 +2,13 @@
 
 int	minishell(char **env)
 {
-	t_shell_list	shell;
 	char			*line;
 	char 			**args;
 	char			*promt;
+	t_ast_node		ast;
 
 	(void)env;
-	(void)shell;
+	(void)ast;
 	//root_signals();
 	while (1)
 	{
@@ -18,12 +18,12 @@ int	minishell(char **env)
 			exit(0);
 		if (line[0] != '\0')
 			add_history(line);
-		shell.args = ft_split_quotes(line, ' ');
-		print_arr_str(shell.args);
+		args = ft_split_quotes(line, ' ');
+		print_arr_str(args);
 		free(promt);
 		free(line);
-		if (shell.args[0] != NULL)
-			clean_arr_str(shell.args);
+		if (args[0] != NULL)
+			clean_arr_str(args);
 	}
 }
 
