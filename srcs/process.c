@@ -17,22 +17,115 @@ int	call_process(t_ast_node *node, char ***env)
 
 int	ft_process(t_ast_node *node, char ***env)
 {
-	if (!node || !node->type || node->type == NODE_UNKNOWN)
-		return (-1);
+	if (!node)
+		return (0);
 	else if (node->type == NODE_LOGICAL)
 		return(wich_logical(node, env));
 	else if (node->type == NODE_PIPE)
 		return (ft_pipe(node, env));
-	else if (node->type == NODE_REDIRECT)
-		return (wich_redirect(node, env));
 	else if (node->type == NODE_COMMAND)
 		return(ft_run(node, env));
-	else if (node->type == NODE_ARGUMENT)
-		return (0);
-	return (0);
+	else
+		return (-1);
 }
 
 char	**ft_get_args(t_ast_node *node)
+{
+	size_t		ac;
+	size_t		i;
+	t_ast_node	*aux;
+	char		**args;
+
+	ac = 0;
+	aux = node;
+	while (aux)
+	{
+		ac++;
+		aux = aux->right;
+	}
+	if (my_alloc(sizeof(char *, ac + 1, args)))
+		return (NULL);
+	i = 0;
+	aux = node;
+	while (i < ac)
+	{
+		args[i] = aux->value;
+		i ++;
+		aux = aux->right;
+	}
+	return (args);
+}
+
+int	ft_get_fds(t_ast_node *node)
+{
+	t_ast_node *aux;
+
+	aux = node->left;
+	while (aux)
+	{
+		if (aux->type == NODE_REDIRECT_IN)
+			if (ft_redirect_in(node, aux->value))
+				return (1);
+		else if (aux->type == NODE_REDIRECT_IN_HERE)
+			if (ft_read_del(node, aux->value))
+				return (1);
+		else if (aux->type == NODE_REDIRECT_OUT)
+			if (ft_redirect_out(node, aux->value))
+				return (1);
+		else if (aux->type == NODE_REDIRECT_OUT_APPENDS)
+			if (ft_append_out(node, aux->value))
+				return (1);
+		aux = aux->left;
+	}
+	return (0);
+}
+
+int	ft_redirect_in(t_ast_node *node, char *fname)
+{
+	int fd;
+
+	close(node->fd_in);
+	fd = open(fname , O_RDONLY);
+	if (fd == -1)
+	{
+		perror(fname);
+		return(1);
+	}
+	node->fd_in = fd;
+	return(0);
+}
+
+int	ft_redirect_out(t_ast_node *node, char *fname)
+{
+	int fd;
+
+	close(node->fd_out);
+	fd = open(node->left->value , O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror(fname);
+		return(1);
+	}
+	node->fd_out = fd;
+	return(0);
+}
+
+int	ft_append_out(t_ast_node *node, char *fname)
+{
+	int fd;
+
+	close(node->fd_out);
+	fd = open(node->left->value , O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+	{
+		perror(fname);
+		return(1);
+	}
+	node->fd_out = fd;
+	return(0);
+}
+
+int	ft_read_del(t_ast_node *node, char *fname)
 {
 
 }
@@ -45,6 +138,7 @@ int	ft_run(t_ast_node *node, char ***env)
 	int		ret;
 
 	args = ft_get_args(node);
+	ft_get_fds(node);
 	if ((node->value)[0] == '/' || (node->value)[0] == '.')
 		ret = local_exec(args, *env, node->fd_in, node->fd_out);
 	else if (ft_strcmp(node->value, "echo") == 0)
@@ -63,6 +157,9 @@ int	ft_run(t_ast_node *node, char ***env)
 		ret = ft_exit();
 	else
 		ret = path_exec(args, *env, node->fd_in, node->fd_out);
+	free(args);
+	close(node->fd_in);
+	close(node->fd_out);
 	return (ret);
 }
 
@@ -142,6 +239,7 @@ int	ft_or(t_ast_node *node, char ***env)
 	return(0);
 }
 
+/*
 int	wich_redirect(t_ast_node *node, char ***env)
 {
 	if (ft_strcmp(node->value, "<") == 0)
@@ -198,3 +296,4 @@ int	ft_read_del(t_ast_node *node, char ***env)
 {
 
 }
+*/
