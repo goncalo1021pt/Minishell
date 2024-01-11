@@ -6,7 +6,7 @@ B =
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 S = main minishell get_current_pwd root_signals str_utils find_env ft_astr_dup ft_cd ft_env ft_export ft_output ft_pwd ft_split \
-	ft_strchr ft_strcmp ft_strdup ft_strjoin ft_strlcpy ft_strlen ft_strncmp ft_substr ft_unset get_env my_alloc \
+	ft_strchr ft_strcmp ft_strdup ft_strjoin ft_strlen ft_strncmp ft_substr ft_unset get_env my_alloc \
 	local_exec path_exec set_fds costum_split ast utils
 
 COMPRESS = ar rcs

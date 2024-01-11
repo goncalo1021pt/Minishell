@@ -101,12 +101,6 @@ void parser(char **args, t_ast_node *ast, char add_direction)
 			break;
 		}
 	}
-	if ()
-	{
-
-	}
-	
-
 }
 
 char	*trim_path(char *path)
