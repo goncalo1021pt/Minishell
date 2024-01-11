@@ -141,7 +141,7 @@ int						ft_pwd(int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
 int						ft_export(char ***env, char **args, int fd_out);
 int						ft_unset(char ***env, char **args);
-int						ft_exit(char **env);
+int						ft_exit(int status);
 
 // ast
 
@@ -176,7 +176,7 @@ void					ignore_signal(struct sigaction *sa, int signal);
 
 // list execution
 
-// exit
+// ft_exit
 
 int						minishell_exit(void);
 
