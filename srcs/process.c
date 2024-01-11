@@ -153,8 +153,8 @@ int	ft_run(t_ast_node *node, char ***env)
 		ret = ft_unset(env, args);
 	else if (ft_strcmp(node->value, "env") == 0)
 		ret = ft_env(*env, args, node->fd_out);
-	else if (ft_strcmp(node->value, "exit") == 0)
-		ret = ft_exit();
+	else if (ft_strcmp(node->value, "ft_exit") == 0)
+		ret = ft_ft_exit();
 	else
 		ret = path_exec(args, *env, node->fd_in, node->fd_out);
 	free(args);
@@ -170,8 +170,7 @@ int	ft_pipe(t_ast_node *node, char ***env)
 	int		pip[2];
 	int		fk1;
 	int		fk2;
-	int		status1;
-	int		status2;
+	int		status;
 
 	if (pipe(pip) == -1)
 	{
@@ -186,25 +185,22 @@ int	ft_pipe(t_ast_node *node, char ***env)
 	if (fk1 < 0)
 	{
 		perror("fork");
-		return (2);
+		ft_exit (2);
 	}
 	if (fk1 == 0)
 	{
 		ft_process(node->left, env);
 		write(pip[1], "", 1);
-		exit();
+		ft_exit(3);
 	}
 	fk2 = fork();
 	if (fk2 < 0)
 	{
 		perror("fork");
-		return (2);
+		ft_exit (4);
 	}
 	if (fk2 == 0)
-	{
-		status = ft_process(node->right, env);
-		exit(status);
-	}
+		ft_exit(ft_process(node->right, env));
 	waitpid(fk1, NULL, 0);
 	waitpid(fk2, &status, 0);
 	close(pip[1]);

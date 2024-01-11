@@ -80,7 +80,7 @@ int    path_exec(char **args, char **env, int fd_in, int fd_out)
 		if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)
 		{
 			perror(args[0]);
-			exit(0);
+			ft_exit(0);
 		}
 	}
 	waitpid(pid, &status, 0);

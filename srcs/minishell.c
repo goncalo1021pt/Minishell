@@ -15,7 +15,7 @@ int	minishell(char **env)
 		promt = get_prompt();
 		line = readline(promt);
 		if (!line)
-			exit(0);
+			ft_exit(0);
 		if (line[0] != '\0')
 			add_history(line);
 		args = ft_split_quotes(line, ' ');
