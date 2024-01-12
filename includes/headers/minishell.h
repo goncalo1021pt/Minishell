@@ -17,11 +17,11 @@
 # define MAX_PATH_SIZE 4096
 # define TOKEN_LIST "'\"&|;<>,"
 # define SPACE_LIST " \t\n\v\f\r"
+# define ARGS_DIVISOR "&|<>"
 # define TRUE 1
 # define FALSE 0
 
 typedef unsigned char	t_bool;
-
 
 
 // typedef struct s_args 
@@ -102,6 +102,7 @@ char					**ft_astr_reduce(char **astr, size_t n_remove);
 void					print_arr_str(char **astr);
 char					*ft_strchr(const char *str, int c);
 char					**ft_split_quotes(char const *s, char c);
+t_bool					is_in_array(char c, char *arr);
 
 // numeric
 
@@ -141,7 +142,7 @@ int						ft_pwd(int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
 int						ft_export(char ***env, char **args, int fd_out);
 int						ft_unset(char ***env, char **args);
-int						ft_exit(int status);
+void					ft_exit(int status);
 
 // ast
 

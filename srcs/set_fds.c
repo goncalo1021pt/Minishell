@@ -4,6 +4,7 @@ int	set_fd_in(int fd_in)
 {
 	int	ret;
 
+	(void)ret;
 	if (fd_in == STDIN_FILENO)
 		return (0);
 	ret = dup2(fd_in, STDIN_FILENO);

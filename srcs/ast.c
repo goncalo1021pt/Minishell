@@ -9,6 +9,8 @@ t_ast_node	*ast_new_node(t_node_type type, char *value)
 		return (NULL);
 	node->type = type;
 	node->value = ft_strdup(value);
+	node->fd_in = STDIN_FILENO;
+	node->fd_out = STDOUT_FILENO;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
