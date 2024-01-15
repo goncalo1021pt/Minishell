@@ -102,120 +102,66 @@ char	**ft_split_quotes(char const *s, char c)
 	return (out);
 }
 
-create_apaces(){
-
-}
-
-/* char *aloc_special(char *str)
+int	copy_quotes(char *dst, char *src, char quote_type)
 {
-	char	*word;
-	int		ctd;
+	int ctd;
 
-	if (str[1] == str[0])
-		ctd = 2;
-	else
-		ctd = 1;
-	word = malloc(ctd + 1);
-	if (!word)
-		return (NULL);
-	word[0] = str[0];
-	if (ctd == 2)
-		word[1] = str[1];
-	word[ctd] = 0;
-	return (word);
-}
-
-char *new_word(char *str)
-{
-	int		ctd;
-	int		ctd2;
-	char	*word;
-
-	ctd = 0;
-	ctd2 = 0;
-	if (is_in_array(str[0], ARGS_DIVISOR))
+	ctd = 1;
+	while (src[ctd] && src[ctd] != quote_type)
 	{
-		return (aloc_special(str));
-	}
-	while (str[ctd] && !is_in_array(str[ctd], ARGS_DIVISOR))
+		dst[ctd] = src[ctd];
 		ctd++;
-	word = (char *)malloc(ctd + 1);
-	if (!word)
-		return (NULL);
-	while (ctd2 < ctd)
-	{
-		word[ctd2] = str[ctd2];
-		ctd2++;
 	}
-	word[ctd2] = 0;
-	return (word);
+	dst[ctd] = src[ctd];
+	return (ctd + 1);
 }
 
-int count_spcial(char **args)
+char *create_spaces(char *str)
 {
-	int		ctd;
-	int		ctd2;
-	int		total;
+	char *out;
+	int new_len;
+	int ctd;
+	int ctd2;
+	int	temp;
 
-	ctd = 0;
-	total = 0;
-	while (args[ctd]) // hello|ls // should be  args
+	new_len = ft_strlen(str);
+	ctd = -1;
+	while (str[++ctd])
 	{
-		ctd2 = 0;
-		while (args[ctd][ctd2])
+		if (str[ctd] == '\'' || str[ctd] == '\"')
+			ctd = skip_quotes(str, ctd, str[ctd]);
+		else if (is_in_array(str[ctd], ARGS_DIVISOR))
 		{
-			if (args[ctd][0] == '\'' || args[ctd][0] == '\"')
-			{
-				total++;
-				break;
-			}
-			if (is_in_array(args[ctd][ctd2], ARGS_DIVISOR))
-			{
-				if (args[ctd][ctd2 + 1] == args[ctd][ctd2])
-					ctd2++;
-				total++;
-			}
-			ctd2++;
+			if (str[ctd + 1] == str[ctd])
+				ctd++;
+			new_len +=2;
 		}
-		ctd++;
 	}
-	return (total);
-}
-
-char **split_special_args(char **args)
-{
-	int		ctd;
-	int		ctd2;
-	int		ctd3;
-	int		total;
-	char	**out;
-
-	total = count_spcial(args);
-	out = (char **)malloc((total + 1) * sizeof(char *));
+	out = (char *)malloc(new_len + 1);
 	if (!out)
 		return (NULL);
 	ctd = 0;
-	ctd2 = 0;
-	ctd3 = 0;
-	while (args[ctd]) 
+	ctd2 =  0;
+	while (str[ctd])
 	{
-		ctd2 = 0;
-		while (args[ctd][ctd2])
+		if (str[ctd] == '\'' || str[ctd] == '\"')
 		{
-			if (args[ctd][0] == '\'' || args[ctd][0] == '\"')
-			{
-				out[ctd3] = ft_strdup(aloc_special(args[ctd]));
-				ctd3++;
-				break;
-			}
-			if (args[ctd][ctd2])
-			{
-				out[ctd3] = new_word(args[ctd], &ctd2);
-				ctd3++;
-			}
-			ctd2++;
+			temp = copy_quotes(out, str, str[ctd]);
+			ctd += temp;
+			ctd2 += temp;
 		}
+		else if (is_in_array(str[ctd], ARGS_DIVISOR))
+		{
+			out[ctd2++] = ' ';
+			out[ctd2] = str[ctd];
+			if (str[ctd + 1] == str[ctd])
+				out[++ctd2] = str[++ctd];
+			out[++ctd2] = ' ';
+		}
+		else
+			out[ctd2] = str[ctd];
 		ctd++;
+		ctd2++;
 	}
 	return (out);
-} */
+}

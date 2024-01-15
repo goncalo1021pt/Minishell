@@ -32,6 +32,7 @@ typedef unsigned char	t_bool;
 // } t_args
 
 
+
 typedef enum e_node_type
 {
 	NODE_LOGICAL,
@@ -55,7 +56,7 @@ typedef struct s_ast_node
 	
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
-	struct s_ast_node	*parent;
+	// struct s_ast_node	*parent;
 }						t_ast_node;
 
 // typedef struct s_shell_list
@@ -102,6 +103,7 @@ char					**ft_astr_reduce(char **astr, size_t n_remove);
 void					print_arr_str(char **astr);
 char					*ft_strchr(const char *str, int c);
 char					**ft_split_quotes(char const *s, char c);
+char 					*create_spaces(char *str);
 t_bool					is_in_array(char c, char *arr);
 
 // numeric

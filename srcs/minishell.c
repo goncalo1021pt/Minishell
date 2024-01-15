@@ -3,6 +3,7 @@
 int	minishell(char **env)
 {
 	char			*line;
+	char			*new_line;
 	char 			**args;
 	char			*promt;
 	t_ast_node		ast;
@@ -18,10 +19,12 @@ int	minishell(char **env)
 			ft_exit(0);
 		if (line[0] != '\0')
 			add_history(line);
-		args = ft_split_quotes(line, ' ');
+		new_line = create_spaces(line);
+		args = ft_split_quotes(new_line, ' ');
 		print_arr_str(args);
 		free(promt);
 		free(line);
+		free(new_line);
 		clean_arr_str(args);
 	}
 }

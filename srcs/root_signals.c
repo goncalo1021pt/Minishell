@@ -15,7 +15,6 @@ void signal_handler(int signal, siginfo_t *info, void *context)
 	}
 	else if (signal == SIGPIPE)
 	{
-		ft_printf("SIGPIPE\n");
 		ft_printf("\0");
 	}
 }
