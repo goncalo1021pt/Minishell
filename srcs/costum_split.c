@@ -31,6 +31,7 @@ static int	count_word(const char *str, char c)
 				ctd++;
 		}
 	}
+	printf("%d\n",total);
 	return (total);
 }
 
