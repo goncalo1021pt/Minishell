@@ -114,7 +114,7 @@ int	copy_quotes(char *dst, char *src, char quote_type)
 		ctd++;
 	}
 	dst[ctd] = src[ctd];
-	return (ctd + 1);
+	return (ctd);
 }
 
 char *create_spaces(char *str)
@@ -138,7 +138,6 @@ char *create_spaces(char *str)
 			new_len +=2;
 		}
 	}
-	printf("new_len = %d\n", new_len);
 	out = (char *)malloc(new_len + 1);
 	if (!out)
 		return (NULL);
@@ -172,7 +171,7 @@ char *create_spaces(char *str)
 // {
 // 	char *str;
 // 	char **test;
-// 	printf("%s\n", str = create_spaces("teste|ola>>adeus'<<1234<1echo | ola'"));
+// 	printf("%s\n", str = create_spaces("teste|ola>>adeus'<<1234<1echo' | ola"));
 // 	// test = ft_split_quotes(str, ' ');
 // 	// print_arr_str(test);
 
