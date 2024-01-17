@@ -16,6 +16,7 @@ rd_ln = -lreadline
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
+
 BONUS_OBJS = $(addprefix $(OBJS_DIR_BONUS)/,$(BONUS:bonus/%.c=%.o))
 OBJS_DIR = objs
 OBJS_DIR_BONUS = objs_bonus
@@ -32,6 +33,7 @@ NC = \033[0m
 
 all: $(NAME) 
 bonus: $(BONUS_NAME)
+
 
 $(OBJS_DIR)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
