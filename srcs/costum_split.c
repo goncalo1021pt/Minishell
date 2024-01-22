@@ -31,7 +31,6 @@ static int	count_word(const char *str, char c)
 				ctd++;
 		}
 	}
-	printf("%d\n",total);
 	return (total);
 }
 
@@ -165,15 +164,14 @@ char *create_spaces(char *str)
 		ctd++;
 		ctd2++;
 	}
+	out[ctd2] = 0;
 	return (out);
 }
 
-// int main()
-// {
-// 	char *str;
-// 	char **test;
-// 	printf("%s\n", str = create_spaces("teste|ola>>adeus'<<1234<1echo' | ola"));
-// 	// test = ft_split_quotes(str, ' ');
-// 	// print_arr_str(test);
+char **ft_costume_split(char *str)
+{
+	char	*new_str;
 
-// }
+	new_str = create_spaces(str);
+	return (ft_split_quotes(new_str, ' '));
+}

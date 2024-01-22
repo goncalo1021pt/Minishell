@@ -3,7 +3,6 @@
 int	minishell(char **env)
 {
 	char			*line;
-	char			*new_line;
 	char 			**args;
 	char			*promt;
 	t_ast_node		ast;
@@ -19,12 +18,10 @@ int	minishell(char **env)
 			ft_exit(0);
 		if (line[0] != '\0')
 			add_history(line);
-		new_line = create_spaces(line);
-		args = ft_split_quotes(new_line, ' ');
+		args = ft_costume_split(line);
 		print_arr_str(args);
 		free(promt);
 		free(line);
-		free(new_line);
 		clean_arr_str(args);
 	}
 }
@@ -74,14 +71,13 @@ char **split_args2(char **args, int ctd)
 	return (new_args);
 }
 
-// ls -l && echo "hard big piece of shit" || echo bye world
-
-//fix cases of impossible syntax example : echo |
 void parser(char **args, t_ast_node *ast, char add_direction)
 {
 	int			ctd;
+	int			flag;
 
 	ctd = 0;
+	flag = 0;
 	while (args[ctd])
 	{
 		if (args[ctd] && (ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2)))

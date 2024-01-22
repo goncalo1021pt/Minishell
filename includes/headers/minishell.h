@@ -103,6 +103,7 @@ char					**ft_astr_reduce(char **astr, size_t n_remove);
 void					print_arr_str(char **astr);
 char					*ft_strchr(const char *str, int c);
 char					**ft_split_quotes(char const *s, char c);
+char					**ft_costume_split(char *str);
 char 					*create_spaces(char *str);
 t_bool					is_in_array(char c, char *arr);
 
