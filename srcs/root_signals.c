@@ -33,4 +33,5 @@ void	ignore_signal(struct sigaction *sa, int signal)
 {
 	sa->sa_handler = SIG_IGN;
 	sigaction(signal, sa, NULL);
+	
 }
