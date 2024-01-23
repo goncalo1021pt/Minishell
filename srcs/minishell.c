@@ -80,16 +80,18 @@ void parser(char **args, t_ast_node *ast, char add_direction)
 	flag = 0;
 	while (args[ctd])
 	{
-		if (args[ctd] && (ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2)))
+		if (flag == 0 && args[ctd] && (ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2)))
 		{
 			ast_add_node(ast, ast_new_node(NODE_LOGICAL, args[ctd]), add_direction);
 			parser(split_args1(args, ctd), ast, 'l');
 			parser(split_args2(args, ctd), ast, 'r' );
 			clean_arr_str(args);
-			break;
 		}
+		if (flag == 1 && args[ctd] && (ft_strncmp(args[ctd], "|", 2)))
+		if (args[ctd + 1] == 0)
+			flag++;
 	}
-	while (args[ctd])
+	/* while (args[ctd])
 	{
 		if (args[ctd] && ft_strncmp(args[ctd], "|", 2))
 		{
@@ -99,7 +101,7 @@ void parser(char **args, t_ast_node *ast, char add_direction)
 			clean_arr_str(args);
 			break;
 		}
-	}
+	} */
 }
 
 char	*trim_path(char *path)

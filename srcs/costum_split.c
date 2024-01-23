@@ -175,3 +175,4 @@ char **ft_costume_split(char *str)
 	new_str = create_spaces(str);
 	return (ft_split_quotes(new_str, ' '));
 }
+
