@@ -8,7 +8,7 @@ static int	skip_quotes(const char *str, int ctd, char quote_type)
 	return (ctd + 1);
 }
 
-static int	count_word(const char *str, char c)
+static int	count_word(const char *str)
 {
 	int	ctd;
 	int	total;
@@ -17,11 +17,11 @@ static int	count_word(const char *str, char c)
 	total = 0;
 	while (str[ctd])
 	{
-		while (str[ctd] && str[ctd] == c)
+		while (str[ctd] && is_in_array(str[ctd], SPACE_LIST))
 			ctd++;
 		if (str[ctd])
 			total++;
-		while (str[ctd] && str[ctd] != c)
+		while (str[ctd] && !is_in_array(str[ctd], SPACE_LIST))
 		{
 			if (str[ctd] == '\'')
 				ctd = skip_quotes(str, ctd, '\'');
@@ -34,7 +34,7 @@ static int	count_word(const char *str, char c)
 	return (total);
 }
 
-static char	*word_aloc(const char *str, char c)
+static char	*word_aloc(const char *str)
 {
 	char	*word;
 	int		word_len;
@@ -42,7 +42,7 @@ static char	*word_aloc(const char *str, char c)
 
 	ctd = -1;
 	word_len = 0;
-	while (str[word_len] && str[word_len] != c)
+	while (str[word_len] && !is_in_array(str[word_len], SPACE_LIST))
 	{
 		if (str[word_len] == '\'')
 			word_len = skip_quotes(str, word_len, '\'');
@@ -68,25 +68,25 @@ static	void	*free_str(char **out, int ctd)
 	return (NULL);
 }
 
-char	**ft_split_quotes(char const *s, char c)
+char	**ft_split_quotes(char const *s)
 {
 	char	**out;
 	int		ctd;
 
 	ctd = 0;
-	out = (char **)malloc((count_word(s, c) + 1) * sizeof(char *));
+	out = (char **)malloc((count_word(s) + 1) * sizeof(char *));
 	if (!out)
 		return (NULL);
 	while (*s)
 	{
-		while (*s && *s == c)
+		while (*s && is_in_array(*s, SPACE_LIST))
 			s++;
 		if (*s)
 		{
-			out[ctd] = word_aloc(s, c);
+			out[ctd] = word_aloc(s);
 			if (!out[ctd])
 				return (free_str(out, ctd - 1));
-			while (*s && *s != c)
+			while (*s && !is_in_array(*s, SPACE_LIST))
 			{
 				if (*s == '\'')
 					s = s + skip_quotes(s, 0, '\'');
@@ -173,6 +173,6 @@ char **ft_costume_split(char *str)
 	char	*new_str;
 
 	new_str = create_spaces(str);
-	return (ft_split_quotes(new_str, ' '));
+	return (ft_split_quotes(new_str));
 }
 
