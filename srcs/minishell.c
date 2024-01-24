@@ -72,13 +72,24 @@ int	minishell(char **env)
 		list = parse_to_list(args);
 		ft_lstiter(list, print_content);
 		if (!check_syntax(list))
+		{
 			ft_putendl_fd("syntax error", 2);
-		ft_lstclear(list, free_parse_lst);
-		free(promt);
-		free(line);
-		clean_arr_str(args);
+			free_all(list, line, args, promt, &ast);
+			continue ;
+		}
+		free_all(list, line, args, promt, &ast);
 	}
 }
+
+void free_all(t_list *list, char *line, char **args, char *promt, t_ast_node *ast)
+{
+	ft_lstclear(&list, free_parse_lst);
+	clean_arr_str(args);
+	(void)ast;
+	free(line);
+	free(promt);
+}
+
 
 void print_content(void *p)
 {
@@ -94,7 +105,7 @@ void free_parse_lst(void *content)
 
 	parser = content;
 	free(parser->str);
-	free(content);
+	free(parser);
 }
 
 t_list *parse_to_list(char **args)

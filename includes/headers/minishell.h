@@ -164,6 +164,7 @@ void					ast_print(t_ast_node *node);
 t_list	*parse_to_list(char **args);
 t_bool	check_syntax(t_list *lst);
 void	print_content(void *p);
+void	free_parse_lst(void *content);
 
 
 // fds
