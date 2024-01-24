@@ -43,7 +43,7 @@ char	**ft_get_args(t_ast_node *node)
 		ac++;
 		aux = aux->right;
 	}
-	if (my_alloc(sizeof(char *, ac + 1, args)))
+	if (my_alloc(sizeof(char *), ac + 1, args))
 		return (NULL);
 	i = 0;
 	aux = node;
@@ -222,7 +222,7 @@ int	wich_logical(t_ast_node *node, char ***env)
 int	ft_and(t_ast_node *node, char ***env)
 {
 	if (!process(node->left, env))
-		return(process(node->right, env))
+		return(process(node->right, env));
 	return(1);
 }
 
@@ -231,7 +231,7 @@ int	ft_and(t_ast_node *node, char ***env)
 int	ft_or(t_ast_node *node, char ***env)
 {
 	if (process(node->left, env))
-		return(process(node->right, env))
+		return(process(node->right, env));
 	return(0);
 }
 

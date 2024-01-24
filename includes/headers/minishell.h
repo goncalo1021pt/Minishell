@@ -37,24 +37,22 @@ typedef enum e_node_type
 {
 	NODE_LOGICAL,
 	NODE_PIPE,
-	NODE_COMMAND,
 	NODE_REDIRECT_IN,
 	NODE_REDIRECT_IN_HERE,
 	NODE_REDIRECT_OUT,
 	NODE_REDIRECT_OUT_APPENDS,
+	NODE_COMMAND,
 }						t_node_type;
 
 typedef struct s_ast_node
 {
 	char				*value;
 	t_node_type			type;
-	// char				**args;
 	int					fd_in;
 	int					fd_out;
 	
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
-	// struct s_ast_node	*parent;
 }						t_ast_node;
 
 typedef struct s_parser
@@ -163,8 +161,9 @@ void					ast_print(t_ast_node *node);
 
 // parser
 
-t_list *parse_to_list(char **args);
-t_bool check_syntax(t_list *lst);
+t_list	*parse_to_list(char **args);
+t_bool	check_syntax(t_list *lst);
+void	print_content(void *p);
 
 
 // fds

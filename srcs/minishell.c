@@ -70,13 +70,31 @@ int	minishell(char **env)
 			add_history(line);
 		args = ft_costume_split(line);
 		list = parse_to_list(args);
+		ft_lstiter(list, print_content);
 		if (!check_syntax(list))
 			ft_putendl_fd("syntax error", 2);
-		print_arr_str(args);
+		ft_lstclear(list, free_parse_lst);
 		free(promt);
 		free(line);
 		clean_arr_str(args);
 	}
+}
+
+void print_content(void *p)
+{
+	t_parser	*parser;
+
+	parser = p;
+	ft_printf("String: %s, Type: %d\n", parser->str, parser->type);
+}
+
+void free_parse_lst(void *content)
+{
+	t_parser	*parser;
+
+	parser = content;
+	free(parser->str);
+	free(content);
 }
 
 t_list *parse_to_list(char **args)
@@ -92,34 +110,34 @@ t_list *parse_to_list(char **args)
 		parser = malloc(sizeof(t_parser));
 		if (!parser)
 			return (NULL);
-		if (ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2))
+		if (!ft_strncmp(args[ctd], "||", 2) || !ft_strncmp(args[ctd], "&&", 2))
 		{
 			parser->type = NODE_LOGICAL;
 			parser->str = ft_strdup(args[ctd]);
 		}
-		else if (ft_strncmp(args[ctd], "|", 1))
+		else if (!ft_strncmp(args[ctd], "|", 1))
 		{
 			parser->type = NODE_PIPE;
 			parser->str = ft_strdup(args[ctd]);
 		}
-		else if (ft_strncmp(args[ctd], ">", 1))
-		{
-			parser->type = NODE_REDIRECT_OUT;
-			parser->str = ft_strdup(args[ctd]);
-		}
-		else if (ft_strncmp(args[ctd], ">>", 2))
+		else if (!ft_strncmp(args[ctd], ">>", 2))
 		{
 			parser->type = NODE_REDIRECT_OUT_APPENDS;
 			parser->str = ft_strdup(args[ctd]);
 		}
-		else if (ft_strncmp(args[ctd], "<", 1))
+		else if (!ft_strncmp(args[ctd], ">", 1))
 		{
-			parser->type = NODE_REDIRECT_IN;
+			parser->type = NODE_REDIRECT_OUT;
 			parser->str = ft_strdup(args[ctd]);
 		}
-		else if (ft_strncmp(args[ctd], "<<", 2))
+		else if (!ft_strncmp(args[ctd], "<<", 2))
 		{
 			parser->type = NODE_REDIRECT_IN_HERE;
+			parser->str = ft_strdup(args[ctd]);
+		}
+		else if (!ft_strncmp(args[ctd], "<", 1))
+		{
+			parser->type = NODE_REDIRECT_IN;
 			parser->str = ft_strdup(args[ctd]);
 		}
 		else
@@ -147,9 +165,10 @@ t_bool check_syntax(t_list *lst)
 	while (tmp)
 	{
 		tmp2 = tmp->next;
-		tmp2_parser = tmp2->content;
+		if (tmp2)
+			tmp2_parser = tmp2->content;
 		parser = tmp->content;
-		if (tmp2_parser->type == NODE_LOGICAL)
+		if (tmp2 && tmp2_parser->type == NODE_LOGICAL)
 		{
 			if (tmp2->next == NULL)
 				return (FALSE);
@@ -157,7 +176,7 @@ t_bool check_syntax(t_list *lst)
 			if (parser->type == NODE_LOGICAL || parser->type == NODE_PIPE || tmp2_parser->type == NODE_LOGICAL || tmp2_parser->type == NODE_PIPE)
 				return (FALSE);
 		}
-		else if (tmp2_parser->type == NODE_PIPE)
+		else if (tmp2 && tmp2_parser->type == NODE_PIPE)
 		{
 			if (tmp2->next == NULL)
 				return (FALSE);
@@ -165,7 +184,7 @@ t_bool check_syntax(t_list *lst)
 			if (parser->type == NODE_LOGICAL || parser->type == NODE_PIPE || tmp2_parser->type == NODE_LOGICAL || tmp2_parser->type == NODE_PIPE)
 				return (FALSE);
 		}
-		else if (tmp2_parser->type == NODE_REDIRECT_OUT || tmp2_parser->type == NODE_REDIRECT_OUT_APPENDS || tmp2_parser->type == NODE_REDIRECT_IN || tmp2_parser->type == NODE_REDIRECT_IN_HERE)
+		else if (tmp2 && (tmp2_parser->type == NODE_REDIRECT_OUT || tmp2_parser->type == NODE_REDIRECT_OUT_APPENDS || tmp2_parser->type == NODE_REDIRECT_IN || tmp2_parser->type == NODE_REDIRECT_IN_HERE))
 		{
 			if (tmp2->next == NULL)
 				return (FALSE);
