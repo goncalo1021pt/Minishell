@@ -16,6 +16,26 @@ t_ast_node	*ast_new_node(t_node_type type, char *value)
 	return (node);
 }
 
+void add_full_right(t_ast_node *current, t_ast_node *node)
+{
+	if (!current)
+		return ;
+	if (!current->right)
+		current->right = node;
+	else
+		add_full_right(current->right, node);
+}
+
+void add_full_left(t_ast_node *current, t_ast_node *node)
+{
+	if (!current)
+		return ;
+	if (!current->left)
+		current->left = node;
+	else
+		add_full_left(current->left, node);
+}
+
 void	ast_add_node(t_ast_node *current, t_ast_node *node, char dir)
 {
 	if (!node)

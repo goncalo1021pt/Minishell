@@ -59,6 +59,12 @@ typedef struct s_ast_node
 	// struct s_ast_node	*parent;
 }						t_ast_node;
 
+typedef struct s_parser
+{
+	char				*str;
+	t_node_type			type;
+}						t_parser;
+
 // typedef struct s_shell_list
 // {
 // 	int					cmd_id;
@@ -152,6 +158,8 @@ void					ft_exit(int status);
 t_ast_node				*ast_new_node(t_node_type type, char *value);
 void					ast_add_node(t_ast_node *current, t_ast_node *node,
 							char dir);
+void					add_full_right(t_ast_node *current, t_ast_node *node);
+void					add_full_left(t_ast_node *current, t_ast_node *node);
 void					ast_free(t_ast_node *node);
 void					ast_print(t_ast_node *node);
 
