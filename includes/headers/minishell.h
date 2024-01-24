@@ -42,8 +42,6 @@ typedef enum e_node_type
 	NODE_REDIRECT_IN_HERE,
 	NODE_REDIRECT_OUT,
 	NODE_REDIRECT_OUT_APPENDS,
-	NODE_ARGUMENT,
-	NODE_UNKNOWN,
 }						t_node_type;
 
 typedef struct s_ast_node
@@ -163,6 +161,10 @@ void					add_full_left(t_ast_node *current, t_ast_node *node);
 void					ast_free(t_ast_node *node);
 void					ast_print(t_ast_node *node);
 
+// parser
+
+t_list *parse_to_list(char **args);
+t_bool check_syntax(t_list *lst);
 
 
 // fds

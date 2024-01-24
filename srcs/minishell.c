@@ -55,6 +55,7 @@ int	minishell(char **env)
 	char 			**args;
 	char			*promt;
 	t_ast_node		ast;
+	t_list			*list;
 
 	(void)env;
 	(void)ast;
@@ -68,6 +69,9 @@ int	minishell(char **env)
 		if (line[0] != '\0')
 			add_history(line);
 		args = ft_costume_split(line);
+		list = parse_to_list(args);
+		if (!check_syntax(list))
+			ft_putendl_fd("syntax error", 2);
 		print_arr_str(args);
 		free(promt);
 		free(line);
@@ -120,7 +124,7 @@ t_list *parse_to_list(char **args)
 		}
 		else
 		{
-			parser->type = NODE_ARGUMENT;
+			parser->type = NODE_COMMAND;
 			parser->str = ft_strdup(args[ctd]);
 		}
 		ft_lstadd_back(&list, ft_lstnew(parser));
@@ -138,7 +142,7 @@ t_bool check_syntax(t_list *lst)
 
 	tmp = lst;
 	parser = tmp->content;
-	if (parser->type != NODE_ARGUMENT)
+	if (parser->type != NODE_COMMAND)
 		return (FALSE);
 	while (tmp)
 	{
@@ -166,7 +170,7 @@ t_bool check_syntax(t_list *lst)
 			if (tmp2->next == NULL)
 				return (FALSE);
 			tmp2_parser = tmp2->next->content;
-			if (tmp2_parser->type != NODE_ARGUMENT)
+			if (tmp2_parser->type != NODE_COMMAND)
 				return (FALSE);
 		}
 		tmp = tmp->next;
@@ -253,7 +257,7 @@ void parser(char **args, t_ast_node *ast, char add_direction)
 			else if (ft_strncmp(args[ctd], "<<", 2))
 				add_full_left(ast, ast_new_node(NODE_REDIRECT_IN_HERE, args[ctd]));
 			else
-				add_full_right(ast, ast_new_node(NODE_ARGUMENT, args[ctd]));
+				add_full_right(ast, ast_new_node(NODE_COMMAND, args[ctd]));
 		}
 		if (!args[ctd + 1])
 			flag++;

@@ -61,8 +61,6 @@ const char	*nodeTypeToString(t_node_type type)
 {
 	if (type == NODE_COMMAND) 
 		return ("NODE_COMMAND");
-	else if (type == NODE_ARGUMENT)
-		return ("NODE_ARGUMENT");
 	else if (type == NODE_PIPE)
 		return ("NODE_PIPE");
 	else if (type == NODE_REDIRECT_IN_HERE)
