@@ -54,11 +54,11 @@ int	minishell(char **env)
 	char			*line;
 	char 			**args;
 	char			*promt;
-	t_ast_node		ast;
+	t_ast_node		*ast;
 	t_list			*list;
 
 	(void)env;
-	(void)ast;
+	ast = NULL;
 	root_signals();
 	while (1)
 	{
@@ -77,22 +77,21 @@ int	minishell(char **env)
 		args = ft_costume_split(line);
 		free(line);
 		list = parse_to_list(args);
-		ft_lstiter(list, print_content);
+		// ft_lstiter(list, print_content);
 		if (!check_syntax(list))
 		{
 			ft_putendl_fd("syntax error", 2);
-			free_all(list, args);
+			free_all(list);
 			continue ;
 		}
-		
-		free_all(list, args);
+		parser(list, ast, 'r', 0);
+		print_tree(ast);
 	}
 }
 
-void free_all(t_list *list, char **args)
+void free_all(t_list *list)
 {
 	ft_lstclear(&list, free_parse_lst);
-	clean_arr_str(args);
 }
 
 
@@ -115,7 +114,7 @@ void free_parse_lst(void *content)
 
 t_list *parse_to_list(char **args)
 {
-	t_list	*list;
+	t_list		*list;
 	t_parser	*parser;
 	int		ctd;
 
@@ -192,23 +191,23 @@ t_bool check_syntax(t_list *lst)
 	return (TRUE);
 }
 
-char **split_args1(char **args, int ctd)
-{
-	char	**new_args;
-	int		ctd2;
+// char **split_args1(char **args, int ctd)
+// {
+// 	char	**new_args;
+// 	int		ctd2;
 
-	ctd2 = 0;
-	new_args = malloc(sizeof(char *) * (ctd + 1));
-	if (!new_args)
-		return (NULL);
-	while (ctd2 < ctd)
-	{
-		new_args[ctd2] = ft_strdup(args[ctd2]);
-		ctd2++;
-	}
-	new_args[ctd2] = NULL;
-	return (new_args);
-}
+// 	ctd2 = 0;
+// 	new_args = malloc(sizeof(char *) * (ctd + 1));
+// 	if (!new_args)
+// 		return (NULL);
+// 	while (ctd2 < ctd)
+// 	{
+// 		new_args[ctd2] = ft_strdup(args[ctd2]);
+// 		ctd2++;
+// 	}
+// 	new_args[ctd2] = NULL;
+// 	return (new_args);
+// }
 
 int ft_arrlen(char **arr)
 {
@@ -220,24 +219,24 @@ int ft_arrlen(char **arr)
 	return (ctd);
 }
 
-char **split_args2(char **args, int ctd)
-{
-	char	**new_args;
-	int		ctd2;
+// char **split_args2(char **args, int ctd)
+// {
+// 	char	**new_args;
+// 	int		ctd2;
 
-	ctd2 = 0;
-	new_args = malloc(sizeof(char *) * (ft_arrlen(args) - ctd + 1));
-	while (args[ctd])
-	{
-		new_args[ctd2] = ft_strdup(args[ctd]);
-		ctd2++;
-		ctd++;
-	}
-	new_args[ctd2] = NULL;
-	return (new_args);
-}
+// 	ctd2 = 0;
+// 	new_args = malloc(sizeof(char *) * (ft_arrlen(args) - ctd + 1));
+// 	while (args[ctd])
+// 	{
+// 		new_args[ctd2] = ft_strdup(args[ctd]);
+// 		ctd2++;
+// 		ctd++;
+// 	}
+// 	new_args[ctd2] = NULL;
+// 	return (new_args);
+// }
 
-void parser(char **args, t_ast_node *ast, char add_direction)
+/* void parser(char **args, t_ast_node *ast, char add_direction)
 {
 	int			ctd;
 	int			flag;
@@ -277,7 +276,193 @@ void parser(char **args, t_ast_node *ast, char add_direction)
 			flag++;
 		ctd++;
 	}
+} */
+
+void	print_tree(t_ast_node *node)
+{
+	if (node)
+	{
+		ft_printf("%i :: %s\n", node->type, node->value);
+		ft_printf("\n%s LEFT\n", node->value);
+		print_tree(node->left);
+		ft_printf("\n%s RIGHT\n", node->value);
+		print_tree(node->right);
+	}
 }
+
+void parser(t_list **lst, t_ast_node **ast)
+{
+	t_list	*nod;
+	t_list *prev;
+
+	if(!lst || !*lst)
+		return ;
+	else if(search_logical(*lst, &nod, &prev))
+	{
+		*ast = ast_new_node(nod->content);
+		prev->next = NULL;
+		parser(*lst, (*ast)->left);
+		parser(nod->next, (*ast)->right);
+	}
+	else if(search_pipe(*lst, &nod, &prev))
+	{
+		*ast = ast_new_node(nod->content);
+		prev->next = NULL;
+		parser(*lst, (*ast)->left);
+		parser(nod->next, (*ast)->right);
+	}
+	else
+	{
+		cmd_parser(*lst, ast, 1);
+	}
+	clean(lst);
+}
+void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
+{
+	t_parser	*content;
+	
+	if (lst)
+	{
+		content = lst->content;
+		*ast = ast_new_node(NULL);
+		if (content->type == NODE_COMMAND)
+		{
+			if (first == 1)
+			{
+				(*ast)->type = content->type;
+				(*ast)->value = content->str;
+				cmd_parser(lst->next, ast, 0);
+			}
+			else
+			{
+				add_full_right(*ast, ast_new_node(content));
+				cmd_parser(lst->next, ast, first);
+			}
+		}
+		else
+		{
+			add_full_left(*ast, ast_new_node(content));
+			cmd_parser(lst->next, ast, first);
+		}
+	}
+}
+
+
+//1 2 3 && 4 5 6 | 7 8 9
+//1 1 1 1  1 1 1 1 0 0 0
+// cmd arg1 >out arg2
+
+int	search_logical(t_list *lst, t_list **nod, t_list **prev)
+{
+	t_parser	*content;
+
+	if (lst)
+	{
+		content = lst->content;
+		if (content->type == NODE_LOGICAL)
+		{
+			*nod = lst;
+			return(TRUE);
+		}
+		*prev = lst;
+		return (search_logical(lst->next, nod, prev));
+	}
+	*nod = NULL;
+	*prev = NULL;
+	return (FALSE);
+}
+int	search_pipe(t_list *lst, t_list **nod, t_list **prev)
+{
+	t_parser	*content;
+
+	if (lst)
+	{
+		content = lst->content;
+		if (content->type == NODE_PIPE)
+		{
+			*nod = lst;
+			return(TRUE);
+		}
+		*prev = lst;
+		return (search_logical(lst->next, nod, prev));
+	}
+	*nod = NULL;
+	*prev = NULL;
+	return (FALSE);
+}
+
+
+
+
+
+
+
+
+
+
+
+// void parser(t_list *lst, t_ast_node *ast, char add_direction, int loop)
+// {
+// 	int			ctd;
+// 	int			flag;
+// 	t_parser	*content;
+// 	t_list		*head;
+// 	t_list		*prev;
+
+// 	ctd = 0;
+// 	flag = 0;
+// 	head = lst;
+// 	while (lst && flag < 3)
+// 	{
+// 		if (head == NULL)
+// 			return ;
+// 		content = lst->content;
+// 		if (flag == 0 && lst && content->type == NODE_LOGICAL)
+// 		{
+// 			ft_printf("1\n");
+// 			ast_add_node(ast, ast_new_node(NODE_LOGICAL, content->str), add_direction);
+// 			content = prev->next->content;
+// 			prev->next = NULL;
+// 			parser(head, ast, 'l', loop++);
+// 			parser(lst->next, ast, 'r', loop++);
+// 			ft_lstclear(&head, free_parse_lst);
+// 		}
+// 		if (flag == 1 && lst && content->type == NODE_PIPE)
+// 		{
+// 			ft_printf("2\n");
+// 			ast_add_node(ast, ast_new_node(NODE_PIPE, content->str), add_direction);
+// 			content = prev->next->content;
+// 			prev->next = NULL;
+// 			parser(head, ast, 'l', loop++);
+// 			parser(lst->next, ast, 'r', loop++);
+// 			ft_lstclear(&head, free_parse_lst);
+// 		}
+// 		if (flag == 2 && lst)
+// 		{
+// 			ft_printf("3\n");
+// 			if (content->type == NODE_REDIRECT_OUT)
+// 				add_full_left(ast, ast_new_node(content->type, content->str));
+// 			else if (content->type == NODE_REDIRECT_OUT_APPENDS)
+// 				add_full_left(ast, ast_new_node(content->type, content->str));
+// 			else if (content->type == NODE_REDIRECT_IN)
+// 				add_full_left(ast, ast_new_node(content->type, content->str));
+// 			else if (content->type == NODE_REDIRECT_IN_HERE)
+// 				add_full_left(ast, ast_new_node(content->type, content->str));
+// 			else
+// 				add_full_right(ast, ast_new_node(content->type, content->str));
+// 		}
+// 		if (!lst->next && flag < 3)
+// 		{
+// 			flag++;
+// 			lst = head;
+// 		}
+// 		else
+// 		{
+// 			prev = lst; 
+// 			lst = lst->next;
+// 		}
+// 	}
+// }
 
 char	*trim_path(char *path)
 {

@@ -1,14 +1,32 @@
 #include "../includes/headers/minishell.h"
 
-t_ast_node	*ast_new_node(t_node_type type, char *value)
+// t_ast_node	*ast_new_node(t_node_type type, char *value)
+// {
+// 	t_ast_node	*node;
+
+// 	node = malloc(sizeof(t_ast_node));
+// 	if (!node)
+// 		return (NULL);
+// 	node->type = type;
+// 	node->value = ft_strdup(value);
+// 	node->fd_in = STDIN_FILENO;
+// 	node->fd_out = STDOUT_FILENO;
+// 	node->left = NULL;
+// 	node->right = NULL;
+// 	return (node);
+// }
+
+t_ast_node	*ast_new_node(void* c)
 {
 	t_ast_node	*node;
-
+	t_parser	*content;
+	
+	content = c;
 	node = malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
-	node->type = type;
-	node->value = ft_strdup(value);
+	node->type = content->type;
+	node->value = ft_strdup(content->str);
 	node->fd_in = STDIN_FILENO;
 	node->fd_out = STDOUT_FILENO;
 	node->left = NULL;

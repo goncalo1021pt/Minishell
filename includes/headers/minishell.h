@@ -151,21 +151,24 @@ void					ft_exit(int status);
 
 // ast
 
-t_ast_node				*ast_new_node(t_node_type type, char *value);
+t_ast_node				*ast_new_node(void *c);
 void					ast_add_node(t_ast_node *current, t_ast_node *node,
 							char dir);
 void					add_full_right(t_ast_node *current, t_ast_node *node);
 void					add_full_left(t_ast_node *current, t_ast_node *node);
 void					ast_free(t_ast_node *node);
 void					ast_print(t_ast_node *node);
+void					print_tree(t_ast_node *node);
 
 // parser
 
+// void parser(t_list *lst, t_ast_node *ast, char add_direction, int loop);
+void parser(t_list *lst, t_ast_node **ast);
 t_list	*parse_to_list(char **args);
 t_bool	check_syntax(t_list *lst);
 void	print_content(void *p);
 void	free_parse_lst(void *content);
-void	free_all(t_list *list, char **args);
+void	free_all(t_list *list);
 
 
 // fds

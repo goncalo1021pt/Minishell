@@ -189,8 +189,8 @@ int	ft_pipe(t_ast_node *node, char ***env)
 	}
 	if (fk1 == 0)
 	{
+		close(pip[0]);
 		ft_process(node->left, env);
-		write(pip[1], "", 1);
 		ft_exit(3);
 	}
 	fk2 = fork();
@@ -200,7 +200,10 @@ int	ft_pipe(t_ast_node *node, char ***env)
 		ft_exit (4);
 	}
 	if (fk2 == 0)
+	{
+		close(pip[1]);
 		ft_exit(ft_process(node->right, env));
+	}
 	waitpid(fk1, NULL, 0);
 	waitpid(fk2, &status, 0);
 	close(pip[1]);
