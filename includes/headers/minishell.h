@@ -42,6 +42,7 @@ typedef enum e_node_type
 	NODE_REDIRECT_OUT,
 	NODE_REDIRECT_OUT_APPENDS,
 	NODE_COMMAND,
+	NODE_UNKNOWN,
 }						t_node_type;
 
 typedef struct s_ast_node
@@ -163,7 +164,10 @@ void					print_tree(t_ast_node *node);
 // parser
 
 // void parser(t_list *lst, t_ast_node *ast, char add_direction, int loop);
-void parser(t_list *lst, t_ast_node **ast);
+void	parser(t_list **lst, t_ast_node **ast);
+int		search_logical(t_list *lst, t_list **nod, t_list **prev);
+int		search_pipe(t_list *lst, t_list **nod, t_list **prev);
+void	cmd_parser(t_list *lst, t_ast_node **ast, int first);
 t_list	*parse_to_list(char **args);
 t_bool	check_syntax(t_list *lst);
 void	print_content(void *p);

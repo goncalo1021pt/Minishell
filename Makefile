@@ -11,7 +11,7 @@ S = main minishell get_current_pwd root_signals str_utils find_env ft_astr_dup f
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 rd_ln = -lreadline
 CC = cc
 

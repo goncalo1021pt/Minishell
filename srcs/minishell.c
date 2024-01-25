@@ -77,14 +77,14 @@ int	minishell(char **env)
 		args = ft_costume_split(line);
 		free(line);
 		list = parse_to_list(args);
-		// ft_lstiter(list, print_content);
+		ft_lstiter(list, print_content);
 		if (!check_syntax(list))
 		{
 			ft_putendl_fd("syntax error", 2);
 			free_all(list);
 			continue ;
 		}
-		parser(list, ast, 'r', 0);
+		parser(&list, &ast);
 		print_tree(ast);
 	}
 }
@@ -301,21 +301,21 @@ void parser(t_list **lst, t_ast_node **ast)
 	{
 		*ast = ast_new_node(nod->content);
 		prev->next = NULL;
-		parser(*lst, (*ast)->left);
-		parser(nod->next, (*ast)->right);
+		parser(lst, &(*ast)->left);
+		parser(&nod->next, &(*ast)->right);
 	}
 	else if(search_pipe(*lst, &nod, &prev))
 	{
 		*ast = ast_new_node(nod->content);
 		prev->next = NULL;
-		parser(*lst, (*ast)->left);
-		parser(nod->next, (*ast)->right);
+		parser(lst, &(*ast)->left);
+		parser(&nod->next, &(*ast)->right);
 	}
 	else
 	{
 		cmd_parser(*lst, ast, 1);
 	}
-	clean(lst);
+	// clean(lst);
 }
 void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 {

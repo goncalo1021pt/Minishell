@@ -25,8 +25,16 @@ t_ast_node	*ast_new_node(void* c)
 	node = malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
+	if (c)
+	{
 	node->type = content->type;
 	node->value = ft_strdup(content->str);
+	}
+	else
+	{
+		node->value = NULL;
+		node->type = NODE_UNKNOWN;
+	}
 	node->fd_in = STDIN_FILENO;
 	node->fd_out = STDOUT_FILENO;
 	node->left = NULL;
