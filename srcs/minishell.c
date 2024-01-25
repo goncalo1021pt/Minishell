@@ -64,30 +64,35 @@ int	minishell(char **env)
 	{
 		promt = get_prompt();
 		line = readline(promt);
+		free(promt);
 		if (!line)
 			ft_exit(0);
+		if (!*line || is_in_array(*line, SPACE_LIST))
+		{
+			free(line);
+			continue ;
+		}
 		if (line[0] != '\0')
 			add_history(line);
 		args = ft_costume_split(line);
+		free(line);
 		list = parse_to_list(args);
 		ft_lstiter(list, print_content);
 		if (!check_syntax(list))
 		{
 			ft_putendl_fd("syntax error", 2);
-			free_all(list, line, args, promt, &ast);
+			free_all(list, args);
 			continue ;
 		}
-		free_all(list, line, args, promt, &ast);
+		
+		free_all(list, args);
 	}
 }
 
-void free_all(t_list *list, char *line, char **args, char *promt, t_ast_node *ast)
+void free_all(t_list *list, char **args)
 {
 	ft_lstclear(&list, free_parse_lst);
 	clean_arr_str(args);
-	(void)ast;
-	free(line);
-	free(promt);
 }
 
 
@@ -121,41 +126,20 @@ t_list *parse_to_list(char **args)
 		parser = malloc(sizeof(t_parser));
 		if (!parser)
 			return (NULL);
+		parser->type = NODE_COMMAND;
 		if (!ft_strncmp(args[ctd], "||", 2) || !ft_strncmp(args[ctd], "&&", 2))
-		{
 			parser->type = NODE_LOGICAL;
-			parser->str = ft_strdup(args[ctd]);
-		}
 		else if (!ft_strncmp(args[ctd], "|", 1))
-		{
 			parser->type = NODE_PIPE;
-			parser->str = ft_strdup(args[ctd]);
-		}
 		else if (!ft_strncmp(args[ctd], ">>", 2))
-		{
 			parser->type = NODE_REDIRECT_OUT_APPENDS;
-			parser->str = ft_strdup(args[ctd]);
-		}
 		else if (!ft_strncmp(args[ctd], ">", 1))
-		{
 			parser->type = NODE_REDIRECT_OUT;
-			parser->str = ft_strdup(args[ctd]);
-		}
 		else if (!ft_strncmp(args[ctd], "<<", 2))
-		{
 			parser->type = NODE_REDIRECT_IN_HERE;
-			parser->str = ft_strdup(args[ctd]);
-		}
 		else if (!ft_strncmp(args[ctd], "<", 1))
-		{
 			parser->type = NODE_REDIRECT_IN;
-			parser->str = ft_strdup(args[ctd]);
-		}
-		else
-		{
-			parser->type = NODE_COMMAND;
-			parser->str = ft_strdup(args[ctd]);
-		}
+		parser->str = ft_strdup(args[ctd]);
 		ft_lstadd_back(&list, ft_lstnew(parser));
 		ctd++;
 	}

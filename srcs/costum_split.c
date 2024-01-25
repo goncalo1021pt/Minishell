@@ -171,8 +171,11 @@ char *create_spaces(char *str)
 char **ft_costume_split(char *str)
 {
 	char	*new_str;
+	char	**out;
 
 	new_str = create_spaces(str);
-	return (ft_split_quotes(new_str));
+	out = ft_split_quotes(new_str);
+	free(new_str);
+	return (out);
 }
 

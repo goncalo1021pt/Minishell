@@ -11,7 +11,7 @@ S = main minishell get_current_pwd root_signals str_utils find_env ft_astr_dup f
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 rd_ln = -lreadline
 CC = cc
 
@@ -68,6 +68,9 @@ fclean: clean
 	@$(RM) $(BONUS_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@echo "$(RED)$(NAME)$(NC)cleaned!"
+
+v: 
+	make re && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions="supression.supp" ./$(NAME)
 
 fcount:
 	@echo "you wrote $(RED)$(shell cat $(SRCS) | wc -l)$(NC)lines of code"
