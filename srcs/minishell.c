@@ -191,6 +191,60 @@ t_bool check_syntax(t_list *lst)
 	return (TRUE);
 }
 
+void split_redirects(t_list **lst)
+{
+	t_list 		*temp;
+	t_list		*temp2;
+	t_parser	*content;
+
+	temp = *lst;
+	while (temp != NULL)
+	{
+		content = temp->content;
+		if (temp->next != NULL && (content->type == NODE_REDIRECT_OUT || content->type == NODE_REDIRECT_OUT_APPENDS || content->type == NODE_REDIRECT_IN || content->type == NODE_REDIRECT_IN_HERE))
+		{
+			content->str = ((t_parser *)(temp->next->content))->str;
+			temp2 = temp->next;
+			temp->next = temp->next->next;
+			ft_lstdelone(temp2, free_parse_lst);
+		}
+		temp = temp->next;
+	}
+}
+
+void swap_redir_command(t_list **lst)
+{
+	t_list		*temp;
+	t_list		*temp2;
+	t_parser	*content;
+	t_parser	*content2;
+	int			ctd;
+
+	temp = *lst;
+	ctd = 0;
+	while (temp != NULL) 
+	{
+		content = temp->content;
+		if (ctd == 0 && content->type != NODE_COMMAND) 
+		{
+			temp2 = temp->next;
+			content2 = temp2->content;
+			while (content2->type != NODE_LOGICAL && content2->type != NODE_PIPE)
+			{
+				if (content2->type != NODE_COMMAND)
+				{
+					
+				}
+				temp2 = temp->next;
+			}
+		}
+		ctd++;
+		if (content->type == NODE_LOGICAL || content->type == NODE_PIPE)
+			ctd = 0;
+		temp = temp->next;
+	}
+}
+
 // char **split_args1(char **args, int ctd)
 // {
 // 	char	**new_args;
