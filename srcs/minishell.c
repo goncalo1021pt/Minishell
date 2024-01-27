@@ -77,6 +77,7 @@ int	minishell(char **env)
 		args = ft_costume_split(line);
 		free(line);
 		list = parse_to_list(args);
+
 		ft_lstiter(list, print_content);
 		if (!check_syntax(list))
 		{
@@ -84,7 +85,7 @@ int	minishell(char **env)
 			free_all(list);
 			continue ;
 		}
-		parser(&list, &ast);
+		// parser(&list, &ast);
 		print_tree(ast);
 	}
 }
@@ -142,6 +143,7 @@ t_list *parse_to_list(char **args)
 		ft_lstadd_back(&list, ft_lstnew(parser));
 		ctd++;
 	}
+	split_redirects(&list);
 	return (list);
 }
 
@@ -203,7 +205,8 @@ void split_redirects(t_list **lst)
 		content = temp->content;
 		if (temp->next != NULL && (content->type == NODE_REDIRECT_OUT || content->type == NODE_REDIRECT_OUT_APPENDS || content->type == NODE_REDIRECT_IN || content->type == NODE_REDIRECT_IN_HERE))
 		{
-			content->str = ((t_parser *)(temp->next->content))->str;
+			free(content->str);
+			content->str = ft_strdup(((t_parser *)(temp->next->content))->str);
 			temp2 = temp->next;
 			temp->next = temp->next->next;
 			ft_lstdelone(temp2, free_parse_lst);
