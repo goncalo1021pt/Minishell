@@ -438,7 +438,7 @@ int	search_pipe(t_list *lst, t_list **nod, t_list **prev)
 			return(TRUE);
 		}
 		*prev = lst;
-		return (search_logical(lst->next, nod, prev));
+		return (search_pipe(lst->next, nod, prev));
 	}
 	*nod = NULL;
 	*prev = NULL;
