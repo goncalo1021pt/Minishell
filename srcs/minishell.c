@@ -248,24 +248,6 @@ void swap_redir_command(t_list **lst)
 	}
 }
 
-// char **split_args1(char **args, int ctd)
-// {
-// 	char	**new_args;
-// 	int		ctd2;
-
-// 	ctd2 = 0;
-// 	new_args = malloc(sizeof(char *) * (ctd + 1));
-// 	if (!new_args)
-// 		return (NULL);
-// 	while (ctd2 < ctd)
-// 	{
-// 		new_args[ctd2] = ft_strdup(args[ctd2]);
-// 		ctd2++;
-// 	}
-// 	new_args[ctd2] = NULL;
-// 	return (new_args);
-// }
-
 int ft_arrlen(char **arr)
 {
 	int		ctd;
@@ -275,65 +257,6 @@ int ft_arrlen(char **arr)
 		ctd++;
 	return (ctd);
 }
-
-// char **split_args2(char **args, int ctd)
-// {
-// 	char	**new_args;
-// 	int		ctd2;
-
-// 	ctd2 = 0;
-// 	new_args = malloc(sizeof(char *) * (ft_arrlen(args) - ctd + 1));
-// 	while (args[ctd])
-// 	{
-// 		new_args[ctd2] = ft_strdup(args[ctd]);
-// 		ctd2++;
-// 		ctd++;
-// 	}
-// 	new_args[ctd2] = NULL;
-// 	return (new_args);
-// }
-
-/* void parser(char **args, t_ast_node *ast, char add_direction)
-{
-	int			ctd;
-	int			flag;
-
-	ctd = 0;
-	flag = 0;
-	while (args[ctd] && flag < 3)
-	{
-		if (flag == 0 && args[ctd] && (ft_strncmp(args[ctd], "||", 2) || ft_strncmp(args[ctd], "&&", 2)))
-		{
-			ast_add_node(ast, ast_new_node(NODE_LOGICAL, args[ctd]), add_direction);
-			parser(split_args1(args, ctd), ast, 'l');
-			parser(split_args2(args, ctd), ast, 'r' );
-			clean_arr_str(args);
-		}
-		if (flag == 1 && args[ctd] && (ft_strncmp(args[ctd], "|", 1)))
-		{
-			ast_add_node(ast, ast_new_node(NODE_PIPE, args[ctd]), add_direction);
-			parser(split_args1(args, ctd), ast, 'l');
-			parser(split_args2(args, ctd), ast, 'r' );
-			clean_arr_str(args);
-		}
-		if (flag == 2 && args[ctd])
-		{
-			if (ft_strncmp(args[ctd], ">", 1))
-				add_full_left(ast, ast_new_node(NODE_REDIRECT_OUT, args[ctd]));
-			else if (ft_strncmp(args[ctd], ">>", 2))
-				add_full_left(ast, ast_new_node(NODE_REDIRECT_OUT_APPENDS, args[ctd]));
-			else if (ft_strncmp(args[ctd], "<", 1))
-				add_full_left(ast, ast_new_node(NODE_REDIRECT_IN, args[ctd]));
-			else if (ft_strncmp(args[ctd], "<<", 2))
-				add_full_left(ast, ast_new_node(NODE_REDIRECT_IN_HERE, args[ctd]));
-			else
-				add_full_right(ast, ast_new_node(NODE_COMMAND, args[ctd]));
-		}
-		if (!args[ctd + 1])
-			flag++;
-		ctd++;
-	}
-} */
 
 void	print_tree(t_ast_node *node)
 {
@@ -404,11 +327,6 @@ void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 	}
 }
 
-
-//1 2 3 && 4 5 6 | 7 8 9
-//1 1 1 1  1 1 1 1 0 0 0
-// cmd arg1 >out arg2
-
 int	search_logical(t_list *lst, t_list **nod, t_list **prev)
 {
 	t_parser	*content;
@@ -447,79 +365,6 @@ int	search_pipe(t_list *lst, t_list **nod, t_list **prev)
 	*prev = NULL;
 	return (FALSE);
 }
-
-
-
-
-
-
-
-
-
-
-
-// void parser(t_list *lst, t_ast_node *ast, char add_direction, int loop)
-// {
-// 	int			ctd;
-// 	int			flag;
-// 	t_parser	*content;
-// 	t_list		*head;
-// 	t_list		*prev;
-
-// 	ctd = 0;
-// 	flag = 0;
-// 	head = lst;
-// 	while (lst && flag < 3)
-// 	{
-// 		if (head == NULL)
-// 			return ;
-// 		content = lst->content;
-// 		if (flag == 0 && lst && content->type == NODE_LOGICAL)
-// 		{
-// 			ft_printf("1\n");
-// 			ast_add_node(ast, ast_new_node(NODE_LOGICAL, content->str), add_direction);
-// 			content = prev->next->content;
-// 			prev->next = NULL;
-// 			parser(head, ast, 'l', loop++);
-// 			parser(lst->next, ast, 'r', loop++);
-// 			ft_lstclear(&head, free_parse_lst);
-// 		}
-// 		if (flag == 1 && lst && content->type == NODE_PIPE)
-// 		{
-// 			ft_printf("2\n");
-// 			ast_add_node(ast, ast_new_node(NODE_PIPE, content->str), add_direction);
-// 			content = prev->next->content;
-// 			prev->next = NULL;
-// 			parser(head, ast, 'l', loop++);
-// 			parser(lst->next, ast, 'r', loop++);
-// 			ft_lstclear(&head, free_parse_lst);
-// 		}
-// 		if (flag == 2 && lst)
-// 		{
-// 			ft_printf("3\n");
-// 			if (content->type == NODE_REDIRECT_OUT)
-// 				add_full_left(ast, ast_new_node(content->type, content->str));
-// 			else if (content->type == NODE_REDIRECT_OUT_APPENDS)
-// 				add_full_left(ast, ast_new_node(content->type, content->str));
-// 			else if (content->type == NODE_REDIRECT_IN)
-// 				add_full_left(ast, ast_new_node(content->type, content->str));
-// 			else if (content->type == NODE_REDIRECT_IN_HERE)
-// 				add_full_left(ast, ast_new_node(content->type, content->str));
-// 			else
-// 				add_full_right(ast, ast_new_node(content->type, content->str));
-// 		}
-// 		if (!lst->next && flag < 3)
-// 		{
-// 			flag++;
-// 			lst = head;
-// 		}
-// 		else
-// 		{
-// 			prev = lst; 
-// 			lst = lst->next;
-// 		}
-// 	}
-// }
 
 char	*trim_path(char *path)
 {
