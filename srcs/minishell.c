@@ -78,14 +78,14 @@ int	minishell(char **env)
 		free(line);
 		list = parse_to_list(args);
 
-		ft_lstiter(list, print_content);
 		if (!check_syntax(list))
 		{
 			ft_putendl_fd("syntax error", 2);
 			free_all(list);
 			continue ;
 		}
-		// parser(&list, &ast);
+		ft_lstiter(list, print_content);
+		parser(&list, &ast);
 		print_tree(ast);
 	}
 }
@@ -143,7 +143,6 @@ t_list *parse_to_list(char **args)
 		ft_lstadd_back(&list, ft_lstnew(parser));
 		ctd++;
 	}
-	split_redirects(&list);
 	return (list);
 }
 
@@ -190,6 +189,7 @@ t_bool check_syntax(t_list *lst)
 		}
 		tmp = tmp->next;
 	}
+	split_redirects(&lst);
 	return (TRUE);
 }
 
@@ -246,6 +246,47 @@ void swap_redir_command(t_list **lst)
 			ctd = 0;
 		temp = temp->next;
 	}
+}
+
+void move_command_before_redir(t_list **lst)
+{
+    t_list		*temp;
+    t_list		*prev;
+    t_parser	*content;
+
+    temp = *lst;
+    prev = NULL;
+    while (temp != NULL && temp->next != NULL) 
+    {
+        content = temp->content;
+        if (content->type == NODE_REDIRECT_IN || content->type == NODE_REDIRECT_IN_HERE || content->type == NODE_REDIRECT_OUT || content->type == NODE_REDIRECT_OUT_APPENDS) 
+        {
+            t_list *nextNode = temp->next;
+            t_parser *nextContent = nextNode->content;
+            if (nextContent->type == NODE_COMMAND)  // Move the command node before the redirection
+            {
+                temp->next = nextNode->next;
+                nextNode->next = temp;
+                if (prev != NULL)  // Fix the previous node's next to current
+                    prev->next = nextNode;
+                else  // Update the head of the list
+                    *lst = nextNode;
+
+                // Continue from the next node
+                prev = nextNode;
+            }
+            else
+            {
+                prev = temp;
+                temp = temp->next;
+            }
+        }
+        else
+        {
+            prev = temp;
+            temp = temp->next;
+        }
+    }
 }
 
 int ft_arrlen(char **arr)
@@ -387,7 +428,7 @@ char	*get_prompt(void)
 
 	pwd = get_current_pwd();
 	pwd = trim_path(pwd);
-	prompt = ft_strjoin(pwd, "> Minishell$ ");
+	prompt = ft_strjoin(pwd, "$ ");
 	free(pwd);
 	return (prompt);
 }
