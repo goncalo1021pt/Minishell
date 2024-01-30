@@ -58,6 +58,7 @@ int	minishell(char **env)
 	t_list			*list;
 
 	(void)env;
+	(void)ast;
 	ast = NULL;
 	root_signals();
 	while (1)
@@ -85,8 +86,8 @@ int	minishell(char **env)
 			continue ;
 		}
 		ft_lstiter(list, print_content);
-		parser(&list, &ast);
-		print_tree(ast);
+		// parser(&list, &ast);
+		// print_tree(ast);
 	}
 }
 
@@ -213,80 +214,6 @@ void split_redirects(t_list **lst)
 		}
 		temp = temp->next;
 	}
-}
-
-void swap_redir_command(t_list **lst)
-{
-	t_list		*temp;
-	t_list		*temp2;
-	t_parser	*content;
-	t_parser	*content2;
-	int			ctd;
-
-	temp = *lst;
-	ctd = 0;
-	while (temp != NULL) 
-	{
-		content = temp->content;
-		if (ctd == 0 && content->type != NODE_COMMAND) 
-		{
-			temp2 = temp->next;
-			content2 = temp2->content;
-			while (content2->type != NODE_LOGICAL && content2->type != NODE_PIPE)
-			{
-				if (content2->type != NODE_COMMAND)
-				{
-					
-				}
-				temp2 = temp->next;
-			}
-		}
-		ctd++;
-		if (content->type == NODE_LOGICAL || content->type == NODE_PIPE)
-			ctd = 0;
-		temp = temp->next;
-	}
-}
-
-void move_command_before_redir(t_list **lst)
-{
-    t_list		*temp;
-    t_list		*prev;
-    t_parser	*content;
-
-    temp = *lst;
-    prev = NULL;
-    while (temp != NULL && temp->next != NULL) 
-    {
-        content = temp->content;
-        if (content->type == NODE_REDIRECT_IN || content->type == NODE_REDIRECT_IN_HERE || content->type == NODE_REDIRECT_OUT || content->type == NODE_REDIRECT_OUT_APPENDS) 
-        {
-            t_list *nextNode = temp->next;
-            t_parser *nextContent = nextNode->content;
-            if (nextContent->type == NODE_COMMAND)  // Move the command node before the redirection
-            {
-                temp->next = nextNode->next;
-                nextNode->next = temp;
-                if (prev != NULL)  // Fix the previous node's next to current
-                    prev->next = nextNode;
-                else  // Update the head of the list
-                    *lst = nextNode;
-
-                // Continue from the next node
-                prev = nextNode;
-            }
-            else
-            {
-                prev = temp;
-                temp = temp->next;
-            }
-        }
-        else
-        {
-            prev = temp;
-            temp = temp->next;
-        }
-    }
 }
 
 int ft_arrlen(char **arr)
