@@ -156,7 +156,7 @@ t_bool check_syntax(t_list *lst)
 
 	tmp = lst;
 	parser = tmp->content;
-	if (parser->type != NODE_COMMAND)
+	if (parser->type != NODE_COMMAND && parser->type != NODE_REDIRECT_IN && parser->type != NODE_REDIRECT_IN_HERE && parser->type != NODE_REDIRECT_OUT && parser->type != NODE_REDIRECT_OUT_APPENDS)
 		return (FALSE);
 	while (tmp)
 	{
