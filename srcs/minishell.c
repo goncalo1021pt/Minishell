@@ -272,7 +272,8 @@ void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 	if (lst)
 	{
 		content = lst->content;
-		*ast = ast_new_node(NULL);
+		if(!(*ast))
+			*ast = ast_new_node(NULL);
 		if (content->type == NODE_COMMAND)
 		{
 			if (first == 1)
