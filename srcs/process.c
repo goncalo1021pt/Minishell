@@ -127,7 +127,9 @@ int	ft_append_out(t_ast_node *node, char *fname)
 
 int	ft_read_del(t_ast_node *node, char *fname)
 {
-
+	(void)node;
+	(void)fname;
+	return (0);
 }
 
 //runs a program or a built in
