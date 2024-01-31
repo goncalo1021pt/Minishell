@@ -27,8 +27,8 @@ t_ast_node	*ast_new_node(void* c)
 		return (NULL);
 	if (c)
 	{
-	node->type = content->type;
-	node->value = ft_strdup(content->str);
+		node->type = content->type;
+		node->value = ft_strdup(content->str);
 	}
 	else
 	{
@@ -111,6 +111,7 @@ void	ast_print(t_ast_node *node)
 	ast_print(node->left);
 	ast_print(node->right);
 }
+
 
 // int	main(void)
 // {

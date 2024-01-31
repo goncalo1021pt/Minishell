@@ -2,11 +2,14 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	char	**my_env;
+
 	(void)argv;
 	(void)env;
 	if (argc != 1)
 		return (1);
-	minishell(env);
+	my_env = ft_astr_dup(env);
+	minishell(&my_env);
 	return (0);
 }
 

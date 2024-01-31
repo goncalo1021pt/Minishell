@@ -49,7 +49,7 @@ Having the basic definitions understood we can start getting into the recursive 
 - A pipeline can be defined as a single command (as defined above), or as a series of commands concatenated by a "|"
  */
 
-int	minishell(char **env)
+int	minishell(char ***env)
 {
 	char			*line;
 	char 			**args;
@@ -59,10 +59,10 @@ int	minishell(char **env)
 
 	(void)env;
 	(void)ast;
-	ast = NULL;
 	root_signals();
 	while (1)
 	{
+		ast = NULL;
 		promt = get_prompt();
 		line = readline(promt);
 		free(promt);
@@ -88,8 +88,9 @@ int	minishell(char **env)
 		// ft_lstiter(list, print_content);
 		parser(&list, &ast);
 		//print_tree(ast);
-		call_process(ast, &env);
-		
+		//printf("PROINT\n");
+		call_process(ast, env);
+		ast_free(ast);
 	}
 }
 
@@ -239,6 +240,14 @@ void	print_tree(t_ast_node *node)
 		print_tree(node->right);
 	}
 }
+void	clean_lst(t_list *lst)
+{
+	if (lst)
+	{
+		free(lst);
+		clean_lst(lst->next);
+	}
+}
 
 void parser(t_list **lst, t_ast_node **ast)
 {
@@ -251,27 +260,27 @@ void parser(t_list **lst, t_ast_node **ast)
 	{
 		*ast = ast_new_node(nod->content);
 		prev->next = NULL;
-		parser(lst, &(*ast)->left);
-		parser(&nod->next, &(*ast)->right);
+		parser(lst, &((*ast)->left));
+		parser(&nod->next, &((*ast)->right));
 	}
 	else if(search_pipe(*lst, &nod, &prev))
 	{
 		*ast = ast_new_node(nod->content);
 		prev->next = NULL;
-		parser(lst, &(*ast)->left);
-		parser(&nod->next, &(*ast)->right);
+		parser(lst, &((*ast)->left));
+		parser(&nod->next, &((*ast)->right));
 	}
 	else
 	{
 		cmd_parser(*lst, ast, 1);
 	}
-	// clean(lst);
+	//clean_lst(*lst);
 }
 void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 {
 	t_parser	*content;
 	
-	if (lst)
+	if (lst && ast)
 	{
 		content = lst->content;
 		if(!(*ast))

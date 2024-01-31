@@ -85,7 +85,7 @@ typedef struct s_info
 
 // core
 
-int						minishell(char **env);
+int						minishell(char ***env);
 char					*get_prompt(void);
 
 char					*get_current_pwd(void);

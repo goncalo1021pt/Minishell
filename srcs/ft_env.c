@@ -5,7 +5,7 @@ int	ft_env(char **env, char **args, int fd_out)
 	int		i;
 
 	i = 0;
-	if (args[1])
+	if (args && args[0] && args[1])
 		return (1);
 	while (env && env[i] != NULL)
 	{
