@@ -31,7 +31,7 @@ int	ft_process(t_ast_node *node, char ***env)
 char	**ft_get_args(t_ast_node *node)
 {
 	size_t		ac;
-	size_t		i;close(pip[1]);
+	size_t		i;
 	t_ast_node	*aux;
 	char		**args;
 
@@ -124,7 +124,8 @@ int	ft_append_out(t_ast_node *node, char *fname)
 {
 	int fd;
 
-	close(node->fd_out);
+	if (node->fd_out != STDOUT_FILENO)
+		close(node->fd_out);
 	fd = open(node->left->value , O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
@@ -214,10 +215,10 @@ int	ft_pipe(t_ast_node *node, char ***env)
 		close(pip[1]);
 		ft_exit(ft_process(node->right, env));
 	}
-	waitpid(fk1, NULL, 0);
-	waitpid(fk2, &status, 0);
 	close(pip[1]);
 	close(pip[0]);
+	waitpid(fk1, NULL, 0);
+	waitpid(fk2, &status, 0);
 	return(status);
 }
 
