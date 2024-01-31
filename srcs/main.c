@@ -2,14 +2,25 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	char	**my_env;
+	// char	**my_env;
 
 	(void)argv;
 	(void)env;
 	if (argc != 1)
 		return (1);
-	my_env = ft_astr_dup(env);
-	minishell(&my_env);
+	// my_env = ft_astr_dup(env);
+	// minishell(&my_env);
+	char *str;
+	char *str2;
+
+	str = ft_strdup("echo $USER");
+	str2 = ft_strdup("echo $USER");
+	printf("str: %s\n", str);
+	printf("str2: %s\n", str2);
+	expand(str, env);
+	printf("str: %s\n", str);
+	printf("str2: %s\n", str2);
+	return (0);
 	return (0);
 }
 

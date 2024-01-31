@@ -54,13 +54,14 @@ int	minishell(char ***env)
 	char			*line;
 	char 			**args;
 	char			*promt;
-	t_ast_node		*ast;
+	// t_ast_node		*ast;
 	t_list			*list;
 
 	root_signals();
+	(void)env;
 	while (1)
 	{
-		ast = NULL;
+		// ast = NULL;
 		promt = get_prompt();
 		line = readline(promt);
 		free(promt);

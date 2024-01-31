@@ -181,6 +181,9 @@ void	print_content(void *p);
 void	free_parse_lst(void *content);
 void	free_all(t_list *list);
 
+// expander
+t_bool expand(char *str, char **env);
+
 
 // fds
 
