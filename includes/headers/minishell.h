@@ -62,6 +62,12 @@ typedef struct s_parser
 	t_node_type			type;
 }						t_parser;
 
+typedef struct s_info
+{
+	char				***env;
+	t_ast_node			**tree;
+}						t_info;
+
 // typedef struct s_shell_list
 // {
 // 	int					cmd_id;

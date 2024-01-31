@@ -85,9 +85,9 @@ int	minishell(char **env)
 			free_all(list);
 			continue ;
 		}
-		ft_lstiter(list, print_content);
-		// parser(&list, &ast);
-		// print_tree(ast);
+		// ft_lstiter(list, print_content);
+		parser(&list, &ast);
+		print_tree(ast);
 	}
 }
 
