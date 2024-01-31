@@ -31,7 +31,7 @@ int	ft_process(t_ast_node *node, char ***env)
 char	**ft_get_args(t_ast_node *node)
 {
 	size_t		ac;
-	size_t		i;close(pip[1]);
+	size_t		i;
 	t_ast_node	*aux;
 	char		**args;
 

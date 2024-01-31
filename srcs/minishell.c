@@ -85,12 +85,12 @@ int	minishell(char ***env)
 			free_all(list);
 			continue ;
 		}
-		// ft_lstiter(list, print_content);
-		parser(&list, &ast);
-		//print_tree(ast);
-		//printf("PROINT\n");
-		call_process(ast, env);
-		ast_free(ast);
+		ft_lstiter(list, print_content);
+		// parser(&list, &ast);
+		// //print_tree(ast);
+		// //printf("PROINT\n");
+		// call_process(ast, env);
+		// ast_free(ast);
 	}
 }
 
