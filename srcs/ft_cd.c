@@ -8,13 +8,13 @@ static int	change_dir(char *path, char ***env)
 	{
 		if (get_env("PWD", *env))
 		{
-			change_env("OLDPWD", ft_strjoin("OLDPWD", get_env("PWD", *env)), env);
-			change_env("PWD", ft_strjoin_f2("PWD", get_current_pwd()), env);
+			change_env("OLDPWD", ft_strjoin("OLDPWD=", get_env("PWD", *env)), env);
+			change_env("PWD", ft_strjoin_f2("PWD=", get_current_pwd()), env);
 		}
 		return (0);
 	}
 	else
-		return (-1);
+		return (2);
 }
 
 

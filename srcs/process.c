@@ -5,10 +5,10 @@ int	call_process(t_ast_node *node, char ***env)
 	int	ret;
 
 	ret = ft_process(node, env);
-	if (ret == -1)
+	if (ret == 127)
 	{
 		ft_output_nl("syntax error", STDERR_FILENO);
-		return (-1);
+		return (127);
 	}
 	return (0);
 }
@@ -25,7 +25,7 @@ int	ft_process(t_ast_node *node, char ***env)
 	else if (node->type == NODE_COMMAND)
 		return(ft_run(node, env));
 	else
-		return (-1);
+		return (127);
 }
 
 char	**ft_get_args(t_ast_node *node)

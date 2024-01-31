@@ -7,8 +7,8 @@ static void	print_export(char **env, int fd_out)
     i = 0;
     while (env && env[i] != NULL)
     {
-		ft_output("declare -x", fd_out);
-        ft_output_nl(env[i], fd_out);
+		ft_output("declare -x ", fd_out);
+        ft_output_export(env[i], fd_out);
         i ++;
     }
 }
