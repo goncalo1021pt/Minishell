@@ -57,8 +57,6 @@ int	minishell(char ***env)
 	t_ast_node		*ast;
 	t_list			*list;
 
-	(void)env;
-	(void)ast;
 	root_signals();
 	while (1)
 	{

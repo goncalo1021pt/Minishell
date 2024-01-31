@@ -192,6 +192,7 @@ int						set_fds(int fd_in, int fd_out);
 
 void					ft_output(char *str, int fd);
 void					ft_output_nl(char *str, int fd);
+void					ft_output_export(char *str, int fd);
 
 // signals
 

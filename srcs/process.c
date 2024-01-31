@@ -5,10 +5,10 @@ int	call_process(t_ast_node *node, char ***env)
 	int	ret;
 
 	ret = ft_process(node, env);
-	if (ret == -1)
+	if (ret == 127)
 	{
 		ft_output_nl("syntax error", STDERR_FILENO);
-		return (-1);
+		return (127);
 	}
 	return (0);
 }
@@ -25,7 +25,7 @@ int	ft_process(t_ast_node *node, char ***env)
 	else if (node->type == NODE_COMMAND)
 		return(ft_run(node, env));
 	else
-		return (-1);
+		return (127);
 }
 
 char	**ft_get_args(t_ast_node *node)
@@ -124,7 +124,8 @@ int	ft_append_out(t_ast_node *node, char *fname)
 {
 	int fd;
 
-	close(node->fd_out);
+	if (node->fd_out != STDOUT_FILENO)
+		close(node->fd_out);
 	fd = open(node->left->value , O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
@@ -214,10 +215,10 @@ int	ft_pipe(t_ast_node *node, char ***env)
 		close(pip[1]);
 		ft_exit(ft_process(node->right, env));
 	}
-	waitpid(fk1, NULL, 0);
-	waitpid(fk2, &status, 0);
 	close(pip[1]);
 	close(pip[0]);
+	waitpid(fk1, NULL, 0);
+	waitpid(fk2, &status, 0);
 	return(status);
 }
 
