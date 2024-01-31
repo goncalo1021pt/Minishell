@@ -87,7 +87,9 @@ int	minishell(char **env)
 		}
 		// ft_lstiter(list, print_content);
 		parser(&list, &ast);
-		print_tree(ast);
+		//print_tree(ast);
+		call_process(ast, &env);
+		
 	}
 }
 

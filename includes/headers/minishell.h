@@ -148,7 +148,7 @@ int						local_exec(char **args, char **env, int fd_in,
 
 // built ins
 
-int						ft_echo(char *arg, char **env);
+int						ft_echo(char **arg, int fd_out);
 int						ft_cd(char **arg, char ***env);
 int						ft_pwd(int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
@@ -200,9 +200,21 @@ void					signal_handler(int signal, siginfo_t *info,
 							void *context);
 void					ignore_signal(struct sigaction *sa, int signal);
 
-// pharsing
+// process
 
-
+int		call_process(t_ast_node *node, char ***env);
+int		ft_process(t_ast_node *node, char ***env);
+char	**ft_get_args(t_ast_node *node);
+int		ft_get_fds(t_ast_node *node);
+int		ft_redirect_in(t_ast_node *node, char *fname);
+int		ft_redirect_out(t_ast_node *node, char *fname);
+int		ft_append_out(t_ast_node *node, char *fname);
+int		ft_read_del(t_ast_node *node, char *fname);
+int		ft_run(t_ast_node *node, char ***env);
+int		ft_pipe(t_ast_node *node, char ***env);
+int		wich_logical(t_ast_node *node, char ***env);
+int		ft_and(t_ast_node *node, char ***env);
+int		ft_or(t_ast_node *node, char ***env);
 // list execution
 
 // ft_exit

@@ -14,7 +14,6 @@ int	call_process(t_ast_node *node, char ***env)
 }
 
 // process a node
-
 int	ft_process(t_ast_node *node, char ***env)
 {
 	if (!node)
@@ -38,12 +37,13 @@ char	**ft_get_args(t_ast_node *node)
 
 	ac = 0;
 	aux = node;
+	args = NULL;
 	while (aux)
 	{
 		ac++;
 		aux = aux->right;
 	}
-	if (my_alloc(sizeof(char *), ac + 1, args))
+	if (my_alloc(sizeof(char *), ac + 1, (void **)(&args)))
 		return (NULL);
 	i = 0;
 	aux = node;
@@ -64,17 +64,25 @@ int	ft_get_fds(t_ast_node *node)
 	while (aux)
 	{
 		if (aux->type == NODE_REDIRECT_IN)
+		{
 			if (ft_redirect_in(node, aux->value))
 				return (1);
+		}
 		else if (aux->type == NODE_REDIRECT_IN_HERE)
+		{
 			if (ft_read_del(node, aux->value))
 				return (1);
+		}
 		else if (aux->type == NODE_REDIRECT_OUT)
+		{
 			if (ft_redirect_out(node, aux->value))
 				return (1);
+		}
 		else if (aux->type == NODE_REDIRECT_OUT_APPENDS)
+		{
 			if (ft_append_out(node, aux->value))
 				return (1);
+		}
 		aux = aux->left;
 	}
 	return (0);
@@ -84,7 +92,8 @@ int	ft_redirect_in(t_ast_node *node, char *fname)
 {
 	int fd;
 
-	close(node->fd_in);
+	if (node->fd_in != STDIN_FILENO)
+		close(node->fd_in);
 	fd = open(fname , O_RDONLY);
 	if (fd == -1)
 	{
@@ -99,7 +108,8 @@ int	ft_redirect_out(t_ast_node *node, char *fname)
 {
 	int fd;
 
-	close(node->fd_out);
+	if (node->fd_out != STDOUT_FILENO)
+		close(node->fd_out);
 	fd = open(node->left->value , O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
@@ -144,7 +154,7 @@ int	ft_run(t_ast_node *node, char ***env)
 	if ((node->value)[0] == '/' || (node->value)[0] == '.')
 		ret = local_exec(args, *env, node->fd_in, node->fd_out);
 	else if (ft_strcmp(node->value, "echo") == 0)
-		ret = ft_echo();
+		ret = ft_echo(args, node->fd_out);
 	else if (ft_strcmp(node->value, "cd") == 0)
 		ret = ft_cd(args, env);
 	else if (ft_strcmp(node->value, "pwd") == 0)
@@ -156,12 +166,10 @@ int	ft_run(t_ast_node *node, char ***env)
 	else if (ft_strcmp(node->value, "env") == 0)
 		ret = ft_env(*env, args, node->fd_out);
 	else if (ft_strcmp(node->value, "ft_exit") == 0)
-		ret = ft_ft_exit();
+		ret = 0;
 	else
 		ret = path_exec(args, *env, node->fd_in, node->fd_out);
 	free(args);
-	close(node->fd_in);
-	close(node->fd_out);
 	return (ret);
 }
 
@@ -226,8 +234,8 @@ int	wich_logical(t_ast_node *node, char ***env)
 // processes right if left is valid
 int	ft_and(t_ast_node *node, char ***env)
 {
-	if (!process(node->left, env))
-		return(process(node->right, env));
+	if (!ft_process(node->left, env))
+		return(ft_process(node->right, env));
 	return(1);
 }
 
@@ -235,8 +243,8 @@ int	ft_and(t_ast_node *node, char ***env)
 
 int	ft_or(t_ast_node *node, char ***env)
 {
-	if (process(node->left, env))
-		return(process(node->right, env));
+	if (ft_process(node->left, env))
+		return(ft_process(node->right, env));
 	return(0);
 }
 

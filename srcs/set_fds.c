@@ -8,7 +8,8 @@ int	set_fd_in(int fd_in)
 	if (fd_in == STDIN_FILENO)
 		return (0);
 	ret = dup2(fd_in, STDIN_FILENO);
-	return (0);
+	close(fd_in);
+	return (ret);
 }
 
 int	set_fd_out(int fd_out)
@@ -18,6 +19,7 @@ int	set_fd_out(int fd_out)
 	if (fd_out == STDOUT_FILENO)
 		return (0);
 	ret = dup2(fd_out, STDOUT_FILENO);
+	close(fd_out);
 	return (ret);
 }
 

@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-int	ft_env(char **env, char **args, int fd_out)
+int	ft_echo(char **arg, int fd_out)
 {
 	size_t	i;
 
@@ -23,4 +23,5 @@ int	ft_env(char **env, char **args, int fd_out)
 			i++;
 		}
 	}
+	return (0);
 }
