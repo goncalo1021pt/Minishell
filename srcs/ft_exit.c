@@ -1,6 +1,5 @@
 #include "../includes/headers/minishell.h"
 
-
 void	ft_exit(int status)
 {
 	t_info	info;

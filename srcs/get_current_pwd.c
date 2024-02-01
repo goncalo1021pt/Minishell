@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-char	*get_current_pwd()
+char	*get_current_pwd(void)
 {
 	char	buffer[MAX_PATH_SIZE];
 	char	*ret;

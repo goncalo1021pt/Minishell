@@ -5,7 +5,7 @@ void	ft_output(char *str, int fd)
 	size_t	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		write(fd, &(str[i]), 1);
 		i++;
@@ -25,7 +25,7 @@ void	ft_output_export(char *str, int fd)
 
 	i = 0;
 	check = 0;
-	while(str[i])
+	while (str[i])
 	{
 		write(fd, &(str[i]), 1);
 		if (check == 0 && str[i] == '=')
