@@ -54,19 +54,19 @@ int	minishell(char ***env)
 	char			*line;
 	char 			**args;
 	char			*promt;
-	t_ast_node		*ast;
+	// t_ast_node		*ast;
 	t_list			*list;
 
 	root_signals();
-	exit_info(env, &ast);
+	// exit_info(env, &ast);
 	while (1)
 	{
-		ast = NULL;
+		// ast = NULL;
 		promt = get_prompt();
 		line = readline(promt);
 		free(promt);
 		if (!line)
-			ft_exit(0);
+			exit(0);
 		if (!*line || is_in_array(*line, SPACE_LIST))
 		{
 			free(line);
@@ -74,7 +74,7 @@ int	minishell(char ***env)
 		}
 		if (line[0] != '\0')
 			add_history(line);
-		args = ft_costume_split(line, *env);
+		args = ft_custom_split(line, *env);
 		free(line);
 		list = parse_to_list(args);
 		if (!check_syntax(list))
@@ -83,12 +83,12 @@ int	minishell(char ***env)
 			free_all(list);
 			continue ;
 		}
-		// ft_lstiter(list, print_content);
-		parser(&list, &ast);
+		ft_lstiter(list, print_content);
+		// parser(&list, &ast);
 		//print_tree(ast);
 		//printf("PROINT\n");
-		call_process(ast, env);
-		ast_free(ast);
+		// call_process(ast, env);
+		// ast_free(ast);
 	}
 }
 

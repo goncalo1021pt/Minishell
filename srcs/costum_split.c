@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-static int	skip_quotes(const char *str, int ctd, char quote_type)
+int	skip_quotes(const char *str, int ctd, char quote_type)
 {
 	ctd++;
 	while (str[ctd] && str[ctd] != quote_type)
@@ -168,7 +168,7 @@ char *create_spaces(char *str)
 	return (out);
 }
 
-char **ft_costume_split(char *str, char **env)
+char **ft_custom_split(char *str, char **env)
 {
 	char	*new_str;
 	char	**out;

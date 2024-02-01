@@ -111,7 +111,9 @@ char					**ft_astr_reduce(char **astr, size_t n_remove);
 void					print_arr_str(char **astr);
 char					*ft_strchr(const char *str, int c);
 char					**ft_split_quotes(char const *s);
-char					**ft_costume_split(char *str, char **env);
+char					**ft_custom_split(char *str, char **env);
+int						skip_quotes(const char *str, int ctd, char quote_type);
+int						copy_quotes(char *dst, char *src, char quote_type);
 char 					*create_spaces(char *str);
 t_bool					is_in_array(char c, char *arr);
 

@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 23:18:40 by gfontao-          #+#    #+#             */
-/*   Updated: 2024/01/24 11:31:33 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:41:56 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	if (lst == NULL)
 		return ;
-	ft_lstiter(lst->next, f);
 	f(lst->content);
+	ft_lstiter(lst->next, f);
 }
