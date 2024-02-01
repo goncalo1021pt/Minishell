@@ -58,7 +58,7 @@ int	minishell(char ***env)
 	t_list			*list;
 
 	root_signals();
-	// exit_info(env, &ast);
+	exit_info(env, &ast);
 	while (1)
 	{
 		// ast = NULL;
@@ -83,9 +83,9 @@ int	minishell(char ***env)
 			free_all(list);
 			continue ;
 		}
-		ft_lstiter(list, print_content);
-		// parser(&list, &ast);
-		// print_tree(ast);
+		// ft_lstiter(list, print_content);
+		parser(&list, &ast);
+		//print_tree(ast);
 		//printf("PROINT\n");
 		// call_process(ast, env);
 		// ast_free(ast);
@@ -240,10 +240,19 @@ void	print_tree(t_ast_node *node)
 }
 void	clean_lst(t_list *lst)
 {
+	t_parser	*aux;
+
 	if (lst)
 	{
-		free(lst);
 		clean_lst(lst->next);
+		if (lst->content)
+		{
+			aux = (t_parser *)lst->content;
+			if (aux->str)
+				free(aux->str);
+			free(lst->content);
+		}
+		free(lst);
 	}
 }
 
@@ -272,7 +281,7 @@ void parser(t_list **lst, t_ast_node **ast)
 	{
 		cmd_parser(*lst, ast, 1);
 	}
-	//clean_lst(*lst);
+	clean_lst(*lst);
 }
 void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 {

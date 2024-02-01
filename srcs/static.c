@@ -1,8 +1,8 @@
 #include "../includes/headers/minishell.h"
 
-t_info	*exit_info(char ***env, t_ast_node **tree)
+t_info	exit_info(char ***env, t_ast_node **tree)
 {
-	static	info;
+	static t_info	info;
 
 	if(env)
 		info.env = env;

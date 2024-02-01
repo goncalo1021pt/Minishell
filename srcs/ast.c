@@ -80,6 +80,7 @@ void	ast_free(t_ast_node *node)
 		return ;
 	ast_free(node->left);
 	ast_free(node->right);
+	free(node->value);
 	free(node);
 }
 

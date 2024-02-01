@@ -2,22 +2,22 @@
 
 static void	print_export(char **env, int fd_out)
 {
-	int		i;
+	int	i;
 
-    i = 0;
-    while (env && env[i] != NULL)
-    {
+	i = 0;
+	while (env && env[i] != NULL)
+	{
 		ft_output("declare -x ", fd_out);
-        ft_output_export(env[i], fd_out);
-        i ++;
-    }
+		ft_output_export(env[i], fd_out);
+		i ++;
+	}
 }
 
 char	*get_env_name(char *env)
 {
 	char	*aux;
 	size_t	size;
-	
+
 	if (!env)
 		return (NULL);
 	size = 0;
@@ -60,11 +60,7 @@ int	ft_export(char ***env, char **args, int fd_out)
 		if (!aux)
 			return (2);
 		if (change_env(name, aux, env))
-		{
-			free(name);
-			free(aux);
-			return (3);
-		}
+			return (free(name), free(aux), 3);
 		free(name);
 		i++;
 	}

@@ -8,7 +8,8 @@ static int	change_dir(char *path, char ***env)
 	{
 		if (get_env("PWD", *env))
 		{
-			change_env("OLDPWD", ft_strjoin("OLDPWD=", get_env("PWD", *env)), env);
+			change_env("OLDPWD",
+				ft_strjoin("OLDPWD=", get_env("PWD", *env)), env);
 			change_env("PWD", ft_strjoin_f2("PWD=", get_current_pwd()), env);
 		}
 		return (0);
@@ -17,9 +18,7 @@ static int	change_dir(char *path, char ***env)
 		return (2);
 }
 
-
 int	ft_cd(char **arg, char ***env)
-
 {
 	char	*where;
 
@@ -41,10 +40,7 @@ int	ft_cd(char **arg, char ***env)
 		if (where)
 			ft_output_nl(where, STDOUT_FILENO);
 		else
-		{
-			ft_output_nl("cd: OLDPWD not set", STDERR_FILENO);
-			return (3);
-		}
+			return (ft_output_nl("cd: OLDPWD not set", STDERR_FILENO), 3);
 	}
 	else
 		where = arg[1];
