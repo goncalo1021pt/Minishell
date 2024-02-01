@@ -150,6 +150,7 @@ int	ft_run(t_ast_node *node, char ***env)
 	char	**args;
 	int		ret;
 
+	ret = 0;
 	args = ft_get_args(node);
 	ft_get_fds(node);
 	if ((node->value)[0] == '/' || (node->value)[0] == '.')
@@ -166,8 +167,11 @@ int	ft_run(t_ast_node *node, char ***env)
 		ret = ft_unset(env, args);
 	else if (ft_strcmp(node->value, "env") == 0)
 		ret = ft_env(*env, args, node->fd_out);
-	else if (ft_strcmp(node->value, "ft_exit") == 0)
-		ret = 0;
+	else if (ft_strcmp(node->value, "exit") == 0)
+	{
+		free(args);
+		ft_exit(0);
+	}
 	else
 		ret = path_exec(args, *env, node->fd_in, node->fd_out);
 	free(args);

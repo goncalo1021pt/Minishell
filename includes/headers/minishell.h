@@ -224,6 +224,7 @@ int		ft_or(t_ast_node *node, char ***env);
 
 // ft_exit
 
+t_info					exit_info(char ***env, t_ast_node **tree);
 int						minishell_exit(void);
 
 #endif
