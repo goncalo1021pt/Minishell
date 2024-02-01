@@ -1,6 +1,20 @@
 #include "../includes/headers/minishell.h"
 
 char *add_to_middle(char *src,char *to_add, int ctd, int len);
+char *remove_quotes(char *str);
+
+int	copy_in_quotes(char *dst, char *src, char quote_type)
+{
+	int ctd;
+
+	ctd = 1;
+	while (src[ctd] && src[ctd] != quote_type)
+	{
+		dst[ctd - 1] = src[ctd];
+		ctd++;
+	}
+	return (ctd);
+}
 
 char *expander(char *str, char **env)
 {
@@ -16,6 +30,11 @@ char *expander(char *str, char **env)
 		free(new);
 		new = temp;
 	}
+	temp = remove_quotes(new);
+	if (!temp)
+		return (NULL);
+	free(new);
+	new = temp;
 	return (new);
 }
 
@@ -26,6 +45,8 @@ t_bool check_expander(char *str)
 	ctd = -1;
 	while (str[++ctd])
 	{
+		if (str[ctd] == '\'' )
+			skip_quotes(str, ctd, '\'');
 		if (str[ctd] == '$')
 			return (TRUE);
 	}
@@ -45,7 +66,7 @@ char	*expand_1(char *str, char **env)
 	while (str[++ctd])
 	{
 		if (str[ctd] == '\'' && flag == 0)
-			flag = 1;
+			ctd = skip_quotes(str, ctd, '\'');
 		else if (str[ctd] == '\'' && flag == 1)
 			flag = 0;
 		if(str[ctd] == '$' && flag == 0)
@@ -93,6 +114,49 @@ char *add_to_middle(char *src,char *to_add, int ctd, int len)
 		out[ctd + ctd2] = src[ctd + len];
 		ctd++;
 		ctd2++;
+	}
+	return (out);
+}
+
+int count_quotes(char *str)
+{
+	int ctd;
+	int count;
+
+	count = 0;
+	ctd = -1;
+	while (str[++ctd])
+	{
+		if (str[ctd] == '\'' || str[ctd] == '\"')
+		{
+			skip_quotes(str, ctd, str[ctd]);
+			count += 2;
+		}
+	}
+	return (count);
+}
+
+char *remove_quotes(char *str)
+{
+	char *out;
+	int ctd;
+	int ctd2;
+
+	out = ft_calloc(ft_strlen(str) - count_quotes(str), sizeof(char));
+	if (!out)
+		return (NULL);
+	ctd = 0;
+	ctd2 = 0;
+	while (str[ctd])
+	{
+		if (str[ctd] == '\'' || str[ctd] == '\"')
+			ctd = copy_in_quotes(out + ctd2, str + ctd, str[ctd]);
+		else
+		{
+			out[ctd2] = str[ctd];
+			ctd2++;
+		}
+		ctd++;
 	}
 	return (out);
 }
