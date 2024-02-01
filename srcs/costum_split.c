@@ -168,13 +168,17 @@ char *create_spaces(char *str)
 	return (out);
 }
 
-char **ft_costume_split(char *str)
+char **ft_costume_split(char *str, char **env)
 {
 	char	*new_str;
 	char	**out;
+	int		ctd;
 
 	new_str = create_spaces(str);
 	out = ft_split_quotes(new_str);
+	ctd = -1;
+	while (out[++ctd])
+		out[ctd] = expander(out[ctd], env);
 	free(new_str);
 	return (out);
 }

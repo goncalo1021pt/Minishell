@@ -4,7 +4,19 @@ char *add_to_middle(char *src,char *to_add, int ctd, int len);
 
 char *expander(char *str, char **env)
 {
+	char *new;
+	char *temp;
 
+	new = str;
+	while (check_expander(new))
+	{
+		temp = expand_1(new, env);
+		if (!temp)
+			return (NULL);
+		free(new);
+		new = temp;
+	}
+	return (new);
 }
 
 t_bool check_expander(char *str)

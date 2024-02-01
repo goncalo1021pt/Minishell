@@ -7,7 +7,6 @@ int	ft_echo(char **arg, int fd_out)
 	i = 1;
 	if (ft_strcmp(arg[1], "-n"))
 	{
-		i++;
 		while (arg[i])
 		{
 			ft_output(arg[i], fd_out);
@@ -19,6 +18,7 @@ int	ft_echo(char **arg, int fd_out)
 	}
 	else
 	{
+		i++;
 		while (arg[i])
 		{
 			ft_output(arg[i], fd_out);

@@ -102,7 +102,6 @@ char					*ft_strjoin(char const *s1, char const *s2);
 char					*ft_strjoin_f1(char *s1, char const *s2);
 char					*ft_strjoin_f2(char const *s1, char *s2);
 char					*ft_strjoin_f12(char *s1, char *s2);
-char					**ft_split(char const *s, char c);
 char					*ft_strdup(const char *str);
 void					clean_arr_str(char **astr);
 char					**ft_astr_dup(char **astr);
@@ -112,7 +111,7 @@ char					**ft_astr_reduce(char **astr, size_t n_remove);
 void					print_arr_str(char **astr);
 char					*ft_strchr(const char *str, int c);
 char					**ft_split_quotes(char const *s);
-char					**ft_costume_split(char *str);
+char					**ft_costume_split(char *str, char **env);
 char 					*create_spaces(char *str);
 t_bool					is_in_array(char c, char *arr);
 
@@ -182,8 +181,8 @@ void	free_parse_lst(void *content);
 void	free_all(t_list *list);
 
 // expander
-char *expander(char *str, char **env);
-t_bool check_expander(char *str);
+char	*expander(char *str, char **env);
+t_bool	check_expander(char *str);
 char	*expand_1(char *str, char **env);
 
 
