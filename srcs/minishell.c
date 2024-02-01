@@ -248,8 +248,6 @@ void	clean_lst(t_list *lst)
 		if (lst->content)
 		{
 			aux = (t_parser *)lst->content;
-			if (aux->str)
-				free(aux->str);
 			free(lst->content);
 		}
 		free(lst);
@@ -374,7 +372,7 @@ char	*get_prompt(void)
 
 	pwd = get_current_pwd();
 	pwd = trim_path(pwd);
-	prompt = ft_strjoin(pwd, "$ ");
-	free(pwd);
+	prompt = ft_strjoin_f1(pwd, "$ ");
+	prompt = ft_strjoin_f2("Minishell:/", prompt);
 	return (prompt);
 }
