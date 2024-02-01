@@ -182,7 +182,9 @@ void	free_parse_lst(void *content);
 void	free_all(t_list *list);
 
 // expander
-t_bool expand(char *str, char **env);
+char *expander(char *str, char **env);
+t_bool check_expander(char *str);
+char	*expand_1(char *str, char **env);
 
 
 // fds

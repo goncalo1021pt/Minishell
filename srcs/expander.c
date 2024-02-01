@@ -2,20 +2,25 @@
 
 char *add_to_middle(char *src,char *to_add, int ctd, int len);
 
+char *expander(char *str, char **env)
+{
+
+}
+
 t_bool check_expander(char *str)
 {
 	int ctd;
 
-	ctd = 0;
-	while (str[ctd])
+	ctd = -1;
+	while (str[++ctd])
 	{
 		if (str[ctd] == '$')
-			ctd++;
+			return (TRUE);
 	}
 	return (FALSE);
 }
 
-t_bool expand(char *str, char **env)
+char	*expand_1(char *str, char **env)
 {
 	int flag;
 	int ctd;
@@ -39,16 +44,19 @@ t_bool expand(char *str, char **env)
 				len++;
 			new = malloc(len + 1);
 			if (!new)
-				return FALSE;
+				return (NULL);
 			ft_strncpy(new, str + ctd, len);
 			var = get_env(new, env);
 			if (!var)
-				return (FALSE);
-			str = add_to_middle(str, var, ctd, len);
-			ft_printf("str: %s\n", str);
+				return (NULL);
+			str = add_to_middle(str, var, ctd - 1, len);
+			if (!str)
+				return (NULL);
+			else
+				return (str);
 		}
 	}
-	return (TRUE);
+	return (str);
 }
 
 char *add_to_middle(char *src,char *to_add, int ctd, int len)
@@ -58,19 +66,21 @@ char *add_to_middle(char *src,char *to_add, int ctd, int len)
 	int ctd2;
 
 	len2 = ft_strlen(src) + ft_strlen(to_add) - len;
-	out = malloc(len2 + 1);
+	out = ft_calloc(len2, sizeof(char));
 	if (!out)
 		return (NULL);
 	strncpy(out, src, ctd);
-	ctd2 = -1;
-	while (to_add[++ctd2])
+	ctd2 = 0;
+	while (to_add[ctd2])
+	{
 		out[ctd + ctd2] = to_add[ctd2];
-	while (src[ctd + len])
+		ctd2++;
+	}
+	while (src[ctd + 1 + len])
 	{
 		out[ctd + ctd2] = src[ctd + len];
 		ctd++;
 		ctd2++;
 	}
-	out[ctd2] = '\0';
 	return (out);
 }
