@@ -58,7 +58,7 @@ int	minishell(char ***env)
 	t_list			*list;
 
 	root_signals();
-	exit_info(env, &ast);
+	// exit_info(env, &ast);
 	while (1)
 	{
 		// ast = NULL;
@@ -66,7 +66,7 @@ int	minishell(char ***env)
 		line = readline(promt);
 		free(promt);
 		if (!line)
-			ft_exit(0);
+			exit(0);
 		if (!*line || is_in_array(*line, SPACE_LIST))
 		{
 			free(line);
@@ -83,8 +83,8 @@ int	minishell(char ***env)
 			free_all(list);
 			continue ;
 		}
-		// ft_lstiter(list, print_content);
-		parser(&list, &ast);
+		ft_lstiter(list, print_content);
+		// parser(&list, &ast);
 		//print_tree(ast);
 		//printf("PROINT\n");
 		// call_process(ast, env);
