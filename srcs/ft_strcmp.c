@@ -13,7 +13,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 		return (1);
 	while ((stra[i] == strb[i]) && (stra[i]))
 	{
-		i ++;
+		i++;
 	}
 	return (stra[i] - strb[i]);
 }

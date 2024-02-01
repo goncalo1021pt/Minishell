@@ -62,6 +62,7 @@ int	minishell(char ***env)
 	while (1)
 	{
 		// ast = NULL;
+		list = NULL;
 		promt = get_prompt();
 		line = readline(promt);
 		free(promt);

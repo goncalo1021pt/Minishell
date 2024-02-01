@@ -22,6 +22,7 @@ char *expander(char *str, char **env)
 	char *temp;
 
 	new = str;
+	ft_printf("new: %s\n", new);
 	while (check_expander(new))
 	{
 		temp = expand_1(new, env);
@@ -129,7 +130,7 @@ int count_quotes(char *str)
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
 		{
-			skip_quotes(str, ctd, str[ctd]);
+			ctd += skip_quotes(str, ctd, str[ctd]);
 			count += 2;
 		}
 	}
@@ -142,7 +143,8 @@ char *remove_quotes(char *str)
 	int ctd;
 	int ctd2;
 
-	out = ft_calloc(ft_strlen(str) - count_quotes(str), sizeof(char));
+	ft_printf("str: %s\n", str);
+	out = ft_calloc(ft_strlen(str) - count_quotes(str) + 1, sizeof(char));
 	if (!out)
 		return (NULL);
 	ctd = 0;
@@ -150,13 +152,13 @@ char *remove_quotes(char *str)
 	while (str[ctd])
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
-			ctd = copy_in_quotes(out + ctd2, str + ctd, str[ctd]);
-		else
 		{
-			out[ctd2] = str[ctd];
-			ctd2++;
+			ctd += copy_in_quotes(out + ctd, str + ctd, str[ctd]);
+			ctd2 += ctd - 2;
 		}
-		ctd++;
+		else
+			out[ctd2++] = str[ctd++];
 	}
+	ft_printf("out: %s\n", out);	
 	return (out);
 }
