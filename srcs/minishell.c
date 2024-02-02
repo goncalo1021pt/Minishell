@@ -249,7 +249,7 @@ void	clean_lst(t_list *lst)
 		if (lst->content)
 		{
 			aux = (t_parser *)lst->content;
-			free(lst->content);
+			free(aux->str);
 		}
 		free(lst);
 	}

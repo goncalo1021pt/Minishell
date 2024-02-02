@@ -13,7 +13,7 @@ int	copy_in_quotes(char *dst, char *src, char quote_type)
 		dst[ctd - 1] = src[ctd];
 		ctd++;
 	}
-	return (ctd);
+	return (ctd - 1);
 }
 
 char *expander(char *str, char **env)
@@ -22,7 +22,6 @@ char *expander(char *str, char **env)
 	char *temp;
 
 	new = str;
-	ft_printf("new: %s\n", new);
 	while (check_expander(new))
 	{
 		temp = expand_1(new, env);
@@ -47,7 +46,7 @@ t_bool check_expander(char *str)
 	while (str[++ctd])
 	{
 		if (str[ctd] == '\'' )
-			skip_quotes(str, ctd, '\'');
+			ctd = skip_quotes(str, ctd, '\'');
 		if (str[ctd] == '$')
 			return (TRUE);
 	}
@@ -56,33 +55,27 @@ t_bool check_expander(char *str)
 
 char	*expand_1(char *str, char **env)
 {
-	int flag;
 	int ctd;
 	int len;
 	char *new;
 	char *var;
 
 	ctd = -1;
-	flag = 0;
 	while (str[++ctd])
 	{
-		if (str[ctd] == '\'' && flag == 0)
+		if (str[ctd] == '\'')
 			ctd = skip_quotes(str, ctd, '\'');
-		else if (str[ctd] == '\'' && flag == 1)
-			flag = 0;
-		if(str[ctd] == '$' && flag == 0)
+		if(str[ctd] == '$')
 		{
 			len = 0;
 			ctd++;
 			while (ft_isalnum(str[ctd + len]))
 				len++;
-			new = malloc(len + 1);
+			new = ft_calloc(len + 1, sizeof(char));
 			if (!new)
 				return (NULL);
 			ft_strncpy(new, str + ctd, len);
 			var = get_env(new, env);
-			if (!var)
-				return (NULL);
 			str = add_to_middle(str, var, ctd - 1, len);
 			if (!str)
 				return (NULL);
@@ -100,21 +93,21 @@ char *add_to_middle(char *src,char *to_add, int ctd, int len)
 	int ctd2;
 
 	len2 = ft_strlen(src) + ft_strlen(to_add) - len;
-	out = ft_calloc(len2, sizeof(char));
+	out = ft_calloc(len2 + 1, sizeof(char));
 	if (!out)
 		return (NULL);
 	strncpy(out, src, ctd);
 	ctd2 = 0;
-	while (to_add[ctd2])
+	while (to_add && to_add[ctd2])
 	{
 		out[ctd + ctd2] = to_add[ctd2];
 		ctd2++;
 	}
-	while (src[ctd + 1 + len])
+	ctd++;
+	while (src[ctd + len])
 	{
-		out[ctd + ctd2] = src[ctd + len];
+		out[ctd + ctd2 - 1] = src[ctd + len];
 		ctd++;
-		ctd2++;
 	}
 	return (out);
 }
@@ -142,8 +135,8 @@ char *remove_quotes(char *str)
 	char *out;
 	int ctd;
 	int ctd2;
+	int copied;
 
-	ft_printf("str: %s\n", str);
 	out = ft_calloc(ft_strlen(str) - count_quotes(str) + 1, sizeof(char));
 	if (!out)
 		return (NULL);
@@ -153,12 +146,12 @@ char *remove_quotes(char *str)
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
 		{
-			ctd += copy_in_quotes(out + ctd, str + ctd, str[ctd]);
-			ctd2 += ctd - 2;
+			copied = copy_in_quotes(out + ctd2, str + ctd, str[ctd]);
+			ctd2 += copied;
+			ctd += copied + 2;
 		}
 		else
 			out[ctd2++] = str[ctd++];
 	}
-	ft_printf("out: %s\n", out);	
 	return (out);
 }
