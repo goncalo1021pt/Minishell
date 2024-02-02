@@ -1,0 +1,9 @@
+total 72
+drwxr-xr-x 4 gfontao- 2023_lisboa    34 Jan 11 15:11 includes
+-rw-r--r-- 1 gfontao- 2023_lisboa  2049 Feb  1 15:39 Makefile
+-rwxr-xr-x 1 gfontao- 2023_lisboa 51960 Feb  2 16:00 Minishell
+drwxr-xr-x 2 gfontao- 2023_lisboa  4096 Feb  2 16:00 objs
+-rw-r--r-- 1 gfontao- 2023_lisboa     0 Feb  2 16:00 out
+drwxr-xr-x 2 gfontao- 2023_lisboa  4096 Feb  2 14:46 srcs
+-rw-r--r-- 1 gfontao- 2023_lisboa   118 Jan 24 19:44 supression.supp
+-rw-r--r-- 1 gfontao- 2023_lisboa    11 Feb  2 15:34 teste
