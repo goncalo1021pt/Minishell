@@ -54,14 +54,14 @@ int	minishell(char ***env)
 	char			*line;
 	char 			**args;
 	char			*promt;
-	t_ast_node		*ast;
+	// t_ast_node		*ast;
 	t_list			*list;
 
 	root_signals();
-	exit_info(env, &ast);
+	// exit_info(env, &ast);
 	while (1)
 	{
-		ast = NULL;
+		// ast = NULL;
 		list = NULL;
 		promt = get_prompt();
 		line = readline(promt);
@@ -78,17 +78,20 @@ int	minishell(char ***env)
 		args = ft_custom_split(line, *env);
 		free(line);
 		list = parse_to_list(args);
+		clean_arr_str(args);
 		if (!check_syntax(list))
 		{
 			ft_putendl_fd("syntax error", 2);
 			free_all(list);
 			continue ;
 		}
+		expand_lst(list, *env);
 		ft_lstiter(list, print_content);
-		parser(&list, &ast);
+		free_all(list);
+		// parser(&list, &ast);
 		//print_tree(ast);
-		call_process(ast, env);
-		ast_free(ast);
+		// call_process(ast, env);
+		// ast_free(ast);
 	}
 }
 
@@ -165,6 +168,8 @@ t_bool check_syntax(t_list *lst)
 		if (tmp2)
 			tmp2_parser = tmp2->content;
 		parser = tmp->content;
+		if (tmp->next == NULL && count_quotes(parser->str) % 2 != 0)
+			return (FALSE);
 		if (tmp2 && tmp2_parser->type == NODE_LOGICAL)
 		{
 			if (tmp2->next == NULL)

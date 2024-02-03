@@ -16,6 +16,18 @@ int	copy_in_quotes(char *dst, char *src, char quote_type)
 	return (ctd - 1);
 }
 
+void expand_lst(t_list *lst, char **env)
+{
+	t_parser	*content;
+
+	while (lst != NULL)
+	{
+		content = lst->content;
+		content->str = expander(content->str, env);
+		lst = lst->next;
+	}
+}
+
 char *expander(char *str, char **env)
 {
 	char *new;
@@ -26,14 +38,13 @@ char *expander(char *str, char **env)
 	{
 		temp = expand_1(new, env);
 		if (!temp)
-			return (NULL);
+			return (free(new), NULL);
 		free(new);
 		new = temp;
 	}
 	temp = remove_quotes(new);
 	if (!temp)
 		return (NULL);
-	free(new);
 	new = temp;
 	return (new);
 }
@@ -116,16 +127,22 @@ int count_quotes(char *str)
 {
 	int ctd;
 	int count;
+	char temp;
 
 	count = 0;
-	ctd = -1;
-	while (str[++ctd])
+	ctd = 0;
+	while (str[ctd])
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
 		{
-			ctd += skip_quotes(str, ctd, str[ctd]);
-			count += 2;
+			temp = str[ctd];
+			ctd = skip_quotes(str, ctd, str[ctd]);
+			count++;
+			if (str[ctd - 1] == temp)
+				count++;
 		}
+		else
+			ctd++;
 	}
 	return (count);
 }
@@ -153,5 +170,6 @@ char *remove_quotes(char *str)
 		else
 			out[ctd2++] = str[ctd++];
 	}
+	free(str);
 	return (out);
 }

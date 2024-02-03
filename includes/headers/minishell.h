@@ -183,8 +183,10 @@ void	free_parse_lst(void *content);
 void	free_all(t_list *list);
 
 // expander
+void	expand_lst(t_list *lst, char **env);
 char	*expander(char *str, char **env);
 t_bool	check_expander(char *str);
+int		count_quotes(char *str);
 char	*expand_1(char *str, char **env);
 
 

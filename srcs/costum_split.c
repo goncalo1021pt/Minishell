@@ -51,12 +51,11 @@ static char	*word_aloc(const char *str)
 		else
 			word_len++;
 	}
-	word = (char *)malloc(word_len + 1);
+	word = (char *)ft_calloc(word_len + 1, sizeof(char *));
 	if (!word)
 		return (NULL);
 	while (++ctd < word_len)
 		word[ctd] = str[ctd];
-	word[ctd] = '\0';
 	return (word);
 }
 
@@ -74,7 +73,7 @@ char	**ft_split_quotes(char const *s)
 	int		ctd;
 
 	ctd = 0;
-	out = (char **)malloc((count_word(s) + 1) * sizeof(char *));
+	out = (char **)ft_calloc((count_word(s) + 1), sizeof(char *));
 	if (!out)
 		return (NULL);
 	while (*s)
@@ -98,7 +97,6 @@ char	**ft_split_quotes(char const *s)
 			ctd++;
 		}
 	}
-	out[ctd] = 0;
 	return (out);
 }
 
@@ -138,7 +136,7 @@ char *create_spaces(char *str)
 			new_len +=2;
 		}
 	}
-	out = (char *)malloc(new_len + 1);
+	out = (char *)ft_calloc(new_len + 1, sizeof(char *));
 	if (!out)
 		return (NULL);
 	ctd = 0;
@@ -164,7 +162,6 @@ char *create_spaces(char *str)
 		ctd++;
 		ctd2++;
 	}
-	out[ctd2] = 0;
 	return (out);
 }
 
@@ -173,12 +170,10 @@ char **ft_custom_split(char *str, char **env)
 	char	*new_str;
 	char	**out;
 	int		ctd;
-
+	(void)env;
 	new_str = create_spaces(str);
 	out = ft_split_quotes(new_str);
 	ctd = -1;
-	while (out[++ctd])
-		out[ctd] = expander(out[ctd], env);
 	free(new_str);
 	return (out);
 }
