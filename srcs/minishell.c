@@ -54,14 +54,14 @@ int	minishell(char ***env)
 	char			*line;
 	char 			**args;
 	char			*promt;
-	// t_ast_node		*ast;
+	t_ast_node		*ast;
 	t_list			*list;
 
 	root_signals();
-	// exit_info(env, &ast);
+	exit_info(env, &ast);
 	while (1)
 	{
-		// ast = NULL;
+		ast = NULL;
 		list = NULL;
 		promt = get_prompt();
 		line = readline(promt);
@@ -86,12 +86,11 @@ int	minishell(char ***env)
 			continue ;
 		}
 		expand_lst(list, *env);
-		ft_lstiter(list, print_content);
-		free_all(list);
-		// parser(&list, &ast);
+		// ft_lstiter(list, print_content);
+		parser(&list, &ast);
 		//print_tree(ast);
-		// call_process(ast, env);
-		// ast_free(ast);
+		call_process(ast, env);
+		ast_free(ast);
 	}
 }
 
@@ -378,6 +377,6 @@ char	*get_prompt(void)
 	pwd = get_current_pwd();
 	pwd = trim_path(pwd);
 	prompt = ft_strjoin_f1(pwd, "$ ");
-	prompt = ft_strjoin_f2("Minishell:/", prompt);
+	prompt = ft_strjoin_f2("Minishell> ", prompt);
 	return (prompt);
 }

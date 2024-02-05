@@ -1,6 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-void sigint_root(int signal, siginfo_t *info, void *context)
+void root_handler(int signal, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
@@ -17,7 +17,7 @@ void sigint_root(int signal, siginfo_t *info, void *context)
 void root_signals(void) {
 	struct sigaction sa;
 
-	sa.sa_sigaction = sigint_root;
+	sa.sa_sigaction = root_handler;
 	sa.sa_flags = SA_SIGINFO;
 	if (sigemptyset(&sa.sa_mask) != 0) 
 		return;
@@ -38,7 +38,27 @@ void ignore_signal(struct sigaction *sa, int signal) {
 	sa->sa_flags = original_flags;
 }
 
+void child_handler(int signal, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+
+	if (signal == SIGINT)
+	{
+		kill
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
 void child_signal(void)
 {
-	
+	struct sigaction sa;
+
+	sa.sigaction = child_handler;
+	sa.sa_handler = SA_SIGINFO;
+	sa.sa_flags = 0;
+	if (sigemptyset(&sa.sa_mask) != 0)
+		return;		
 }
