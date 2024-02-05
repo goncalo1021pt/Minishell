@@ -14,7 +14,8 @@ void root_handler(int signal, siginfo_t *info, void *context)
 	}
 }
 
-void root_signals(void) {
+void root_signals(void)
+{
 	struct sigaction sa;
 
 	sa.sa_sigaction = root_handler;
@@ -25,7 +26,8 @@ void root_signals(void) {
 	ignore_signal(&sa, SIGQUIT);
 }
 
-void ignore_signal(struct sigaction *sa, int signal) {
+void ignore_signal(struct sigaction *sa, int signal) 
+{
 	struct sigaction	original_sa;
 	int					original_flags;
 
@@ -45,20 +47,20 @@ void child_handler(int signal, siginfo_t *info, void *context)
 
 	if (signal == SIGINT)
 	{
-		kill
+		// fazer limpeza de processos e matar o filho
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
 
-void child_signal(void)
-{
-	struct sigaction sa;
+// void child_signal(void)
+// {
+// 	struct sigaction sa;
 
-	sa.sigaction = child_handler;
-	sa.sa_handler = SA_SIGINFO;
-	sa.sa_flags = 0;
-	if (sigemptyset(&sa.sa_mask) != 0)
-		return;		
-}
+// 	sa.sigaction = child_handler;
+// 	sa.sa_handler = SIG_DFL;
+// 	sa.sa_flags = 0;
+// 	if (sigemptyset(&sa.sa_mask) != 0)
+// 		return;		
+// }
