@@ -35,3 +35,12 @@ int	set_fds(int fd_in, int fd_out)
 	else
 		return (0);
 }
+
+void close_fds(int fd_in, int fd_out)
+{
+	if (fd_in != STDIN_FILENO)
+		close (fd_in);
+	if (fd_out != STDOUT_FILENO)
+		close (fd_out);
+
+}

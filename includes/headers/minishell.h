@@ -195,6 +195,7 @@ char	*expand_1(char *str, char **env);
 int						set_fd_in(int fd_in);
 int						set_fd_out(int fd_out);
 int						set_fds(int fd_in, int fd_out);
+void					close_fds(int fd_in, int fd_out);
 
 // output
 

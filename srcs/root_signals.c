@@ -45,7 +45,6 @@ void child_handler(int signal, siginfo_t *info, void *context)
 
 	if (signal == SIGINT)
 	{
-		kill
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -56,8 +55,8 @@ void child_signal(void)
 {
 	struct sigaction sa;
 
-	sa.sigaction = child_handler;
-	sa.sa_handler = SA_SIGINFO;
+	sa.sa_sigaction = child_handler;
+	sa.sa_handler = (void *)SA_SIGINFO;
 	sa.sa_flags = 0;
 	if (sigemptyset(&sa.sa_mask) != 0)
 		return;		
