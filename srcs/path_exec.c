@@ -83,6 +83,7 @@ int    path_exec(char **args, char **env, int fd_in, int fd_out)
 			ft_exit(0);
 		}
 	}
+	close_fds(fd_in, fd_out);
 	waitpid(pid, &status, 0);
 	free(path);
     return (0);
