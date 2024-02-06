@@ -110,7 +110,7 @@ int	ft_redirect_out(t_ast_node *node, char *fname)
 
 	if (node->fd_out != STDOUT_FILENO)
 		close(node->fd_out);
-	fd = open(node->left->value , O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(fname , O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		perror(fname);
@@ -126,7 +126,7 @@ int	ft_append_out(t_ast_node *node, char *fname)
 
 	if (node->fd_out != STDOUT_FILENO)
 		close(node->fd_out);
-	fd = open(node->left->value , O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(fname , O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		perror(fname);
