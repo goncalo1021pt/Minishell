@@ -174,7 +174,9 @@ int	ft_run(t_ast_node *node, char ***env)
 	ret = 0;
 	args = ft_get_args(node);
 	ft_get_fds(node);
-	if ((node->value)[0] == '/' || (node->value)[0] == '.')
+	if (!(node->value))
+		ret = 0;
+	else if ((node->value)[0] == '/' || (node->value)[0] == '.')
 		ret = local_exec(args, *env, node->fd_in, node->fd_out);
 	else if (ft_strcmp(node->value, "echo") == 0)
 		ret = ft_echo(args, node->fd_out);
