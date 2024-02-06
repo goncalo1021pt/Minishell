@@ -143,8 +143,7 @@ int	ft_read_del(t_ast_node *node, char *fname)
 
 	if (pipe(pip) == -1)
 		return(1);
-	write(STDIN_FILENO, "> ", 2);
-	line = get_next_line(STDIN_FILENO);
+	line = readline("> ");
 		if (!line)
 			return (1);
 	while (ft_strncmp(line, fname, ft_strlen(line) - 1) != 0)
