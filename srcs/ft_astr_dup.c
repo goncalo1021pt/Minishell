@@ -76,6 +76,12 @@ char	**ft_astr_extend(char **astr, char *new)
 	return (aux);
 }
 
+static char	**ft_astr_reduce_aux(char **aux)
+{
+	free(aux);
+	return (NULL);
+}
+
 char	**ft_astr_reduce(char **astr, size_t n_remove)
 {
 	char	**aux;
@@ -96,10 +102,7 @@ char	**ft_astr_reduce(char **astr, size_t n_remove)
 		{
 			aux[count - count_aux] = astr[count];
 			if (!aux[count - count_aux])
-			{
-				free(aux);
-				return (NULL);
-			}
+				return (ft_astr_reduce_aux(aux));
 		}
 		else
 			count_aux = 1;
