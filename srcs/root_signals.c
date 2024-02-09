@@ -54,13 +54,13 @@ void child_handler(int signal, siginfo_t *info, void *context)
 	}
 }
 
-// void child_signal(void)
-// {
-// 	struct sigaction sa;
+void child_signal(void)
+{
+	struct sigaction sa;
 
-// 	sa.sigaction = child_handler;
-// 	sa.sa_handler = SIG_DFL;
-// 	sa.sa_flags = 0;
-// 	if (sigemptyset(&sa.sa_mask) != 0)
-// 		return;		
-// }
+	sa.sa_sigaction = child_handler;
+	sa.sa_handler = SIG_DFL;
+	sa.sa_flags = 0;
+	if (sigemptyset(&sa.sa_mask) != 0)
+		return;		
+}

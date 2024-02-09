@@ -209,6 +209,7 @@ void					root_signals(void);
 void					signal_handler(int signal, siginfo_t *info,
 							void *context);
 void					ignore_signal(struct sigaction *sa, int signal);
+void 					child_signal(void);
 
 // process
 
