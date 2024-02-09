@@ -57,10 +57,10 @@ int	minishell(char ***env)
 	t_ast_node		*ast;
 	t_list			*list;
 
-	root_signals();
 	exit_info(env, &ast);
 	while (1)
 	{
+		choose_signal(ROOT);
 		ast = NULL;
 		list = NULL;
 		promt = get_prompt();

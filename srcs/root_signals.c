@@ -14,16 +14,29 @@ void root_handler(int signal, siginfo_t *info, void *context)
 	}
 }
 
-void root_signals(void)
+void choose_signal(t_signal_time type)
 {
-	struct sigaction sa;
+	static struct sigaction sa;
 
-	sa.sa_sigaction = root_handler;
-	sa.sa_flags = SA_SIGINFO;
-	if (sigemptyset(&sa.sa_mask) != 0) 
-		return;
-	sigaction(SIGINT, &sa, NULL);
-	ignore_signal(&sa, SIGQUIT);
+	ft_memset(&sa, 0, sizeof(struct sigaction));
+	if  (type == ROOT)
+	{
+		sa.sa_sigaction = root_handler;
+		sa.sa_flags = SA_SIGINFO;
+		if (sigemptyset(&sa.sa_mask) != 0) 
+			return;
+		sigaction(SIGINT, &sa, NULL);
+		ignore_signal(&sa, SIGQUIT);
+	}
+	else if (type == CHILD)
+	{
+		sa.sa_sigaction = child_handler;
+		sa.sa_flags = SA_SIGINFO;
+		if (sigemptyset(&sa.sa_mask) != 0)
+			return;
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+	}
 }
 
 void ignore_signal(struct sigaction *sa, int signal) 
@@ -47,20 +60,10 @@ void child_handler(int signal, siginfo_t *info, void *context)
 
 	if (signal == SIGINT)
 	{
-		// fazer limpeza de processos e matar o filho
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		ft_printf("\n");
 	}
-}
-
-void child_signal(void)
-{
-	struct sigaction sa;
-
-	sa.sa_sigaction = child_handler;
-	sa.sa_handler = SIG_DFL;
-	sa.sa_flags = 0;
-	if (sigemptyset(&sa.sa_mask) != 0)
-		return;		
+	if (signal == SIGQUIT)
+	{
+		ft_printf("Quit\n");
+	}
 }
