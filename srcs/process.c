@@ -143,8 +143,7 @@ int	ft_read_del(t_ast_node *node, char *fname)
 
 	if (pipe(pip) == -1)
 		return(1);
-	write(STDIN_FILENO, "> ", 2);
-	line = get_next_line(STDIN_FILENO);
+	line = readline("> ");
 		if (!line)
 			return (1);
 	while (ft_strncmp(line, fname, ft_strlen(line) - 1) != 0)
@@ -174,7 +173,9 @@ int	ft_run(t_ast_node *node, char ***env)
 	ret = 0;
 	args = ft_get_args(node);
 	ft_get_fds(node);
-	if ((node->value)[0] == '/' || (node->value)[0] == '.')
+	if (!(node->value))
+		ret = 0;
+	else if ((node->value)[0] == '/' || (node->value)[0] == '.')
 		ret = local_exec(args, *env, node->fd_in, node->fd_out);
 	else if (ft_strcmp(node->value, "echo") == 0)
 		ret = ft_echo(args, node->fd_out);

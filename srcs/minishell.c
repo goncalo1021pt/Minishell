@@ -293,12 +293,14 @@ void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 	{
 		content = lst->content;
 		if(!(*ast))
+		{
 			*ast = ast_new_node(NULL);
+			(*ast)->type = NODE_COMMAND;
+		}
 		if (content->type == NODE_COMMAND)
 		{
 			if (first == 1)
 			{
-				(*ast)->type = content->type;
 				(*ast)->value = ft_strdup(content->str);
 				cmd_parser(lst->next, ast, 0);
 			}
