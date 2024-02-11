@@ -37,6 +37,11 @@ void choose_signal(t_signal_time type)
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
 	}
+	else if  (type == IGNORE)
+	{
+		ignore_signal(&sa, SIGINT);
+		ignore_signal(&sa, SIGQUIT);
+	}
 }
 
 void ignore_signal(struct sigaction *sa, int signal) 
