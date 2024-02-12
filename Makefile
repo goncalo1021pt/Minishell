@@ -1,5 +1,5 @@
-NAME = Minishell
-BONUS_NAME = Minishell_bonus
+NAME = minishell
+BONUS_NAME = minishell_bonus
 
 BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
@@ -7,7 +7,7 @@ B =
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 S = main minishell get_current_pwd root_signals str_utils find_env ft_astr_dup ft_cd ft_env ft_export ft_output ft_pwd ft_echo\
 	ft_strcmp ft_strjoin ft_unset get_env my_alloc expander static\
-	local_exec path_exec set_fds costum_split ast utils ft_exit process shell_level
+	local_exec path_exec set_fds costum_split ast utils ft_exit process run redirect pipe
 
 COMPRESS = ar rcs
 RM = rm -f

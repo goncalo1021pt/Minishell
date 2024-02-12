@@ -31,7 +31,13 @@ typedef unsigned char	t_bool;
 
 // } t_args
 
-
+typedef enum e_signal_time
+{
+	ROOT,
+	CHILD,
+	HEREDOCK,
+	IGNORE,
+}						t_signal_time;
 
 typedef enum e_node_type
 {
@@ -67,21 +73,6 @@ typedef struct s_info
 	char				***env;
 	t_ast_node			**tree;
 }						t_info;
-
-// typedef struct s_shell_list
-// {
-// 	int					cmd_id;
-// 	// t_args				*args;
-// 	char				**args;
-// 	int					conex;
-// 	int					fd_in;
-// 	char				*file_in;
-// 	char				*file_out;
-
-// 	struct s_shell_list	*next;
-// 	struct s_shell_list	*prev;
-// }						t_shell_list;
-
 
 // core
 
@@ -185,8 +176,10 @@ void	free_parse_lst(void *content);
 void	free_all(t_list *list);
 
 // expander
+void	expand_lst(t_list *lst, char **env);
 char	*expander(char *str, char **env);
 t_bool	check_expander(char *str);
+int		count_quotes(char *str);
 char	*expand_1(char *str, char **env);
 
 
@@ -195,6 +188,7 @@ char	*expand_1(char *str, char **env);
 int						set_fd_in(int fd_in);
 int						set_fd_out(int fd_out);
 int						set_fds(int fd_in, int fd_out);
+void					close_fds(int fd_in, int fd_out);
 
 // output
 
@@ -204,10 +198,11 @@ void					ft_output_export(char *str, int fd);
 
 // signals
 
-void					root_signals(void);
-void					signal_handler(int signal, siginfo_t *info,
-							void *context);
+void 					choose_signal(t_signal_time type);
+void					signal_handler(int signal, siginfo_t *info, void *context);
+void 					child_handler(int signal, siginfo_t *info, void *context);
 void					ignore_signal(struct sigaction *sa, int signal);
+void 					child_signal(void);
 
 // process
 

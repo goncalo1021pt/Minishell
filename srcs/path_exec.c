@@ -77,15 +77,17 @@ int    path_exec(char **args, char **env, int fd_in, int fd_out)
 		return (2);
 	else if (pid == 0)
 	{
+		choose_signal(IGNORE);
 		if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)
 		{
 			perror(args[0]);
 			ft_exit(0);
 		}
 	}
+	close_fds(fd_in, fd_out);
 	waitpid(pid, &status, 0);
 	free(path);
-    return (0);
+    return (status);
 }
 /*
 int	main(int argc, char **argv, char **env)

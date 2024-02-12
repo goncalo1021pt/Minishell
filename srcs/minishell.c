@@ -56,19 +56,19 @@ int	minishell(char ***env)
 	char			*promt;
 	t_ast_node		*ast;
 	t_list			*list;
+	// int				exit_status;
 
-	root_signals();
 	exit_info(env, &ast);
-	shell_level(env);
 	while (1)
 	{
+		choose_signal(ROOT);
 		ast = NULL;
 		list = NULL;
 		promt = get_prompt();
 		line = readline(promt);
 		free(promt);
 		if (!line)
-			exit(0);
+			ft_exit(0);
 		if (!*line || is_in_array(*line, SPACE_LIST))
 		{
 			free(line);
@@ -79,17 +79,18 @@ int	minishell(char ***env)
 		args = ft_custom_split(line, *env);
 		free(line);
 		list = parse_to_list(args);
+		clean_arr_str(args);
 		if (!check_syntax(list))
 		{
 			ft_putendl_fd("syntax error", 2);
 			free_all(list);
 			continue ;
 		}
-		//ft_lstiter(list, print_content);
+		expand_lst(list, *env);
+		// ft_lstiter(list, print_content);
 		parser(&list, &ast);
-		print_tree(ast);
-		//printf("PROINT\n");
-		//call_process(ast, env);
+		// print_tree(ast);
+		/* exit_status = */ call_process(ast, env);
 		ast_free(ast);
 	}
 }
@@ -127,7 +128,7 @@ t_list *parse_to_list(char **args)
 	list = NULL;
 	while (args[ctd])
 	{
-		parser = malloc(sizeof(t_parser));
+		parser = (t_parser *)malloc(sizeof(t_parser));
 		if (!parser)
 			return (NULL);
 		parser->type = NODE_COMMAND;
@@ -167,6 +168,8 @@ t_bool check_syntax(t_list *lst)
 		if (tmp2)
 			tmp2_parser = tmp2->content;
 		parser = tmp->content;
+		if (tmp->next == NULL && count_quotes(parser->str) % 2 != 0)
+			return (FALSE);
 		if (tmp2 && tmp2_parser->type == NODE_LOGICAL)
 		{
 			if (tmp2->next == NULL)
@@ -245,7 +248,12 @@ void	clean_lst(t_list *lst)
 	if (lst)
 	{
 		clean_lst(lst->next);
-		free(lst->content);
+		if (lst->content)
+		{
+			if (((t_parser *)(lst->content))->str)
+				free(((t_parser *)(lst->content))->str);
+			free((t_parser *)(lst->content));
+		}
 		free(lst);
 	}
 }
@@ -276,6 +284,7 @@ void parser(t_list **lst, t_ast_node **ast)
 		cmd_parser(*lst, ast, 1);
 	}
 	clean_lst(*lst);
+	*lst = NULL;
 }
 void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 {
@@ -285,13 +294,15 @@ void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 	{
 		content = lst->content;
 		if(!(*ast))
+		{
 			*ast = ast_new_node(NULL);
+			(*ast)->type = NODE_COMMAND;
+		}
 		if (content->type == NODE_COMMAND)
 		{
 			if (first == 1)
 			{
-				(*ast)->type = content->type;
-				(*ast)->value = content->str;
+				(*ast)->value = ft_strdup(content->str);
 				cmd_parser(lst->next, ast, 0);
 			}
 			else
@@ -369,6 +380,6 @@ char	*get_prompt(void)
 	pwd = get_current_pwd();
 	pwd = trim_path(pwd);
 	prompt = ft_strjoin_f1(pwd, "$ ");
-	prompt = ft_strjoin_f2("Minishell:/", prompt);
+	prompt = ft_strjoin_f2("Minishell> ", prompt);
 	return (prompt);
 }
