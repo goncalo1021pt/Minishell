@@ -18,7 +18,8 @@ void signal_handler(int signal, siginfo_t *info, void *context)
 	}
 }
 
-void root_signals(void) {
+void root_signals(void)
+{
 	struct sigaction sa;
 
 	sa.sa_sigaction = signal_handler;
@@ -29,7 +30,8 @@ void root_signals(void) {
 	ignore_signal(&sa, SIGQUIT);
 }
 
-void ignore_signal(struct sigaction *sa, int signal) {
+void ignore_signal(struct sigaction *sa, int signal)
+{
 	struct sigaction	original_sa;
 	int					original_flags;
 

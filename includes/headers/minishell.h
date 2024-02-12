@@ -139,6 +139,8 @@ int						remove_env(char *name, char ***env);
 int						add_env(char *new_env, char ***env);
 int						change_env(char *name, char *new_env, char ***env);
 char					*get_env_name(char *env);
+char					*inc_str(char *i);
+void					shell_level(char ***env);
 
 // execs
 
