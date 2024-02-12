@@ -49,12 +49,12 @@ int	change_env(char *name, char *new, char ***env)
 {
 	char	**where;
 
-	if (!name && !strchr(new ,'='))
+	if (!name && !strchr(new, '='))
 		return (add_env(new, env));
 	where = get_env2(name, *env);
 	if (where)
 	{
-		if(!strchr(new,'=') && strchr(*where,'='))
+		if (!strchr(new, '=') && strchr(*where, '='))
 			return (0);
 		free(*where);
 		*where = new;
@@ -69,6 +69,19 @@ int	change_env(char *name, char *new, char ***env)
 	}
 }
 
+static int	remove_env_aux(char **aux, char ***env, size_t out)
+{
+	if (aux)
+	{
+		free((*env)[out]);
+		free(*env);
+		*env = aux;
+		return (0);
+	}
+	else
+		return (1);
+}
+
 int	remove_env(char *name, char ***env)
 {
 	char	**aux;
@@ -79,24 +92,17 @@ int	remove_env(char *name, char ***env)
 	name_e = ft_strjoin(name, "=");
 	if (!env || !(*env) || !(*env)[out])
 		return (0);
-	while (ft_strcmp(name, (*env)[out]) && ft_strncmp(name_e, (*env)[out], ft_strlen(name_e)))
+	while (ft_strcmp(name, (*env)[out]) &&
+		ft_strncmp(name_e, (*env)[out], ft_strlen(name_e)))
 	{
 		if ((*env)[out] == NULL)
 		{
 			free(name_e);
-			return(0);
+			return (0);
 		}
 		out++;
 	}
 	free(name_e);
 	aux = ft_astr_reduce(*env, out);
-	if (aux)
-	{
-		free((*env)[out]);
-		free(*env);
-		*env = aux;
-		return (0);
-	}
-	else
-		return (1);
+	return (remove_env_aux(aux, env, out));
 }

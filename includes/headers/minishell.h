@@ -31,6 +31,14 @@ typedef unsigned char	t_bool;
 
 // } t_args
 
+typedef enum e_signal_time
+{
+	ROOT,
+	CHILD,
+	HEREDOCK,
+	IGNORE,
+}						t_signal_time;
+
 typedef enum e_node_type
 {
 	NODE_LOGICAL,
@@ -188,10 +196,11 @@ void					ft_output_export(char *str, int fd);
 
 // signals
 
-void					root_signals(void);
-void					signal_handler(int signal, siginfo_t *info,
-							void *context);
+void 					choose_signal(t_signal_time type);
+void					signal_handler(int signal, siginfo_t *info, void *context);
+void 					child_handler(int signal, siginfo_t *info, void *context);
 void					ignore_signal(struct sigaction *sa, int signal);
+void 					child_signal(void);
 
 // process
 

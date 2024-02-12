@@ -56,18 +56,19 @@ int	minishell(char ***env)
 	char			*promt;
 	t_ast_node		*ast;
 	t_list			*list;
+	// int				exit_status;
 
-	root_signals();
 	exit_info(env, &ast);
 	while (1)
 	{
+		choose_signal(ROOT);
 		ast = NULL;
 		list = NULL;
 		promt = get_prompt();
 		line = readline(promt);
 		free(promt);
 		if (!line)
-			exit(0);
+			ft_exit(0);
 		if (!*line || is_in_array(*line, SPACE_LIST))
 		{
 			free(line);
@@ -89,7 +90,7 @@ int	minishell(char ***env)
 		// ft_lstiter(list, print_content);
 		parser(&list, &ast);
 		// print_tree(ast);
-		call_process(ast, env);
+		/* exit_status = */ call_process(ast, env);
 		ast_free(ast);
 	}
 }
@@ -293,12 +294,14 @@ void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 	{
 		content = lst->content;
 		if(!(*ast))
+		{
 			*ast = ast_new_node(NULL);
+			(*ast)->type = NODE_COMMAND;
+		}
 		if (content->type == NODE_COMMAND)
 		{
 			if (first == 1)
 			{
-				(*ast)->type = content->type;
 				(*ast)->value = ft_strdup(content->str);
 				cmd_parser(lst->next, ast, 0);
 			}

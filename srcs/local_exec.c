@@ -16,6 +16,7 @@ int    local_exec(char **args, char **env, int fd_in, int fd_out)
 		return (2);
 	else if (pid == 0)
 	{
+		choose_signal(IGNORE);
 		if (set_fds(fd_in, fd_out) == -1 || execve(args[0], args, env) == -1)
 		{
 			perror(args[0]);
@@ -24,5 +25,5 @@ int    local_exec(char **args, char **env, int fd_in, int fd_out)
 	}
 	close_fds(fd_in, fd_out);
 	waitpid(pid, &status, 0);
-	return (0);
+	return (status);
 }
