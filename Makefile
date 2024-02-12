@@ -1,5 +1,5 @@
-NAME = Minishell
-BONUS_NAME = Minishell_bonus
+NAME = minishell
+BONUS_NAME = minishell_bonus
 
 BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 

@@ -31,8 +31,6 @@ typedef unsigned char	t_bool;
 
 // } t_args
 
-
-
 typedef enum e_node_type
 {
 	NODE_LOGICAL,
@@ -67,21 +65,6 @@ typedef struct s_info
 	char				***env;
 	t_ast_node			**tree;
 }						t_info;
-
-// typedef struct s_shell_list
-// {
-// 	int					cmd_id;
-// 	// t_args				*args;
-// 	char				**args;
-// 	int					conex;
-// 	int					fd_in;
-// 	char				*file_in;
-// 	char				*file_out;
-
-// 	struct s_shell_list	*next;
-// 	struct s_shell_list	*prev;
-// }						t_shell_list;
-
 
 // core
 
