@@ -6,10 +6,10 @@ int	call_process(t_ast_node *node, char ***env)
 
 	choose_signal(CHILD);
 	ret = ft_process(node, env);
-	if (ret == 127)
+	if (ret == 2)
 	{
 		ft_output_nl("syntax error", STDERR_FILENO);
-		return (127);
+		return (2);
 	}
 	return (ret);
 }
@@ -26,7 +26,7 @@ int	ft_process(t_ast_node *node, char ***env)
 	else if (node->type == NODE_COMMAND)
 		return (ft_run(node, env));
 	else
-		return (127);
+		return (2);
 }
 
 int	wich_logical(t_ast_node *node, char ***env)
@@ -36,15 +36,18 @@ int	wich_logical(t_ast_node *node, char ***env)
 	else if (ft_strcmp(node->value, "||") == 0)
 		return (ft_or(node, env));
 	else
-		return (-1);
+		return (2);
 }
 
 // processes right if left is valid
 int	ft_and(t_ast_node *node, char ***env)
 {
-	if (!ft_process(node->left, env))
+	int	ret;
+
+	ret = ft_process(node->left, env);
+	if (!ret)
 		return (ft_process(node->right, env));
-	return (1);
+	return (ret);
 }
 
 // processes right if left is invalid

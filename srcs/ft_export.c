@@ -58,7 +58,7 @@ int	ft_export(char ***env, char **args, int fd_out)
 		name = get_env_name(args[i]);
 		aux = ft_strdup(args[i]);
 		if (!aux)
-			return (2);
+			return (1);
 		if (change_env(name, aux, env))
 			return (free(name), free(aux), 3);
 		free(name);

@@ -13,7 +13,7 @@ int	ft_unset(char ***env, char **args)
 	{
 		if (remove_env(args[i], env))
 		{
-			return (2);
+			return (1);
 		}
 		i++;
 	}

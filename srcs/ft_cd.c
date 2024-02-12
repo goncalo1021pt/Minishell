@@ -15,7 +15,11 @@ static int	change_dir(char *path, char ***env)
 		return (0);
 	}
 	else
-		return (2);
+	{
+		ft_output("minishell: cd: no such directory: ", STDOUT_FILENO);
+		ft_output_nl(path, STDOUT_FILENO);
+		return (1);
+	}
 }
 
 int	ft_cd(char **arg, char ***env)
@@ -25,13 +29,13 @@ int	ft_cd(char **arg, char ***env)
 	where = NULL;
 	if (!arg)
 		return (1);
-	else if (!(arg[1]))
+	else if (!(arg[1]) || (ft_strlen(arg[1]) == 1 && arg[1][0] == '~'))
 	{
 		where = get_env("HOME", *env);
 		if (!where)
 		{
-			ft_output_nl("cd: HOME not set", STDERR_FILENO);
-			return (2);
+			ft_output_nl("minishell: cd: HOME not set", STDERR_FILENO);
+			return (1);
 		}
 	}
 	else if (ft_strlen(arg[1]) == 1 && arg[1][0] == '-')
@@ -40,7 +44,7 @@ int	ft_cd(char **arg, char ***env)
 		if (where)
 			ft_output_nl(where, STDOUT_FILENO);
 		else
-			return (ft_output_nl("cd: OLDPWD not set", STDERR_FILENO), 3);
+			return (ft_output_nl("minishell: cd: OLDPWD not set", STDERR_FILENO), 3);
 	}
 	else
 		where = arg[1];
