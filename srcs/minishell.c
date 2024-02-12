@@ -56,7 +56,7 @@ int	minishell(char ***env)
 	char			*promt;
 	t_ast_node		*ast;
 	t_list			*list;
-	// int				exit_status;
+	int				exit_status;
 
 	exit_info(env, &ast);
 	while (1)
@@ -90,7 +90,7 @@ int	minishell(char ***env)
 		// ft_lstiter(list, print_content);
 		parser(&list, &ast);
 		// print_tree(ast);
-		/* exit_status = */ call_process(ast, env);
+		exit_status = call_process(ast, env);
 		ast_free(ast);
 	}
 }
