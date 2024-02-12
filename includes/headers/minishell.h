@@ -20,6 +20,8 @@
 # define ARGS_DIVISOR "&|<>"
 # define TRUE 1
 # define FALSE 0
+//ideia do fontao
+# define EXIT_UNCHANGED -69420
 
 typedef unsigned char	t_bool;
 
@@ -224,6 +226,7 @@ int		ft_or(t_ast_node *node, char ***env);
 // ft_exit
 
 t_info					exit_info(char ***env, t_ast_node **tree);
+int						err_info(int err);
 int						minishell_exit(void);
 
 #endif
