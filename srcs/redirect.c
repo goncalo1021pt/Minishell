@@ -69,7 +69,7 @@ int	ft_read_del(t_ast_node *node, char *fname)
 	line = readline("> ");
 	if (!line)
 		return (close(pip[1]), del_eof());
-	while (ft_strncmp(line, fname, ft_strlen(line) - 1) != 0)
+	while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
 	{
 		write(pip[1], line, ft_strlen(line));
 		free(line);

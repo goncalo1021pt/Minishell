@@ -31,21 +31,25 @@ char	**ft_get_args(t_ast_node *node)
 int	ft_get_fds(t_ast_node *node)
 {
 	t_ast_node	*aux;
+	int			ret;
 
+	ret = 0;
 	aux = node->left;
 	while (aux)
 	{
 		if (aux->type == NODE_REDIRECT_IN)
-			return (ft_redirect_in(node, aux->value));
+			ret = ft_redirect_in(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_IN_HERE)
-			return (ft_read_del(node, aux->value));
+			ret = ft_read_del(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_OUT)
-			return (ft_redirect_out(node, aux->value));
+			ret = ft_redirect_out(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_OUT_APPENDS)
-			return (ft_append_out(node, aux->value));
+			ret = ft_append_out(node, aux->value);
+		if(ret)
+			return(ret);
 		aux = aux->left;
 	}
-	return (0);
+	return (ret);
 }
 
 static int	run_aux(t_ast_node *node, char **args, char ***env)
@@ -83,8 +87,8 @@ int	ft_run(t_ast_node *node, char ***env)
 
 	ret = 0;
 	args = ft_get_args(node);
-	ft_get_fds(node);
-	ret = run_aux(node, args, env);
+	if (!ft_get_fds(node))
+		ret = run_aux(node, args, env);
 	free(args);
 	return (ret);
 }
