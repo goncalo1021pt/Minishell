@@ -48,11 +48,13 @@ int	ft_append_out(t_ast_node *node, char *fname)
 	return (0);
 }
 
-static int	del_eof(void)
+static int	del_eof(int pip)
 {
+	close(pip);
 	ft_output("minishell: warning: ", STDOUT_FILENO);
 	ft_output("here-document ", STDOUT_FILENO);
 	ft_output_nl("delimited by end-of-file", STDOUT_FILENO);
+	set_signals_root();
 	return (1);
 }
 
@@ -66,24 +68,24 @@ int	ft_read_del(t_ast_node *node, char *fname)
 		return (1);
 	if (node->fd_in != STDIN_FILENO)
 		close(node->fd_in);
-	choose_signal(IGNORE);
+	set_signals_ignore();
 	fk = fork();
 	if(fk == -1)
 		return (close(pip[1]), -1);
 	if (fk == 0)
 	{
-		choose_signal(HEREDOCK);
+		set_signals_here();
 		close(pip[0]);
 		line = readline("> ");
 		if (!line)
-			return (close(pip[1]), del_eof());
+			ft_exit(del_eof(pip[1]));
 		while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
 		{
 			write(pip[1], line, ft_strlen(line));
 			free(line);
 			line = readline("> ");
 			if (!line)
-				return (close(pip[1]), del_eof());
+				ft_exit(del_eof(pip[1]));
 		}
 		free(line);
 		write(pip[1], "\n", 1);
@@ -93,6 +95,6 @@ int	ft_read_del(t_ast_node *node, char *fname)
 	close(pip[1]);
 	node->fd_in = pip[0];
 	waitpid(fk, NULL, 0);
-	choose_signal(ROOT);
+	set_signals_root();
 	return (0);
 }

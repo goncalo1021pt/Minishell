@@ -206,6 +206,10 @@ void					signal_handler(int signal, siginfo_t *info, void *context);
 void					child_handler(int signal, siginfo_t *info, void *context);
 void					ignore_signal(struct sigaction *sa, int signal);
 void 					child_signal(void);
+void					set_signals_root(void);
+void					set_signals_child(void);
+void					set_signals_here(void);
+void					set_signals_ignore(void);
 
 // process
 
