@@ -60,24 +60,39 @@ int	ft_read_del(t_ast_node *node, char *fname)
 {
 	char	*line;
 	int		pip[2];
+	int		fk;
 
 	if (pipe(pip) == -1)
 		return (1);
 	if (node->fd_in != STDIN_FILENO)
 		close(node->fd_in);
-	node->fd_in = pip[0];
-	line = readline("> ");
-	if (!line)
-		return (close(pip[1]), del_eof());
-	while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
+	choose_signal(IGNORE);
+	fk = fork();
+	if(fk == -1)
+		return (close(pip[1]), -1);
+	if (fk == 0)
 	{
-		write(pip[1], line, ft_strlen(line));
-		free(line);
+		choose_signal(HEREDOCK);
+		close(pip[0]);
 		line = readline("> ");
 		if (!line)
 			return (close(pip[1]), del_eof());
+		while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
+		{
+			write(pip[1], line, ft_strlen(line));
+			free(line);
+			line = readline("> ");
+			if (!line)
+				return (close(pip[1]), del_eof());
+		}
+		free(line);
+		write(pip[1], "\n", 1);
+		close(pip[1]);
+		ft_exit(0);
 	}
-	free(line);
 	close(pip[1]);
+	node->fd_in = pip[0];
+	waitpid(fk, NULL, 0);
+	choose_signal(ROOT);
 	return (0);
 }

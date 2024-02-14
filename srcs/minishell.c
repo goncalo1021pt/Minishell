@@ -57,11 +57,11 @@ int	minishell(char ***env)
 	t_ast_node		*ast;
 	t_list			*list;
 
-	choose_signal(ROOT);
+	// choose_signal(ROOT);
 	exit_info(env, &ast);
 	while (1)
 	{
-		// choose_signal(ROOT);
+		choose_signal(ROOT);
 		ast = NULL;
 		list = NULL;
 		promt = get_prompt();
