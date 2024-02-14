@@ -16,9 +16,8 @@ void root_handler(int signal, siginfo_t *info, void *context)
 
 void choose_signal(t_signal_time type)
 {
-	static struct sigaction sa;
+	struct sigaction sa;
 
-	ft_memset(&sa, 0, sizeof(struct sigaction));
 	if  (type == ROOT)
 	{
 		sa.sa_sigaction = root_handler;
@@ -40,6 +39,11 @@ void choose_signal(t_signal_time type)
 	else if  (type == IGNORE)
 	{
 		ignore_signal(&sa, SIGINT);
+		ignore_signal(&sa, SIGQUIT);
+	}
+	else if (type ==  HEREDOCK)
+	{
+		
 		ignore_signal(&sa, SIGQUIT);
 	}
 }
@@ -66,9 +70,11 @@ void child_handler(int signal, siginfo_t *info, void *context)
 	if (signal == SIGINT)
 	{
 		ft_printf("\n");
+		kill(getpid(), SIGINT);
 	}
 	if (signal == SIGQUIT)
 	{
 		ft_printf("Quit\n");
+		kill(getpid(), SIGQUIT);
 	}
 }

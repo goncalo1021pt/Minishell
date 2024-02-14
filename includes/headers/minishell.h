@@ -183,6 +183,7 @@ char	*expander(char *str, char **env);
 t_bool	check_expander(char *str);
 int		count_quotes(char *str);
 char	*expand_1(char *str, char **env);
+char	*expand_exit_status(char *str, int ctd);
 
 
 // fds

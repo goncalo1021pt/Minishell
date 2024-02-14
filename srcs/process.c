@@ -4,7 +4,6 @@ int	call_process(t_ast_node *node, char ***env)
 {
 	int	ret;
 
-	choose_signal(CHILD);
 	ret = ft_process(node, env);
 	if (ret == 2)
 	{

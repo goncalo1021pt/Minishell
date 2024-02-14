@@ -80,6 +80,8 @@ char	*expand_1(char *str, char **env)
 		{
 			len = 0;
 			ctd++;
+			if (str[ctd] == '?')
+				return (expand_exit_status(str, ctd));
 			while (ft_isalnum(str[ctd + len]))
 				len++;
 			new = ft_calloc(len + 1, sizeof(char));
@@ -107,7 +109,7 @@ char *add_to_middle(char *src,char *to_add, int ctd, int len)
 	out = ft_calloc(len2 + 1, sizeof(char));
 	if (!out)
 		return (NULL);
-	strncpy(out, src, ctd);
+	ft_strncpy(out, src, ctd);
 	ctd2 = 0;
 	while (to_add && to_add[ctd2])
 	{
@@ -172,4 +174,22 @@ char *remove_quotes(char *str)
 	}
 	free(str);
 	return (out);
+}
+
+char	*expand_exit_status(char *str, int ctd)
+{
+	char *new;
+	char *status;
+
+	status = ft_itoa(err_info(EXIT_UNCHANGED));
+	if (!status)
+		return (NULL);
+	new = ft_calloc(ft_strlen(str) + ft_strlen(status), sizeof(char));
+	if (!new)
+		return (NULL);
+	ft_strncpy(new, str, ctd - 1);
+	new = add_to_middle(new, status, ctd - 1, ft_strlen(status));
+	if (!new)
+		return (NULL);
+	return (new);
 }
