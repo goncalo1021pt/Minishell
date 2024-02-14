@@ -5,11 +5,6 @@ int	call_process(t_ast_node *node, char ***env)
 	int	ret;
 
 	ret = ft_process(node, env);
-	if (ret == 2)
-	{
-		ft_output_nl("syntax error", STDERR_FILENO);
-		return (2);
-	}
 	return (ret);
 }
 

@@ -1,5 +1,21 @@
 #include "../includes/headers/minishell.h"
 
+void child_handler(int signal, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+
+	if (signal == SIGINT)
+	{
+		ft_printf("\n");
+		kill(getpid(), SIGINT);
+	}
+	if (signal == SIGQUIT)
+	{
+		ft_printf("Quit\n");
+		kill(getpid(), SIGQUIT);
+	}
+}
 void root_handler(int signal, siginfo_t *info, void *context)
 {
 	(void)info;
@@ -16,7 +32,7 @@ void root_handler(int signal, siginfo_t *info, void *context)
 
 void choose_signal(t_signal_time type)
 {
-	struct sigaction sa;
+	static struct sigaction sa;
 
 	if  (type == ROOT)
 	{
@@ -41,11 +57,6 @@ void choose_signal(t_signal_time type)
 		ignore_signal(&sa, SIGINT);
 		ignore_signal(&sa, SIGQUIT);
 	}
-	else if (type ==  HEREDOCK)
-	{
-		
-		ignore_signal(&sa, SIGQUIT);
-	}
 }
 
 void ignore_signal(struct sigaction *sa, int signal) 
@@ -60,21 +71,4 @@ void ignore_signal(struct sigaction *sa, int signal)
 		return;
 	sigaction(signal, sa, &original_sa);
 	sa->sa_flags = original_flags;
-}
-
-void child_handler(int signal, siginfo_t *info, void *context)
-{
-	(void)info;
-	(void)context;
-
-	if (signal == SIGINT)
-	{
-		ft_printf("\n");
-		kill(getpid(), SIGINT);
-	}
-	if (signal == SIGQUIT)
-	{
-		ft_printf("Quit\n");
-		kill(getpid(), SIGQUIT);
-	}
 }

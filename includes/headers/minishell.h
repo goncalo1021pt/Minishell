@@ -203,7 +203,7 @@ void					ft_output_export(char *str, int fd);
 
 void 					choose_signal(t_signal_time type);
 void					signal_handler(int signal, siginfo_t *info, void *context);
-void 					child_handler(int signal, siginfo_t *info, void *context);
+void					child_handler(int signal, siginfo_t *info, void *context);
 void					ignore_signal(struct sigaction *sa, int signal);
 void 					child_signal(void);
 

@@ -61,7 +61,6 @@ int	minishell(char ***env)
 	exit_info(env, &ast);
 	while (1)
 	{
-		// choose_signal(ROOT);
 		ast = NULL;
 		list = NULL;
 		promt = get_prompt();
