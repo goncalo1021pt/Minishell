@@ -14,10 +14,9 @@ int    local_exec(char **args, char **env, int fd_in, int fd_out)
 	choose_signal(IGNORE);
 	pid = fork();
 	if (pid < 0)
-		return (2);
+		return (1);
 	else if (pid == 0)
 	{
-		choose_signal(CHILD);
 		if (set_fds(fd_in, fd_out) == -1 || execve(args[0], args, env) == -1)
 		{
 			perror(args[0]);
