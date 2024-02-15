@@ -89,6 +89,7 @@ char	*expand_1(char *str, char **env)
 				return (NULL);
 			ft_strncpy(new, str + ctd, len);
 			var = get_env(new, env);
+			free(new);
 			str = add_to_middle(str, var, ctd - 1, len);
 			if (!str)
 				return (NULL);
@@ -184,12 +185,12 @@ char	*expand_exit_status(char *str, int ctd)
 	status = ft_itoa(err_info(EXIT_UNCHANGED));
 	if (!status)
 		return (NULL);
-	new = ft_calloc(ft_strlen(str) + ft_strlen(status), sizeof(char));
+	new = ft_calloc(ft_strlen(str) + ft_strlen(status) -1, sizeof(char));
 	if (!new)
 		return (NULL);
 	ft_strncpy(new, str, ctd - 1);
-	new = add_to_middle(new, status, ctd - 1, ft_strlen(status));
-	if (!new)
-		return (NULL);
+	ft_strncpy(new + ctd - 1, status, ft_strlen(status));
+	ft_strncpy(new + ctd - 1 + ft_strlen(status), str + ctd + 1, ft_strlen(str) - ctd - 1);
+	free(status);
 	return (new);
 }
