@@ -6,7 +6,7 @@ void    local_exec(char **args, char **env, int fd_in, int fd_out)
 	{
 		ft_output(args[0], STDERR_FILENO);
 		ft_output_nl(": No such file or directory", STDERR_FILENO);
-		ft_exit(errno);
+		ft_exit(1);
 	}
 	if (set_fds(fd_in, fd_out) == -1 || execve(args[0], args, env) == -1)
 	{
