@@ -21,19 +21,11 @@
 # define ARGS_DIVISOR "&|<>"
 # define TRUE 1
 # define FALSE 0
+# define ERROR -1
 //ideia do fontao
 # define EXIT_UNCHANGED -69420
-#define ERROR -1
 
 typedef unsigned char	t_bool;
-
-
-// typedef struct s_args 
-// {
-// 	char *str;
-// 	struct s_args *next;
-
-// } t_args
 
 typedef enum e_signal_time
 {

@@ -92,7 +92,7 @@ int	minishell(char ***env)
 		// ft_lstiter(list, print_content);
 		parser(&list, &ast);
 		// print_tree(ast);
-		err_info(call_process(ast, env));
+		// err_info(call_process(ast, env));
 		ast_free(ast);
 	}
 }
@@ -170,7 +170,7 @@ t_bool check_syntax(t_list *lst)
 		if (tmp2)
 			tmp2_parser = tmp2->content;
 		parser = tmp->content;
-		if (tmp->next == NULL && count_quotes(parser->str) % 2 != 0)
+		if (tmp2 == NULL && count_quotes(parser->str) % 2 != 0)
 			return (FALSE);
 		if (tmp2 && tmp2_parser->type == NODE_LOGICAL)
 		{
@@ -196,6 +196,10 @@ t_bool check_syntax(t_list *lst)
 			if (tmp2_parser->type != NODE_COMMAND)
 				return (FALSE);
 		}
+		else if (!tmp2 && parser->type != NODE_COMMAND)
+			return (FALSE);
+		else if (tmp2 && tmp2_parser->type == NODE_UNKNOWN)
+			return (FALSE);
 		tmp = tmp->next;
 	}
 	split_redirects(&lst);

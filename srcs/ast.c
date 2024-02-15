@@ -1,21 +1,5 @@
 #include "../includes/headers/minishell.h"
 
-// t_ast_node	*ast_new_node(t_node_type type, char *value)
-// {
-// 	t_ast_node	*node;
-
-// 	node = malloc(sizeof(t_ast_node));
-// 	if (!node)
-// 		return (NULL);
-// 	node->type = type;
-// 	node->value = ft_strdup(value);
-// 	node->fd_in = STDIN_FILENO;
-// 	node->fd_out = STDOUT_FILENO;
-// 	node->left = NULL;
-// 	node->right = NULL;
-// 	return (node);
-// }
-
 t_ast_node	*ast_new_node(void* c)
 {
 	t_ast_node	*node;
@@ -112,27 +96,3 @@ void	ast_print(t_ast_node *node)
 	ast_print(node->left);
 	ast_print(node->right);
 }
-
-
-// int	main(void)
-// {
-// 	t_ast_node *root;
-// 	t_ast_node *node;
-
-// 	root = ast_create_node(NODE_COMMAND, "echo");
-// 	node = ast_create_node(NODE_ARGUMENT, "hello");
-// 	ast_add_node(root, node);
-// 	node = ast_create_node(NODE_ARGUMENT, "world");
-// 	ast_add_node(root, node);
-// 	node = ast_create_node(NODE_PIPE, "|");
-// 	ast_add_node(root, node);
-// 	node = ast_create_node(NODE_COMMAND, "wc");
-// 	ast_add_node(root, node);
-// 	node = ast_create_node(NODE_REDIRECT, ">");
-// 	ast_add_node(root, node);
-// 	node = ast_create_node(NODE_ARGUMENT, "file.txt");
-// 	ast_add_node(root, node);
-// 	ast_print(root);
-// 	ast_free(root);
-// 	return (0);
-// }
