@@ -13,6 +13,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <termios.h>
 
 # define MAX_PATH_SIZE 4096
 # define TOKEN_LIST "'\"&|;<>,"
@@ -22,6 +23,7 @@
 # define FALSE 0
 //ideia do fontao
 # define EXIT_UNCHANGED -69420
+#define ERROR -1
 
 typedef unsigned char	t_bool;
 

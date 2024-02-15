@@ -64,7 +64,9 @@ int	minishell(char ***env)
 		ast = NULL;
 		list = NULL;
 		promt = get_prompt();
+		termios_change(FALSE);
 		line = readline(promt);
+		termios_change(TRUE);
 		free(promt);
 		if (!line)
 			ft_exit(0);
