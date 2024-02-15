@@ -11,13 +11,13 @@ int    local_exec(char **args, char **env, int fd_in, int fd_out)
 		ft_output_nl(": No such file or directory", STDERR_FILENO);
 		return(1);
 	}
-	set_signals_ignore();
+	choose_signal(IGNORE);
 	pid = fork();
 	if (pid < 0)
 		return (1);
 	else if (pid == 0)
 	{
-		set_signals_child();
+		choose_signal(CHILD);
 		if (set_fds(fd_in, fd_out) == -1 || execve(args[0], args, env) == -1)
 		{
 			perror(args[0]);
@@ -26,6 +26,5 @@ int    local_exec(char **args, char **env, int fd_in, int fd_out)
 	}
 	close_fds(fd_in, fd_out);
 	waitpid(pid, &status, 0);
-	set_signals_root();
 	return (status);
 }

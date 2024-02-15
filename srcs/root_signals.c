@@ -1,21 +1,6 @@
 #include "../includes/headers/minishell.h"
 
-void child_handler(int signal, siginfo_t *info, void *context)
-{
-	(void)info;
-	(void)context;
 
-	if (signal == SIGINT)
-	{
-		ft_printf("\n");
-		kill(getpid(), SIGINT);
-	}
-	if (signal == SIGQUIT)
-	{
-		ft_printf("Quit\n");
-		kill(getpid(), SIGQUIT);
-	}
-}
 void root_handler(int signal, siginfo_t *info, void *context)
 {
 	(void)info;
@@ -27,6 +12,18 @@ void root_handler(int signal, siginfo_t *info, void *context)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+}
+
+void here_handler(int signal, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+
+	if (signal == SIGINT)
+	{
+		ft_printf("\n");
+		kill(getpid(), SIGINT);
 	}
 }
 
@@ -45,12 +42,21 @@ void choose_signal(t_signal_time type)
 	}
 	else if (type == CHILD)
 	{
-		sa.sa_sigaction = child_handler;
-		sa.sa_flags = SA_SIGINFO;
+		sa.sa_handler =  SIG_DFL;
+		sa.sa_flags = 0;
 		if (sigemptyset(&sa.sa_mask) != 0)
 			return;
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
+	}
+	else if (type == HEREDOC)
+	{
+		sa.sa_sigaction = here_handler;
+		sa.sa_flags = SA_SIGINFO;
+		if (sigemptyset(&sa.sa_mask) != 0) 
+			return;
+		sigaction(SIGINT, &sa, NULL);
+		ignore_signal(&sa, SIGQUIT);
 	}
 	else if  (type == IGNORE)
 	{

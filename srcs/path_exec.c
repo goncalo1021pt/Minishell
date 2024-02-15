@@ -72,13 +72,13 @@ int    path_exec(char **args, char **env, int fd_in, int fd_out)
 		ft_output_nl(": command not found", STDERR_FILENO);
 		return (1);
 	}
-	set_signals_ignore();
+	choose_signal(IGNORE);
 	pid = fork();
 	if (pid < 0)
 		return (1);
 	else if (pid == 0)
 	{
-		set_signals_child();
+		choose_signal(CHILD);
 		if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)
 		{
 			perror(args[0]);
@@ -88,7 +88,6 @@ int    path_exec(char **args, char **env, int fd_in, int fd_out)
 	close_fds(fd_in, fd_out);
 	waitpid(pid, &status, 0);
 	free(path);
-	set_signals_root();
     return (status);
 }
 /*
