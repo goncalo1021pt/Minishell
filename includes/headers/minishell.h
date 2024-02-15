@@ -37,7 +37,7 @@ typedef enum e_signal_time
 {
 	ROOT,
 	CHILD,
-	HEREDOCK,
+	HEREDOC,
 	IGNORE,
 }						t_signal_time;
 

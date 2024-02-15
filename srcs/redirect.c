@@ -54,8 +54,7 @@ static int	del_eof(int pip)
 	ft_output("minishell: warning: ", STDOUT_FILENO);
 	ft_output("here-document ", STDOUT_FILENO);
 	ft_output_nl("delimited by end-of-file", STDOUT_FILENO);
-	set_signals_root();
-	return (1);
+	return (errno);
 }
 
 int	ft_read_del(t_ast_node *node, char *fname)
