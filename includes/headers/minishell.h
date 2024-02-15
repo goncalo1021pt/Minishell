@@ -137,9 +137,9 @@ void					shell_level(char ***env);
 
 // execs
 
-int						path_exec(char **args, char **env, int fd_in,
+void					path_exec(char **args, char **env, int fd_in,
 							int fd_out);
-int						local_exec(char **args, char **env, int fd_in,
+void					local_exec(char **args, char **env, int fd_in,
 							int fd_out);
 
 // built ins
