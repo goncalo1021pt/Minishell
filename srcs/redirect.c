@@ -62,6 +62,7 @@ int	ft_read_del(t_ast_node *node, char *fname)
 	char	*line;
 	int		pip[2];
 
+	choose_signal(HEREDOC);
 	if (pipe(pip) == -1)
 		return (1);
 	if (node->fd_in != STDIN_FILENO)
@@ -81,5 +82,6 @@ int	ft_read_del(t_ast_node *node, char *fname)
 	write(pip[1], "\n", 1);
 	close(pip[1]);
 	node->fd_in = pip[0];
+	choose_signal(CHILD);
 	return (0);
 }

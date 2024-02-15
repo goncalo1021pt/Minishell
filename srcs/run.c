@@ -1,5 +1,23 @@
 #include "../includes/headers/minishell.h"
 
+void error_handler(int status)
+{
+	if (status == 0)
+	{
+		err_info(0);
+		return ;
+	}
+	else 
+		err_info(128 + status);
+	if (status == 2)
+	{
+		status = 130;
+		ft_printf("\n");
+	}
+	else if (status == 131)
+		ft_printf("Quit\n");
+}
+
 char	**ft_get_args(t_ast_node *node)
 {
 	size_t		ac;
@@ -74,7 +92,6 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 	{
 		free(args);
 		ft_exit(0);
-		return (0);
 	}
 	else
 		path_exec(args, *env, node->fd_in, node->fd_out);
@@ -88,6 +105,7 @@ int	ft_run(t_ast_node *node, char ***env)
 	pid_t	pid;
 	int		status;
 
+	choose_signal(IGNORE);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -96,6 +114,7 @@ int	ft_run(t_ast_node *node, char ***env)
 	}
 	if (pid == 0)
 	{
+		choose_signal(CHILD);
 		ret = 0;
 		args = ft_get_args(node);
 		if (!ft_get_fds(node))
@@ -104,5 +123,6 @@ int	ft_run(t_ast_node *node, char ***env)
 		ft_exit(ret);
 	}
 	waitpid(pid, &status, 0);
+	error_handler(status);
 	return (status);
 }

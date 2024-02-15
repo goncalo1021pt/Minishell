@@ -23,7 +23,7 @@ void here_handler(int signal, siginfo_t *info, void *context)
 	if (signal == SIGINT)
 	{
 		ft_printf("\n");
-		kill(getpid(), SIGINT);
+		ft_exit(130);
 	}
 }
 
