@@ -58,7 +58,29 @@ static char	*find_path(char *pname, char **env)
 	clean_arr_str(path_ar);
 	return (ret);
 }
+void    path_exec(char **args, char **env, int fd_in, int fd_out)
+{
+	char	*path;
 
+	path = find_path(args[0], env);
+	if (!path)
+	{
+		ft_output(args[0], STDERR_FILENO);
+		ft_output_nl(": command not found", STDERR_FILENO);
+		ft_exit(errno);
+	}
+	if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)
+	{
+		perror(args[0]);
+		free(path);
+		ft_exit(errno);
+	}
+	free(path);
+	close_fds(fd_in, fd_out);
+    ft_exit(errno);
+}
+
+/*
 int    path_exec(char **args, char **env, int fd_in, int fd_out)
 {
 	pid_t	pid;
@@ -90,6 +112,7 @@ int    path_exec(char **args, char **env, int fd_in, int fd_out)
 	free(path);
     return (status);
 }
+*/
 /*
 int	main(int argc, char **argv, char **env)
 {

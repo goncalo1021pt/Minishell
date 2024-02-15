@@ -54,45 +54,32 @@ static int	del_eof(int pip)
 	ft_output("minishell: warning: ", STDOUT_FILENO);
 	ft_output("here-document ", STDOUT_FILENO);
 	ft_output_nl("delimited by end-of-file", STDOUT_FILENO);
-	return (1);
+	return (errno);
 }
 
 int	ft_read_del(t_ast_node *node, char *fname)
 {
 	char	*line;
 	int		pip[2];
-	int		fk;
 
 	if (pipe(pip) == -1)
 		return (1);
 	if (node->fd_in != STDIN_FILENO)
 		close(node->fd_in);
-	choose_signal(IGNORE);
-	fk = fork();
-	if(fk == -1)
-		return (close(pip[1]), -1);
-	if (fk == 0)
+	line = readline("> ");
+	if (!line)
+		ft_exit(del_eof(pip[1]));
+	while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
 	{
-		choose_signal(HEREDOC);
-		close(pip[0]);
+		write(pip[1], line, ft_strlen(line));
+		free(line);
 		line = readline("> ");
 		if (!line)
 			ft_exit(del_eof(pip[1]));
-		while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
-		{
-			write(pip[1], line, ft_strlen(line));
-			free(line);
-			line = readline("> ");
-			if (!line)
-				ft_exit(del_eof(pip[1]));
-		}
-		free(line);
-		write(pip[1], "\n", 1);
-		close(pip[1]);
-		ft_exit(0);
 	}
+	free(line);
+	write(pip[1], "\n", 1);
 	close(pip[1]);
 	node->fd_in = pip[0];
-	waitpid(fk, NULL, 0);
 	return (0);
 }

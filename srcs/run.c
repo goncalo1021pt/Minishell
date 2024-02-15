@@ -57,9 +57,9 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 	if (!(node->value))
 		return (0);
 	else if ((node->value)[0] == '/' || (node->value)[0] == '.')
-		return (local_exec(args, *env, node->fd_in, node->fd_out));
+		local_exec(args, *env, node->fd_in, node->fd_out);
 	else if (ft_strcmp(node->value, "echo") == 0)
-		return (ft_echo(args, node->fd_out));
+		ft_echo(args, node->fd_out);
 	else if (ft_strcmp(node->value, "cd") == 0)
 		return (ft_cd(args, env));
 	else if (ft_strcmp(node->value, "pwd") == 0)
@@ -77,18 +77,32 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 		return (0);
 	}
 	else
-		return (path_exec(args, *env, node->fd_in, node->fd_out));
+		path_exec(args, *env, node->fd_in, node->fd_out);
+	return (0);
 }
 
 int	ft_run(t_ast_node *node, char ***env)
 {
 	char	**args;
 	int		ret;
+	pid_t	pid;
+	int		status;
 
-	ret = 0;
-	args = ft_get_args(node);
-	if (!ft_get_fds(node))
-		ret = run_aux(node, args, env);
-	free(args);
-	return (ret);
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("minishell:");
+		return (errno);
+	}
+	if (pid == 0)
+	{
+		ret = 0;
+		args = ft_get_args(node);
+		if (!ft_get_fds(node))
+			ret = run_aux(node, args, env);
+		free(args);
+		ft_exit(ret);
+	}
+	waitpid(pid, &status, 0);
+	return (status);
 }
