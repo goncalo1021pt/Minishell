@@ -2,6 +2,7 @@
 
 static void	error_handler(int status)
 {
+	status = status % 256;
 	if (status == 0)
 	{
 		err_info(0);
