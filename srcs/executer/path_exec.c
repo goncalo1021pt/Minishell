@@ -69,6 +69,7 @@ static void	path_exec_aux(char **args, char **env, int fd_in, int fd_out)
 		ft_output("Command '", STDERR_FILENO);
 		ft_output(args[0], STDERR_FILENO);
 		ft_output_nl("' not found", STDERR_FILENO);
+		free(args);
 		ft_exit(127);
 	}
 	if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)

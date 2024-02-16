@@ -111,6 +111,6 @@ int	ft_run(t_ast_node *node, char ***env)
 	args = ft_get_args(node);
 	if (!ft_get_fds(node))
 		ret = run_aux(node, args, env);
-	clean_arr_str(args);
+	free(args);
 	return (ret);
 }
