@@ -87,7 +87,8 @@ t_bool					check_expander(char *str);
 char					*expander(char *str, char **env);
 void					expand_lst(t_list *lst, char **env);
 char					*expand_1(char *str, char **env);
-char					*handle_variable(char *str, char **env, int ctd, int len);
+char					*handle_variable(char *str, char **env, int ctd,
+							int len);
 char					*expand_exit_status(char *str, int ctd);
 char					*add_to_middle(char *src, char *to_add, int ctd,
 							int len);

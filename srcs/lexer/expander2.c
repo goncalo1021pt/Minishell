@@ -56,7 +56,7 @@ char	*expand_exit_status(char *str, int ctd)
 	ft_strncpy(new, str, ctd - 1);
 	ft_strncpy(new + ctd - 1, status, ft_strlen(status));
 	ft_strncpy(new + ctd - 1 + ft_strlen(status), str + ctd + 1, ft_strlen(str)
-			- ctd - 1);
+		- ctd - 1);
 	free(status);
 	return (new);
 }

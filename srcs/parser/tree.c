@@ -81,6 +81,7 @@ int	search_logical(t_list *lst, t_list **nod, t_list **prev)
 	*prev = NULL;
 	return (FALSE);
 }
+
 int	search_pipe(t_list *lst, t_list **nod, t_list **prev)
 {
 	t_parser	*content;
