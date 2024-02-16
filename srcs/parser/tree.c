@@ -29,6 +29,15 @@ void	parser_to_tree(t_list **lst, t_ast_node **ast)
 	*lst = NULL;
 }
 
+static void	set_phantom_node(t_ast_node **ast)
+{
+	if (!(*ast))
+	{
+		*ast = ast_new_node(NULL);
+		(*ast)->type = NODE_COMMAND;
+	}
+}
+
 void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 {
 	t_parser	*content;
@@ -36,11 +45,7 @@ void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 	if (lst && ast)
 	{
 		content = lst->content;
-		if (!(*ast))
-		{
-			*ast = ast_new_node(NULL);
-			(*ast)->type = NODE_COMMAND;
-		}
+		set_phantom_node(ast);
 		if (content->type == NODE_COMMAND)
 		{
 			if (first == 1)
