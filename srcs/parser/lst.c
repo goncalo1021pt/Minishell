@@ -1,10 +1,10 @@
 #include "../../includes/headers/minishell.h"
 
-t_list *parse_to_list(char **args)
+t_list	*parse_to_list(char **args)
 {
 	t_list		*list;
 	t_parser	*parser;
-	int		ctd;
+	int			ctd;
 
 	ctd = 0;
 	list = NULL;
@@ -21,7 +21,7 @@ t_list *parse_to_list(char **args)
 	return (list);
 }
 
-void set_type(t_parser *parser, char **args, int ctd)
+void	set_type(t_parser *parser, char **args, int ctd)
 {
 	parser->type = NODE_COMMAND;
 	if (!ft_strncmp(args[ctd], "||", 2) || !ft_strncmp(args[ctd], "&&", 2))

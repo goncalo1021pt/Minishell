@@ -1,11 +1,11 @@
 #include "../../includes/headers/minishell.h"
 
-void free_all(t_list *list)
+void	free_all(t_list *list)
 {
 	ft_lstclear(&list, free_parse_lst);
 }
 
-void print_content(void *p)
+void	print_content(void *p)
 {
 	t_parser	*parser;
 
@@ -13,7 +13,7 @@ void print_content(void *p)
 	ft_printf("String: %s, Type: %d\n", parser->str, parser->type);
 }
 
-void free_parse_lst(void *content)
+void	free_parse_lst(void *content)
 {
 	t_parser	*parser;
 

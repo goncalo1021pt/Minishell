@@ -1,10 +1,10 @@
 #include "../../includes/headers/minishell.h"
 
-t_ast_node	*ast_new_node(void* c)
+t_ast_node	*ast_new_node(void *c)
 {
 	t_ast_node	*node;
 	t_parser	*content;
-	
+
 	content = c;
 	node = malloc(sizeof(t_ast_node));
 	if (!node)
@@ -26,7 +26,7 @@ t_ast_node	*ast_new_node(void* c)
 	return (node);
 }
 
-void add_full_right(t_ast_node *current, t_ast_node *node)
+void	add_full_right(t_ast_node *current, t_ast_node *node)
 {
 	if (!current)
 		return ;
@@ -36,7 +36,7 @@ void add_full_right(t_ast_node *current, t_ast_node *node)
 		add_full_right(current->right, node);
 }
 
-void add_full_left(t_ast_node *current, t_ast_node *node)
+void	add_full_left(t_ast_node *current, t_ast_node *node)
 {
 	if (!current)
 		return ;
@@ -54,7 +54,7 @@ void	ast_add_node(t_ast_node *current, t_ast_node *node, char dir)
 		current = node;
 	else if (dir == 'l')
 		current->left = node;
-	else if(dir == 'r')
+	else if (dir == 'r')
 		current->right = node;
 }
 

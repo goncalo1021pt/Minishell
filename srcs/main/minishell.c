@@ -1,6 +1,6 @@
 #include "../../includes/headers/minishell.h"
 
-static char *minishell_aux_1(void)
+static char	*minishell_aux_1(void)
 {
 	char	*promt;
 	char	*line;
@@ -13,14 +13,13 @@ static char *minishell_aux_1(void)
 	return (line);
 }
 
-static t_list *minishell_aux_2(char *line)
+static t_list	*minishell_aux_2(char *line)
 {
 	char	**args;
 	t_list	*list;
 
-
 	if (line[0] != '\0')
-			add_history(line);
+		add_history(line);
 	args = ft_custom_split(line);
 	free(line);
 	list = parse_to_list(args);
@@ -28,12 +27,13 @@ static t_list *minishell_aux_2(char *line)
 	return (list);
 }
 
-static t_bool confirm_free(char *line)
+static t_bool	confirm_free(char *line)
 {
 	free(line);
 	return (TRUE);
 }
-static t_bool display_error(t_list *list)
+
+static t_bool	display_error(t_list *list)
 {
 	ft_putendl_fd("syntax error", 2);
 	err_info(2);
@@ -43,9 +43,9 @@ static t_bool display_error(t_list *list)
 
 int	minishell(char ***env)
 {
-	char			*line;
-	t_ast_node		*ast;
-	t_list			*list;
+	char		*line;
+	t_ast_node	*ast;
+	t_list		*list;
 
 	exit_info(env, &ast);
 	while (1)
@@ -55,7 +55,7 @@ int	minishell(char ***env)
 		line = minishell_aux_1();
 		if (!line)
 			ft_exit(0);
-		if (!*line || (is_in_array(*line, SPACE_LIST) && confirm_free(line)))
+		if (!*line || (*line == '\n' && confirm_free(line)))
 			continue ;
 		list = minishell_aux_2(line);
 		if (!check_syntax(list) && display_error(list))

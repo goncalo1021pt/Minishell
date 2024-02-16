@@ -7,7 +7,8 @@ void	expand_lst(t_list *lst, char **env)
 	while (lst != NULL)
 	{
 		content = lst->content;
-		content->str = expander(content->str, env);
+		if (content->type == NODE_COMMAND)
+			content->str = expander(content->str, env);
 		lst = lst->next;
 	}
 }
