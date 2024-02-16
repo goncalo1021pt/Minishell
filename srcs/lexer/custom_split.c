@@ -63,7 +63,7 @@ char	**ft_split_quotes(char const *s)
 	return (skip_str((char *)s, out, ctd));
 }
 
-char **skip_str(char *s, char **out, int ctd)
+char	**skip_str(char *s, char **out, int ctd)
 {
 	while (*s)
 	{
@@ -74,15 +74,15 @@ char **skip_str(char *s, char **out, int ctd)
 			out[ctd] = word_aloc(s);
 			if (!out[ctd])
 				return (free_arr_str(out, ctd - 1));
-		while (*s && !is_in_array(*s, SPACE_LIST))
-		{
-			if (*s == '\'')
-				s = s + skip_quotes(s, 0, '\'');
-			else if (*s == '\"')
-				s = s + skip_quotes(s, 0, '\"');
-			else
-				s++;
-		}
+			while (*s && !is_in_array(*s, SPACE_LIST))
+			{
+				if (*s == '\'')
+					s = s + skip_quotes(s, 0, '\'');
+				else if (*s == '\"')
+					s = s + skip_quotes(s, 0, '\"');
+				else
+					s++;
+			}
 			ctd++;
 		}
 	}

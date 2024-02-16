@@ -10,7 +10,7 @@ static int	aloc_len(char *str)
 	while (str[++ctd])
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
-			ctd = skip_quotes(str, ctd, str[ctd]);
+			ctd = skip_quotes(str, ctd, str[ctd]) - 1;
 		else if (is_in_array(str[ctd], ARGS_DIVISOR))
 		{
 			if (str[ctd + 1] == str[ctd])
