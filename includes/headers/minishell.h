@@ -124,9 +124,10 @@ int						search_logical(t_list *lst, t_list **nod,
 int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
 
 // executer
-void					local_exec(char **args, char **env, int fd_in,
+void					error_handler(int status);
+int						local_exec(char **args, char **env, int fd_in,
 							int fd_out);
-void					path_exec(char **args, char **env, int fd_in,
+int						path_exec(char **args, char **env, int fd_in,
 							int fd_out);
 int						ft_pipe(t_ast_node *node, char ***env);
 int						call_process(t_ast_node *node, char ***env);

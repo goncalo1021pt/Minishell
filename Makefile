@@ -10,7 +10,7 @@ S = main/main main/minishell main/prompt main/shell_level lexer/custom_split lex
 	utils/ft_astr_dup utils/ft_output utils/ft_strcmp utils/ft_strjoin utils/my_alloc utils/static utils/str_utils built_ins/find_env \
 	built_ins/ft_cd built_ins/ft_echo built_ins/ft_env built_ins/ft_exit built_ins/ft_export built_ins/ft_pwd built_ins/ft_unset \
 	built_ins/get_current_pwd built_ins/get_env executer/local_exec executer/path_exec executer/pipe executer/process \
-	executer/redirect executer/run executer/set_fds
+	executer/redirect executer/redirect2 executer/run executer/set_fds
 COMPRESS = ar rcs
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address

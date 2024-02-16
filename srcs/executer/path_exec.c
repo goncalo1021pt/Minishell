@@ -59,7 +59,7 @@ static char	*find_path(char *pname, char **env)
 	return (ret);
 }
 
-void	path_exec(char **args, char **env, int fd_in, int fd_out)
+static void	path_exec_aux(char **args, char **env, int fd_in, int fd_out)
 {
 	char	*path;
 
@@ -82,39 +82,29 @@ void	path_exec(char **args, char **env, int fd_in, int fd_out)
 	ft_exit(errno);
 }
 
-/*
-int    path_exec(char **args, char **env, int fd_in, int fd_out)
+int	path_exec(char **args, char **env, int fd_in, int fd_out)
 {
 	pid_t	pid;
 	int		status;
-	char	*path;
 
-	path = find_path(args[0], env);
-	if (!path)
-	{
-		ft_output(args[0], STDERR_FILENO);
-		ft_output_nl(": command not found", STDERR_FILENO);
-		return (1);
-	}
 	choose_signal(IGNORE);
 	pid = fork();
 	if (pid < 0)
-		return (1);
+	{
+		perror("minishel:");
+		return (errno);
+	}
 	else if (pid == 0)
 	{
 		choose_signal(CHILD);
-		if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)
-		{
-			perror(args[0]);
-			ft_exit(0);
-		}
+		path_exec_aux(args, env, fd_in, fd_out);
 	}
 	close_fds(fd_in, fd_out);
 	waitpid(pid, &status, 0);
-	free(path);
-    return (status);
+	error_handler(status);
+	return (status);
 }
-*/
+
 /*
 int	main(int argc, char **argv, char **env)
 {

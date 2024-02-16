@@ -1,6 +1,6 @@
 #include "../../includes/headers/minishell.h"
 
-static void	error_handler(int status)
+void	error_handler(int status)
 {
 	if (status == 0)
 	{
@@ -75,7 +75,7 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 	if (!(node->value))
 		return (0);
 	else if ((node->value)[0] == '/' || (node->value)[0] == '.')
-		local_exec(args, *env, node->fd_in, node->fd_out);
+		return (local_exec(args, *env, node->fd_in, node->fd_out));
 	else if (ft_strcmp(node->value, "echo") == 0)
 		ft_echo(args, node->fd_out);
 	else if (ft_strcmp(node->value, "cd") == 0)
@@ -94,7 +94,7 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 		ft_exit(0);
 	}
 	else
-		path_exec(args, *env, node->fd_in, node->fd_out);
+		return (path_exec(args, *env, node->fd_in, node->fd_out));
 	return (0);
 }
 
@@ -102,27 +102,11 @@ int	ft_run(t_ast_node *node, char ***env)
 {
 	char	**args;
 	int		ret;
-	pid_t	pid;
-	int		status;
 
-	choose_signal(IGNORE);
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("minishell:");
-		return (errno);
-	}
-	if (pid == 0)
-	{
-		choose_signal(CHILD);
-		ret = 0;
-		args = ft_get_args(node);
-		if (!ft_get_fds(node))
-			ret = run_aux(node, args, env);
-		free(args);
-		ft_exit(ret);
-	}
-	waitpid(pid, &status, 0);
-	error_handler(status);
-	return (status);
+	ret = 0;
+	args = ft_get_args(node);
+	if (!ft_get_fds(node))
+		ret = run_aux(node, args, env);
+	clean_arr_str(args);
+	return (ret);
 }
