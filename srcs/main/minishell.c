@@ -55,7 +55,7 @@ int	minishell(char ***env)
 		line = minishell_aux_1();
 		if (!line)
 			ft_exit(0);
-		if (!*line || (is_in_array(*line, SPACE_LIST) && confirm_free(line)))
+		if (!*line || (*line == '\n' && confirm_free(line)))
 			continue ;
 		list = minishell_aux_2(line);
 		if (!check_syntax(list) && display_error(list))
