@@ -24,7 +24,7 @@ static int	change_dir(char *path, char ***env)
 	}
 }
 
-int	ft_cd(char **arg, char ***env)
+static int	ft_cd_aux(char **arg, char ***env)
 {
 	char	*where;
 
@@ -51,4 +51,15 @@ int	ft_cd(char **arg, char ***env)
 	else
 		where = arg[1];
 	return (change_dir(where, env));
+}
+
+int	ft_cd(char **arg, char ***env)
+{
+	if (arg && arg[1] && arg [2])
+	{
+		ft_output_nl("minishell: cd: too many arguments", STDERR_FILENO);
+		return (1);
+	}
+	else
+		return (ft_cd_aux(arg, env));
 }
