@@ -126,7 +126,7 @@ int						search_logical(t_list *lst, t_list **nod,
 int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
 
 // executer
-void					error_handler(int status);
+int						error_handler(int status);
 int						local_exec(char **args, char **env, int fd_in,
 							int fd_out);
 int						path_exec(char **args, char **env, int fd_in,

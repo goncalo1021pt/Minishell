@@ -101,7 +101,7 @@ int	path_exec(char **args, char **env, int fd_in, int fd_out)
 	}
 	close_fds(fd_in, fd_out);
 	waitpid(pid, &status, 0);
-	error_handler(status);
+	status = error_handler(status);
 	return (status);
 }
 

@@ -1,12 +1,11 @@
 #include "../../includes/headers/minishell.h"
 
-void	error_handler(int status)
+int	error_handler(int status)
 {
-	status = status % 256;
 	if (status == 0)
 	{
 		err_info(0);
-		return ;
+		return (status);
 	}
 	else
 		err_info(128 + status);
@@ -17,6 +16,10 @@ void	error_handler(int status)
 	}
 	else if (status == 131)
 		ft_printf("Quit\n");
+	if (status > 255)
+		status = status / 256;
+	err_info(status);
+	return (status);
 }
 
 char	**ft_get_args(t_ast_node *node)

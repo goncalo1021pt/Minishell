@@ -4,7 +4,7 @@ void	clean_arr_str(char **astr)
 {
 	int	i;
 
-	if(astr || *astr)
+	if (astr || *astr)
 		return ;
 	i = 0;
 	while (astr[i])
