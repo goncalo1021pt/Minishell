@@ -13,7 +13,7 @@ S = main/main main/minishell main/prompt main/shell_level lexer/custom_split lex
 	executer/redirect executer/redirect2 executer/run executer/set_fds
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3# -fsanitize=address
 rd_ln = -lreadline
 CC = cc
 
@@ -72,7 +72,7 @@ fclean: clean
 	@echo "$(RED)$(NAME)$(NC)cleaned!"
 
 v: 
-	make re && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions="supression.supp" ./$(NAME)
+	make re && valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions="supression.supp" ./$(NAME)
 
 fcount:
 	@echo "you wrote $(RED)$(shell cat $(SRCS) | wc -l)$(NC)lines of code"

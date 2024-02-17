@@ -29,6 +29,14 @@ t_bool	check_syntax(t_list *lst)
 	return (TRUE);
 }
 
+static t_bool	is_redirect(int type)
+{
+	if (type == NODE_REDIRECT_IN || type == NODE_REDIRECT_IN_HERE
+		|| type == NODE_REDIRECT_OUT || type == NODE_REDIRECT_OUT_APPENDS)
+		return (TRUE);
+	return (FALSE);
+}
+
 t_bool	syntax_1(t_list *tmp2, t_parser *tmp2_parser, t_parser *parser)
 {
 	if (tmp2 == NULL && count_quotes(parser->str) % 2 != 0)
@@ -43,13 +51,13 @@ t_bool	syntax_1(t_list *tmp2, t_parser *tmp2_parser, t_parser *parser)
 			|| tmp2_parser->type == NODE_PIPE)
 			return (FALSE);
 	}
-	else if (tmp2 && tmp2_parser->type == NODE_PIPE)
+	if (tmp2 && tmp2_parser->type == NODE_PIPE)
 	{
 		if (tmp2->next == NULL)
 			return (FALSE);
 		tmp2_parser = tmp2->next->content;
 		if (parser->type == NODE_LOGICAL || parser->type == NODE_PIPE
-			|| tmp2_parser->type == NODE_LOGICAL
+			|| is_redirect(parser->type) || tmp2_parser->type == NODE_LOGICAL
 			|| tmp2_parser->type == NODE_PIPE)
 			return (FALSE);
 	}
@@ -86,10 +94,7 @@ void	split_redirects(t_list **lst)
 	while (temp != NULL)
 	{
 		content = temp->content;
-		if (temp->next != NULL && (content->type == NODE_REDIRECT_OUT
-				|| content->type == NODE_REDIRECT_OUT_APPENDS
-				|| content->type == NODE_REDIRECT_IN
-				|| content->type == NODE_REDIRECT_IN_HERE))
+		if (temp->next != NULL && is_redirect(content->type))
 		{
 			free(content->str);
 			content->str = ft_strdup(((t_parser *)(temp->next->content))->str);

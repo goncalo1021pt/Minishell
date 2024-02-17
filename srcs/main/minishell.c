@@ -41,6 +41,17 @@ static t_bool	display_error(t_list *list)
 	return (TRUE);
 }
 
+t_bool has_argument(char *str)
+{
+	int ctd;
+
+	ctd = -1;
+	while (str[++ctd])
+		if (!is_in_array(str[ctd], SPACE_LIST))
+			return (FALSE);
+	return (TRUE);
+}
+
 int	minishell(char ***env)
 {
 	char		*line;
@@ -55,7 +66,7 @@ int	minishell(char ***env)
 		line = minishell_aux_1();
 		if (!line)
 			ft_exit(0);
-		if (!*line || (*line == '\n' && confirm_free(line)))
+		if ((!*line || has_argument(line) ) && confirm_free(line))
 			continue ;
 		list = minishell_aux_2(line);
 		if (!check_syntax(list) && display_error(list))
