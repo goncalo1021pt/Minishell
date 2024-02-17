@@ -26,13 +26,13 @@ static int	ft_read_del_aux(int fd_out, char *fname)
 	while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
 	{
 		write(fd_out, line, ft_strlen(line));
+		write(fd_out, "\n", 1);
 		free(line);
 		line = readline("> ");
 		if (!line)
 			ft_exit(del_eof(fd_out));
 	}
 	free(line);
-	write(fd_out, "\n", 1);
 	close(fd_out);
 	return (0);
 }
