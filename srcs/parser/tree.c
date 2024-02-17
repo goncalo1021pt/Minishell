@@ -13,6 +13,7 @@ void	parser_to_tree(t_list **lst, t_ast_node **ast)
 		prev->next = NULL;
 		parser_to_tree(lst, &((*ast)->left));
 		parser_to_tree(&nod->next, &((*ast)->right));
+		clean_lst(nod);
 	}
 	else if (search_pipe(*lst, &nod, &prev))
 	{
@@ -20,11 +21,10 @@ void	parser_to_tree(t_list **lst, t_ast_node **ast)
 		prev->next = NULL;
 		parser_to_tree(lst, &((*ast)->left));
 		parser_to_tree(&nod->next, &((*ast)->right));
+		clean_lst(nod);
 	}
 	else
-	{
 		cmd_parser(*lst, ast, 1);
-	}
 	clean_lst(*lst);
 	*lst = NULL;
 }

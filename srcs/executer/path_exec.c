@@ -75,6 +75,7 @@ static void	path_exec_aux(char **args, char **env, int fd_in, int fd_out)
 	if (set_fds(fd_in, fd_out) == -1 || execve(path, args, env) == -1)
 	{
 		perror(args[0]);
+		free(args);
 		free(path);
 		ft_exit(errno);
 	}
