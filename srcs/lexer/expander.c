@@ -37,11 +37,15 @@ char	*expander(char *str, char **env)
 t_bool	check_expander(char *str)
 {
 	int	ctd;
+	t_bool flag;
 
 	ctd = -1;
+	flag = TRUE;
 	while (str[++ctd])
 	{
-		if (str[ctd] == '\'')
+		if (str[ctd] == '\"')
+			flag = !flag;
+		if (flag && str[ctd] == '\'')
 			ctd = skip_quotes(str, ctd, '\'');
 		if (str[ctd] == '$')
 			return (TRUE);

@@ -76,6 +76,7 @@ int						minishell(char ***env);
 char					*trim_path(char *path);
 char					*get_prompt(void);
 void					shell_level(char ***env);
+t_bool					has_argument(char *str);
 
 // lexer
 char					*create_spaces(char *str);

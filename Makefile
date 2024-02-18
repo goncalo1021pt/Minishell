@@ -5,7 +5,7 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main/main main/minishell main/prompt main/shell_level lexer/custom_split lexer/expander lexer/expander2 lexer/split_utils \
+S = main/main main/minishell main/minishell_aux main/prompt main/shell_level lexer/custom_split lexer/expander lexer/expander2 lexer/split_utils \
 	lexer/tokenizer parser/ast parser/ast2 parser/lst_utils parser/lst parser/syntax parser/tree signals/signals signals/termios \
 	utils/ft_astr_dup utils/ft_output utils/ft_strcmp utils/ft_strjoin utils/my_alloc utils/static utils/str_utils built_ins/find_env \
 	built_ins/ft_cd built_ins/ft_echo built_ins/ft_env built_ins/ft_exit built_ins/ft_export built_ins/ft_pwd built_ins/ft_unset \
@@ -72,7 +72,7 @@ fclean: clean
 	@echo "$(RED)$(NAME)$(NC)cleaned!"
 
 v: 
-	make re && valgrind --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions="supression.supp" ./$(NAME)
+	make re && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions="supression.supp" ./$(NAME)
 
 fcount:
 	@echo "you wrote $(RED)$(shell cat $(SRCS) | wc -l)$(NC)lines of code"

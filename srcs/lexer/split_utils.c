@@ -5,7 +5,7 @@ int	skip_quotes(const char *str, int ctd, char quote_type)
 	ctd++;
 	while (str[ctd] && str[ctd] != quote_type)
 		ctd++;
-	return (ctd + 1);
+	return (ctd);
 }
 
 int	copy_quotes(char *dst, char *src, char quote_type)
@@ -23,6 +23,7 @@ int	copy_quotes(char *dst, char *src, char quote_type)
 	return (ctd);
 }
 
+//a"""
 int	count_quotes(char *str)
 {
 	int		ctd;
@@ -36,10 +37,13 @@ int	count_quotes(char *str)
 		if (str[ctd] == '\'' || str[ctd] == '\"')
 		{
 			temp = str[ctd];
-			ctd = skip_quotes(str, ctd, str[ctd]);
 			count++;
-			if (str[ctd - 1] == temp)
+			ctd = skip_quotes(str, ctd, str[ctd]);
+			if (str[ctd] == temp)
+			{
 				count++;
+				ctd++;
+			}
 		}
 		else
 			ctd++;

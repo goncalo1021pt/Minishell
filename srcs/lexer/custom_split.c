@@ -93,7 +93,11 @@ char	**ft_custom_split(char *str)
 {
 	char	*new_str;
 	char	**out;
+	int		total;
 
+	total = count_quotes(str);
+	if (total % 2 != 0)
+		return (ft_putendl_fd("syntax error", 2), NULL);
 	new_str = create_spaces(str);
 	out = ft_split_quotes(new_str);
 	free(new_str);
