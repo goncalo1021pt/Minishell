@@ -39,22 +39,29 @@ char	*get_env_name(char *env)
 	return (aux);
 }
 
-int	ft_export(char ***env, char **args, int fd_out)
+static void	invalid(char *arg)
+{
+	ft_output("minishell: export: `", STDERR_FILENO);
+	ft_output(arg, STDERR_FILENO);
+	ft_output_nl("': not a valid identifier", STDERR_FILENO);
+}
+
+static int	ft_export_aux(char ***env, char **args)
 {
 	size_t	i;
 	char	*name;
 	char	*aux;
 
-	if (!args || !args[0])
-		return (1);
-	if (!args[1])
+	i = 0;
+	while (args[++i])
 	{
-		print_export(*env, fd_out);
-		return (0);
-	}
-	i = 1;
-	while (args[i])
-	{
+		if (args[i][0] == '=')
+		{
+			invalid(args[i]);
+			continue ;
+		}
+		if (args[i][0] == '_' && args[i][1] == '=')
+			continue ;
 		name = get_env_name(args[i]);
 		aux = ft_strdup(args[i]);
 		if (!aux)
@@ -62,7 +69,25 @@ int	ft_export(char ***env, char **args, int fd_out)
 		if (change_env(name, aux, env))
 			return (free(name), free(aux), 3);
 		free(name);
-		i++;
 	}
 	return (0);
+}
+
+int	ft_export(char ***env, char **args, int fd_out)
+{
+	int	ret;
+
+	ret = 0;
+	if (!args || !args[0])
+	{
+		perror("minishell: ");
+		return (errno);
+	}
+	if (!args[1])
+	{
+		print_export(*env, fd_out);
+		return (0);
+	}
+	ret = ft_export_aux(env, args);
+	return (ret);
 }
