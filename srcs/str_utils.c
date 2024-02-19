@@ -5,7 +5,7 @@ void	clean_arr_str(char **astr)
 	int	i;
 
 	i = 0;
-	while (astr[i])
+	while (astr && astr[i])
 	{
 		free(astr[i]);
 		i++;

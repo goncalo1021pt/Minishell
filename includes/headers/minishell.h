@@ -76,6 +76,7 @@ int						minishell(char ***env);
 char					*get_prompt(void);
 
 char					*get_current_pwd(void);
+char					*pre_parser(char *prompt, char ***env);
 
 //strings
 
@@ -98,7 +99,7 @@ char					**ft_astr_reduce(char **astr, size_t n_remove);
 void					print_arr_str(char **astr);
 char					*ft_strchr(const char *str, int c);
 char					**ft_split_quotes(char const *s);
-char					**ft_custom_split(char *str, char **env);
+char					**ft_custom_split(char *str);
 int						skip_quotes(const char *str, int ctd, char quote_type);
 int						copy_quotes(char *dst, char *src, char quote_type);
 char 					*create_spaces(char *str);

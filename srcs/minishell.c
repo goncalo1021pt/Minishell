@@ -66,6 +66,7 @@ int	minishell(char ***env)
 		promt = get_prompt();
 		termios_change(FALSE);
 		line = readline(promt);
+		line = pre_parser(line, env);
 		termios_change(TRUE);
 		free(promt);
 		if (!line)
@@ -77,7 +78,7 @@ int	minishell(char ***env)
 		}
 		if (line[0] != '\0')
 			add_history(line);
-		args = ft_custom_split(line, *env);
+		args = ft_custom_split(line);
 		free(line);
 		list = parse_to_list(args);
 		clean_arr_str(args);
@@ -92,7 +93,7 @@ int	minishell(char ***env)
 		// ft_lstiter(list, print_content);
 		parser(&list, &ast);
 		// print_tree(ast);
-		// err_info(call_process(ast, env));
+		err_info(call_process(ast, env));
 		ast_free(ast);
 	}
 }

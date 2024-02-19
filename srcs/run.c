@@ -91,7 +91,7 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 	else if (ft_strcmp(node->value, "exit") == 0)
 	{
 		free(args);
-		ft_exit(0);
+		ft_exit(EXIT_UNCHANGED);
 	}
 	else
 		path_exec(args, *env, node->fd_in, node->fd_out);
@@ -123,6 +123,8 @@ int	ft_run(t_ast_node *node, char ***env)
 		ft_exit(ret);
 	}
 	waitpid(pid, &status, 0);
+	if (ft_strcmp(node->value, "exit") == 0)
+		ft_exit(0);
 	error_handler(status);
 	return (status);
 }

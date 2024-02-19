@@ -165,11 +165,10 @@ char *create_spaces(char *str)
 	return (out);
 }
 
-char **ft_custom_split(char *str, char **env)
+char **ft_custom_split(char *str)
 {
 	char	*new_str;
 	char	**out;
-	(void)env;
 	new_str = create_spaces(str);
 	out = ft_split_quotes(new_str);
 	free(new_str);

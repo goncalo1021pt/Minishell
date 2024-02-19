@@ -30,8 +30,8 @@ int	ft_pipe(t_ast_node *node, char ***env)
 
 	if (pipe(pip) == -1)
 	{
-		perror("pipe");
-		return (1);
+		perror("minishell: ");
+		return (errno);
 	}
 	node->left->fd_out = pip[1];
 	node->left->fd_in = node->fd_in;
@@ -41,13 +41,13 @@ int	ft_pipe(t_ast_node *node, char ***env)
 	if (fk1 < 0)
 	{
 		perror("fork");
-		ft_exit (2);
+		ft_exit (errno);
 	}
 	if (fk1 == 0)
 	{
 		close(pip[0]);
 		ft_process(node->left, env);
-		ft_exit(3);
+		ft_exit(0);
 	}
 	return (pipe_2(node, env, pip, fk1));
 }
