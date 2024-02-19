@@ -47,3 +47,11 @@ int	ft_append_out(t_ast_node *node, char *fname)
 	node->fd_out = fd;
 	return (0);
 }
+
+int	ft_recive_fd_in(t_ast_node *node, t_ast_node *c_node)
+{
+	if (node->fd_in != STDIN_FILENO)
+		close(node->fd_in);
+	node->fd_in = c_node->fd_in;
+	return (0);
+}

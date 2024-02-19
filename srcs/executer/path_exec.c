@@ -39,7 +39,7 @@ static char	*find_path(char *pname, char **env)
 	int		i;
 
 	paths = find_env_paths(env);
-	if (!paths)
+	if (!paths || !(*pname))
 		return (NULL);
 	path_ar = ft_split(paths, ':');
 	if (!path_ar)

@@ -61,3 +61,21 @@ int	ft_read_del(t_ast_node *node, char *fname)
 	node->fd_in = pip[0];
 	return (status);
 }
+
+int	ft_get_here(t_ast_node *node)
+{
+	t_ast_node	*aux;
+	int			ret;
+
+	ret = 0;
+	aux = node->left;
+	while (aux)
+	{
+		if (aux->type == NODE_REDIRECT_IN_HERE)
+			ret = ft_read_del(aux, aux->value);
+		if (ret)
+			return (ret);
+		aux = aux->left;
+	}
+	return (ret);
+}

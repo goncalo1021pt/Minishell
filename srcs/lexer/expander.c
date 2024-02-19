@@ -3,20 +3,12 @@
 void	expand_lst(t_list *lst, char **env)
 {
 	t_parser	*content;
-	char		*temp;
 
 	while (lst != NULL)
 	{
 		content = lst->content;
-		temp = ft_strdup(content->str);
 		if (content->type == NODE_COMMAND)
 			content->str = expander(content->str, env);
-		if (content->str[0] == NULL && temp[0] != NULL)
-		{
-			free(content->str);
-			content->str = NULL;
-		}
-		free(temp);
 		lst = lst->next;
 	}
 }
@@ -34,6 +26,11 @@ char	*expander(char *str, char **env)
 			return (free(new), NULL);
 		free(new);
 		new = temp;
+	}
+	if (new[0] == '\0')
+	{
+		free(new);
+		return (NULL);
 	}
 	temp = remove_quotes(new);
 	if (!temp)

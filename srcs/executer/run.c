@@ -1,27 +1,5 @@
 #include "../../includes/headers/minishell.h"
 
-int	error_handler(int status)
-{
-	if (status == 0)
-	{
-		err_info(0);
-		return (status);
-	}
-	else
-		err_info(128 + status);
-	if (status == 2)
-	{
-		status = 130;
-		ft_printf("\n");
-	}
-	else if (status == 131)
-		ft_printf("Quit\n");
-	if (status > 255)
-		status = status / 256;
-	err_info(status);
-	return (status);
-}
-
 char	**ft_get_args(t_ast_node *node)
 {
 	size_t		ac;
@@ -34,7 +12,8 @@ char	**ft_get_args(t_ast_node *node)
 	args = NULL;
 	while (aux)
 	{
-		ac++;
+		if (aux->value)
+			ac++;
 		aux = aux->right;
 	}
 	if (my_alloc(sizeof(char *), ac + 1, (void **)(&args)))
@@ -43,11 +22,21 @@ char	**ft_get_args(t_ast_node *node)
 	aux = node;
 	while (i < ac)
 	{
-		args[i] = aux->value;
-		i++;
+		if (aux->value)
+			args[i++] = aux->value;
 		aux = aux->right;
 	}
 	return (args);
+}
+
+int	close_astr_fds(t_ast_node *aux, int ret)
+{
+	while (aux)
+	{
+		close_fds(aux->fd_in, aux->fd_out);
+		aux = aux->left;
+	}
+	return (ret);
 }
 
 int	ft_get_fds(t_ast_node *node)
@@ -57,18 +46,21 @@ int	ft_get_fds(t_ast_node *node)
 
 	ret = 0;
 	aux = node->left;
+	ret = ft_get_here(node);
+	if (ret)
+		return (ret);
 	while (aux)
 	{
 		if (aux->type == NODE_REDIRECT_IN)
 			ret = ft_redirect_in(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_IN_HERE)
-			ret = ft_read_del(node, aux->value);
+			ret = ft_recive_fd_in(node, aux);
 		else if (aux->type == NODE_REDIRECT_OUT)
 			ret = ft_redirect_out(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_OUT_APPENDS)
 			ret = ft_append_out(node, aux->value);
 		if (ret)
-			return (ret);
+			return (close_astr_fds(aux, ret));
 		aux = aux->left;
 	}
 	return (ret);

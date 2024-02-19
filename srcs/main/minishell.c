@@ -63,7 +63,6 @@ int	minishell(char ***env)
 		if (!list || (!check_syntax(list) && display_error(list)))
 			continue ;
 		expand_lst(list, *env);
-		// check_null(list);
 		parser_to_tree(&list, &ast);
 		err_info(call_process(ast, env));
 		ast_free(ast);

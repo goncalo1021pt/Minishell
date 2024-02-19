@@ -38,3 +38,25 @@ int	local_exec(char **args, char **env, int fd_in, int fd_out)
 	error_handler(status);
 	return (status);
 }
+
+int	error_handler(int status)
+{
+	if (status == 0)
+	{
+		err_info(0);
+		return (status);
+	}
+	else
+		err_info(128 + status);
+	if (status == 2)
+	{
+		status = 130;
+		ft_printf("\n");
+	}
+	else if (status == 131)
+		ft_printf("Quit\n");
+	if (status > 255)
+		status = status / 256;
+	err_info(status);
+	return (status);
+}
