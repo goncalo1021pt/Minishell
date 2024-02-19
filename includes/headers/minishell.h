@@ -84,6 +84,7 @@ void					create_token(char *str, int ctd, int ctd2, char *out);
 char					**ft_custom_split(char *str);
 char					**skip_str(char *s, char **out, int ctd);
 char					**ft_split_quotes(char const *s);
+void					check_null(t_list *lst);
 t_bool					check_expander(char *str);
 char					*expander(char *str, char **env);
 void					expand_lst(t_list *lst, char **env);

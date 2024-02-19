@@ -19,8 +19,7 @@ static int	count_word(const char *str)
 				ctd = skip_quotes(str, ctd, '\'');
 			else if (str[ctd] == '\"')
 				ctd = skip_quotes(str, ctd, '\"');
-			else
-				ctd++;
+			ctd++;
 		}
 	}
 	return (total);
@@ -40,8 +39,7 @@ static char	*word_aloc(const char *str)
 			word_len = skip_quotes(str, word_len, '\'');
 		else if (str[word_len] == '\"')
 			word_len = skip_quotes(str, word_len, '\"');
-		else
-			word_len++;
+		word_len++;
 	}
 	word = (char *)ft_calloc(word_len + 1, sizeof(char *));
 	if (!word)
@@ -65,23 +63,25 @@ char	**ft_split_quotes(char const *s)
 
 char	**skip_str(char *s, char **out, int ctd)
 {
-	while (*s)
+	int	ctd2;
+
+	ctd2 = 0;
+	while (s[ctd2])
 	{
-		while (*s && is_in_array(*s, SPACE_LIST))
-			s++;
-		if (*s)
+		while (s[ctd2] && is_in_array(s[ctd2], SPACE_LIST))
+			ctd2++;
+		if (s[ctd2])
 		{
-			out[ctd] = word_aloc(s);
+			out[ctd] = word_aloc(s + ctd2);
 			if (!out[ctd])
 				return (free_arr_str(out, ctd - 1));
-			while (*s && !is_in_array(*s, SPACE_LIST))
+			while (s[ctd2] && !is_in_array(s[ctd2], SPACE_LIST))
 			{
-				if (*s == '\'')
-					s = s + skip_quotes(s, 0, '\'');
-				else if (*s == '\"')
-					s = s + skip_quotes(s, 0, '\"');
-				else
-					s++;
+				if (s[ctd2] == '\'')
+					ctd2 = ctd2 + skip_quotes(s + ctd2, 0, '\'');
+				if (s[ctd2] == '\"')
+					ctd2 = ctd2 + skip_quotes(s + ctd2, 0, '\"');
+				ctd2++;
 			}
 			ctd++;
 		}

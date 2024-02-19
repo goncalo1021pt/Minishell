@@ -18,7 +18,8 @@ void	free_parse_lst(void *content)
 	t_parser	*parser;
 
 	parser = content;
-	free(parser->str);
+	if (parser->str)
+		free(parser->str);
 	free(parser);
 }
 

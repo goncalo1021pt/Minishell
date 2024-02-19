@@ -3,12 +3,20 @@
 void	expand_lst(t_list *lst, char **env)
 {
 	t_parser	*content;
+	char		*temp;
 
 	while (lst != NULL)
 	{
 		content = lst->content;
+		temp = ft_strdup(content->str);
 		if (content->type == NODE_COMMAND)
 			content->str = expander(content->str, env);
+		if (content->str[0] == NULL && temp[0] != NULL)
+		{
+			free(content->str);
+			content->str = NULL;
+		}
+		free(temp);
 		lst = lst->next;
 	}
 }
@@ -36,8 +44,8 @@ char	*expander(char *str, char **env)
 
 t_bool	check_expander(char *str)
 {
-	int	ctd;
-	t_bool flag;
+	int		ctd;
+	t_bool	flag;
 
 	ctd = -1;
 	flag = TRUE;
@@ -51,4 +59,20 @@ t_bool	check_expander(char *str)
 			return (TRUE);
 	}
 	return (FALSE);
+}
+
+void	check_null(t_list *lst)
+{
+	t_parser	*content;
+
+	while (lst != NULL)
+	{
+		content = lst->content;
+		if (content->str && content->str[0] == '\0')
+		{
+			free(content->str);
+			content->str = NULL;
+		}
+		lst = lst->next;
+	}
 }

@@ -57,12 +57,13 @@ int	minishell(char ***env)
 		line = minishell_aux_1();
 		if (!line)
 			ft_exit(0);
-		if ((!*line || has_argument(line) ) && confirm_free(line))
+		if ((!*line || has_argument(line)) && confirm_free(line))
 			continue ;
 		list = minishell_aux_2(line);
 		if (!list || (!check_syntax(list) && display_error(list)))
 			continue ;
 		expand_lst(list, *env);
+		// check_null(list);
 		parser_to_tree(&list, &ast);
 		err_info(call_process(ast, env));
 		ast_free(ast);
