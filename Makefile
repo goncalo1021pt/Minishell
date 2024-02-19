@@ -5,13 +5,15 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main minishell get_current_pwd root_signals str_utils find_env ft_astr_dup ft_cd ft_env ft_export ft_output ft_pwd ft_echo\
-	ft_strcmp ft_strjoin ft_unset get_env my_alloc expander static\
-	local_exec path_exec set_fds costum_split ast utils ft_exit process run redirect pipe pre_parser
-
+S = main/main main/minishell main/minishell_aux main/prompt main/shell_level lexer/custom_split lexer/expander lexer/expander2 lexer/split_utils \
+	lexer/tokenizer parser/ast parser/ast2 parser/lst_utils parser/lst parser/syntax parser/tree signals/signals signals/termios \
+	utils/ft_astr_dup utils/ft_output utils/ft_strcmp utils/ft_strjoin utils/my_alloc utils/static utils/str_utils built_ins/find_env \
+	built_ins/ft_cd built_ins/ft_echo built_ins/ft_env built_ins/ft_exit built_ins/ft_export built_ins/ft_pwd built_ins/ft_unset \
+	built_ins/get_current_pwd built_ins/get_env executer/local_exec executer/path_exec executer/pipe executer/process \
+	executer/redirect executer/redirect2 executer/run executer/set_fds
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3# -fsanitize=address
 rd_ln = -lreadline
 CC = cc
 
