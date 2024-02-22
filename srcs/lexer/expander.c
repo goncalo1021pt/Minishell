@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 12:54:44 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:37:17 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	expand_lst(t_list *lst, char **env)
 	while (lst != NULL)
 	{
 		content = lst->content;
-		if (content->type == NODE_COMMAND)
+		if (content->type != NODE_REDIRECT_IN_HERE)
 			content->str = expander(content->str, env);
 		lst = lst->next;
 	}
