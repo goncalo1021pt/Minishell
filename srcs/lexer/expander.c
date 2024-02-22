@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/22 12:09:13 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 void	expand_lst(t_list *lst, char **env)
@@ -52,12 +64,12 @@ t_bool	check_expander(char *str)
 			flag = !flag;
 		if (flag && str[ctd] == '\'')
 			ctd = skip_quotes(str, ctd, '\'');
-		if (str[ctd] == '$')
+		if (str[ctd] == '$' && ft_isalnum(str[ctd + 1]))
 			return (TRUE);
 	}
 	return (FALSE);
 }
-
+	       
 void	check_null(t_list *lst)
 {
 	t_parser	*content;
