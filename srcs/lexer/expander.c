@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 12:30:48 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:54:44 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ t_bool	check_expander(char *str)
 			flag = !flag;
 		if (flag && str[ctd] == '\'')
 			ctd = skip_quotes(str, ctd, '\'');
-		if (str[ctd] == '$' && ft_isalnum(str[ctd + 1]))
+		if (str[ctd] == '$' && (ft_isalnum(str[ctd + 1]) || str[ctd
+					+ 1] == '?'))
 			return (TRUE);
 	}
 	return (FALSE);

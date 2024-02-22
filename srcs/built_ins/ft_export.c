@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:06 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 12:21:15 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:48:19 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	print_export(char **env, int fd_out)
 	{
 		ft_output("declare -x ", fd_out);
 		ft_output_export(env[i], fd_out);
-		i ++;
+		i++;
 	}
 }
 
@@ -37,7 +37,7 @@ char	*get_env_name(char *env)
 	{
 		if (env[size] == 0)
 			return (ft_strdup(env));
-		size ++;
+		size++;
 	}
 	aux = (char *)malloc(sizeof(char) * (size + 1));
 	if (aux == NULL)
@@ -45,7 +45,7 @@ char	*get_env_name(char *env)
 	aux[size] = '\0';
 	while (size > 0)
 	{
-		size --;
+		size--;
 		aux[size] = env[size];
 	}
 	return (aux);
@@ -65,7 +65,7 @@ static int	ft_export_aux(char ***env, char **args)
 	char	*name;
 	char	*aux;
 	int		ret;
-	
+
 	ret = 0;
 	i = 0;
 	while (args[++i])
