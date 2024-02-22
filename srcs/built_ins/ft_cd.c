@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:45 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 16:07:10 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:58:31 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	change_dir(char *path, char ***env)
 		ft_output("minishell: cd: ", STDERR_FILENO);
 		ft_output(path, STDERR_FILENO);
 		ft_output(": No such file or directory", STDERR_FILENO);
-		return (127);
+		return (1);
 	}
 }
 
