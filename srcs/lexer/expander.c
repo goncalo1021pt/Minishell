@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 12:09:13 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:19:31 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_bool	check_expander(char *str)
 	}
 	return (FALSE);
 }
-	       
+
 void	check_null(t_list *lst)
 {
 	t_parser	*content;
