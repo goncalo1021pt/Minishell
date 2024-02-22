@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:51 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/21 19:05:56 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:36:46 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 		return (ft_env(*env, args, node->fd_out));
 	else if (ft_strcmp(node->value, "exit") == 0)
 	{
-		free(args);
-		ft_exit(0);
+		ft_ft_exit(args);
+		return(1);
 	}
 	else
 		return (path_exec(args, *env, node->fd_in, node->fd_out));
