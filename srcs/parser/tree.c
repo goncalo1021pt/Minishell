@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:54 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 16:32:20 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:03:41 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,28 @@ static void	set_phantom_node(t_ast_node **ast)
 
 void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 {
-	t_parser	*content;
-
 	if (lst && ast)
 	{
-		content = lst->content;
-		if (!(content->str))
-		{
-			cmd_parser(lst->next, ast, first);
-			return ;
-		}
 		set_phantom_node(ast);
-		if (content->type == NODE_COMMAND)
+		if (!(((t_parser *)(lst->content))->str))
+			cmd_parser(lst->next, ast, first);
+		else if (((t_parser *)(lst->content))->type == NODE_COMMAND)
 		{
 			if (first == 1)
 			{
-				(*ast)->value = ft_strdup(content->str);
+				(*ast)->value = ft_strdup(((t_parser *)(lst->content))->str);
 				cmd_parser(lst->next, ast, 0);
 			}
 			else
 			{
-				add_full_right(*ast, ast_new_node(content));
+				add_full_right(*ast,
+					ast_new_node(((t_parser *)(lst->content))));
 				cmd_parser(lst->next, ast, first);
 			}
 		}
 		else
 		{
-			add_full_left(*ast, ast_new_node(content));
+			add_full_left(*ast, ast_new_node(((t_parser *)(lst->content))));
 			cmd_parser(lst->next, ast, first);
 		}
 	}

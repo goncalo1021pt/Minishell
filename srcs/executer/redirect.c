@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:46 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 16:49:36 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:55:23 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,5 @@ int	ft_get_here_rec(t_ast_node *node)
 	{
 		return (ft_get_here_rec(node->left) + ft_get_here_rec(node->right));
 	}
-	return(0);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:51 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 16:50:55 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:55:36 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 	else if (ft_strcmp(node->value, "exit") == 0)
 	{
 		ft_ft_exit(args);
-		return(1);
+		return (1);
 	}
 	else
 		return (path_exec(args, *env, node->fd_in, node->fd_out));

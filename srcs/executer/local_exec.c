@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   local_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:35 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 16:24:41 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:55:52 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	local_exec(char **args, char **env, int fd_in, int fd_out)
 {
 	pid_t	pid;
 	int		status;
-	
+
 	choose_signal(IGNORE);
 	pid = fork();
 	if (pid < 0)
