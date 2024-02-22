@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:10 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:23 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:32:26 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*expand_1(char *str, char **env)
 	{
 		if (str[ctd] == '\'')
 			ctd = skip_quotes(str, ctd, '\'');
-		if (str[ctd] == '$')
+		if (str[ctd] == '$' && ft_isalnum(str[ctd + 1]))
 		{
 			len = 0;
 			ctd++;
