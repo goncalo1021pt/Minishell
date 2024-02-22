@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:51 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 13:36:46 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:50:55 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	ft_run(t_ast_node *node, char ***env)
 	char	**args;
 	int		ret;
 
-	ret = 0;
+	ret = 1;
 	if (!ft_get_fds(node))
 	{
 		args = ft_get_args(node);

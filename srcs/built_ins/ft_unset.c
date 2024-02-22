@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:11 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:07 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:56:01 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_unset(char ***env, char **args)
 	{
 		if (remove_env(args[i], env))
 		{
-			return (1);
+			return (0);
 		}
 		i++;
 	}

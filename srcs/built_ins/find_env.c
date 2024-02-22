@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:41 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:00 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:19:35 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	remove_env(char *name, char ***env)
 	size_t	out;
 
 	out = 0;
-	name_e = ft_strjoin(name, "=");
 	if (!env || !(*env) || !(*env)[out])
 		return (0);
+	name_e = ft_strjoin(name, "=");
 	while (ft_strcmp(name, (*env)[out]) &&
 		ft_strncmp(name_e, (*env)[out], ft_strlen(name_e)))
 	{

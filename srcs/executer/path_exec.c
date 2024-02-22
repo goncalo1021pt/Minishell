@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:38 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:16 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:22:49 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,8 @@ static void	path_exec_aux(char **args, char **env, int fd_in, int fd_out)
 	path = find_path(args[0], env);
 	if (!path)
 	{
-		ft_output("Command '", STDERR_FILENO);
 		ft_output(args[0], STDERR_FILENO);
-		ft_output_nl("' not found", STDERR_FILENO);
+		ft_output_nl(": command not found", STDERR_FILENO);
 		free(args);
 		ft_exit(127);
 	}

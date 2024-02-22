@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:03 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 13:46:45 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:38:43 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	ft_exit(int status)
 	if (*(info.env))
 		clean_arr_str(*(info.env));
 	fuck_fds();
-	ft_output_nl("exit", STDOUT_FILENO);
 	exit(status);
 }
 static t_bool	ft_strisnum(char *str)
@@ -42,7 +41,9 @@ static t_bool	ft_strisnum(char *str)
 	size_t	count;
 
 	count = 0;
-	
+	if (!ft_isdigit(str[count]) && str[count] != '-' && str[count] != '+')
+		return(FALSE);
+	count++;
 	while (str[count])
 	{
 		if (!ft_isdigit(str[count]))
@@ -56,6 +57,8 @@ static t_bool	ft_strisnum(char *str)
 void	ft_ft_exit(char **args)
 {
 	int	ret;
+	
+	ft_output_nl("exit", STDOUT_FILENO);
 	if (!args[1])
 	{
 		free(args);

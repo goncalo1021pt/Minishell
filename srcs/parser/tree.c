@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:54 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:38 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:32:20 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void	cmd_parser(t_list *lst, t_ast_node **ast, int first)
 	if (lst && ast)
 	{
 		content = lst->content;
+		if (!(content->str))
+		{
+			cmd_parser(lst->next, ast, first);
+			return ;
+		}
 		set_phantom_node(ast);
 		if (content->type == NODE_COMMAND)
 		{

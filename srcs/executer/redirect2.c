@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/21 19:26:31 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:49:52 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_get_here(t_ast_node *node)
 	aux = node->left;
 	while (aux)
 	{
-		if (aux->type == NODE_REDIRECT_IN_HERE)
+		if (aux->type == NODE_REDIRECT_IN_HERE && aux->value)
 			ret = ft_read_del(aux, aux->value);
 		if (ret)
 			return (ret);

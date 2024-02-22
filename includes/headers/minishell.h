@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 13:26:07 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:44:36 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <dirent.h>
 
 # define MAX_PATH_SIZE 4096
 # define TOKEN_LIST "'\"&|;<>,"

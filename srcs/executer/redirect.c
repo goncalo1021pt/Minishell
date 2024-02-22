@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:46 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/21 19:27:28 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:49:36 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,13 @@ int	ft_recive_fd_in(t_ast_node *node, t_ast_node *c_node)
 
 int	ft_get_here_rec(t_ast_node *node)
 {
-	if (node->type == NODE_COMMAND)
+	if (node && node->type == NODE_COMMAND)
 	{
 		return (ft_get_here(node));
 	}
-	else
+	else if (node)
 	{
 		return (ft_get_here_rec(node->left) + ft_get_here_rec(node->right));
 	}
+	return(0);
 }
