@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:46 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:17 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:27:28 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,16 @@ int	ft_recive_fd_in(t_ast_node *node, t_ast_node *c_node)
 		close(node->fd_in);
 	node->fd_in = c_node->fd_in;
 	return (0);
+}
+
+int	ft_get_here_rec(t_ast_node *node)
+{
+	if (node->type == NODE_COMMAND)
+	{
+		return (ft_get_here(node));
+	}
+	else
+	{
+		return (ft_get_here_rec(node->left) + ft_get_here_rec(node->right));
+	}
 }

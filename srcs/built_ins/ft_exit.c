@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:03 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:05 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:33:09 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minishell.h"
+
+static void	fuck_fds(void)
+{
+	size_t	fd;
+
+	fd = 3;
+	while (fd < FOPEN_MAX)
+	{
+		close(fd);
+		fd++;
+	}
+}
 
 void	ft_exit(int status)
 {
@@ -21,5 +33,6 @@ void	ft_exit(int status)
 		ast_free(*(info.tree));
 	if (*(info.env))
 		clean_arr_str(*(info.env));
+	fuck_fds();
 	exit(status);
 }

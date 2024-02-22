@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:51 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:18 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:05:56 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ int	ft_get_fds(t_ast_node *node)
 
 	ret = 0;
 	aux = node->left;
-	ret = ft_get_here(node);
-	if (ret)
-		return (ret);
 	while (aux)
 	{
 		if (aux->type == NODE_REDIRECT_IN)

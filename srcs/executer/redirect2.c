@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:18 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:26:31 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_read_del_aux(int fd_out, char *fname)
 	line = readline("> ");
 	if (!line)
 		return (del_eof(fd_out));
-	while (ft_strncmp(line, fname, ft_strlen(line)) != 0)
+	while (ft_strcmp(line, fname) != 0)
 	{
 		write(fd_out, line, ft_strlen(line));
 		write(fd_out, "\n", 1);

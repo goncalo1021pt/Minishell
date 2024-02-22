@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   local_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:35 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:15 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:28:26 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,22 @@
 
 static void	local_exec_aux(char **args, char **env, int fd_in, int fd_out)
 {
+	char	*mess;
+
 	if (access(args[0], F_OK) != 0)
 	{
-		perror(ft_strjoin("minishell: ", args[0]));
+		mess = ft_strjoin("minishell: ", args[0]);
+		perror(mess);
+		free(args);
+		free(mess);
 		ft_exit(errno);
 	}
 	if (set_fds(fd_in, fd_out) == -1 || execve(args[0], args, env) == -1)
 	{
-		perror(ft_strjoin("minishell: ", args[0]));
+		mess = ft_strjoin("minishell: ", args[0]);
+		perror(mess);
+		free(args);
+		free(mess);
 		ft_exit(errno);
 	}
 	close_fds(fd_in, fd_out);

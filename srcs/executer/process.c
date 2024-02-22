@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:43 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:17 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:26:08 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	call_process(t_ast_node *node, char ***env)
 {
 	int	ret;
 
+	if (ft_get_here_rec(node))
+		return (1);
 	ret = ft_process(node, env);
 	return (ret);
 }

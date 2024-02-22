@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:26:30 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:04:32 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int						set_fd_in(int fd_in);
 int						set_fd_out(int fd_out);
 int						set_fds(int fd_in, int fd_out);
 void					close_fds(int fd_in, int fd_out);
+int						ft_get_here_rec(t_ast_node *node);
 
 // built_ins
 int						add_env(char *new_env, char ***env);
