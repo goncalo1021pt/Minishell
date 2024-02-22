@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:06 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 12:48:19 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:58:02 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,17 @@ char	*get_env_name(char *env)
 	return (aux);
 }
 
-static int	invalid(char *arg)
+static int	invalid(char *arg, int *ret)
 {
-	ft_output("minishell: export: `", STDERR_FILENO);
-	ft_output(arg, STDERR_FILENO);
-	ft_output_nl("': not a valid identifier", STDERR_FILENO);
-	return (1);
+	if (arg[0] == '=' || ft_strchr(arg, '-') || (arg[0] >= '0' && (arg[0] <= '9')))
+	{
+		ft_output("minishell: export: `", STDERR_FILENO);
+		ft_output(arg, STDERR_FILENO);
+		ft_output_nl("': not a valid identifier", STDERR_FILENO);
+		*ret = 1;
+		return (1);
+	}
+	return (0);
 }
 
 static int	ft_export_aux(char ***env, char **args)
@@ -70,11 +75,8 @@ static int	ft_export_aux(char ***env, char **args)
 	i = 0;
 	while (args[++i])
 	{
-		if (args[i][0] == '=' || ft_strchr(args[i], '-') || (args[i][0] >= '0' && (args[i][0] <= '9')))
-		{
-			ret = invalid(args[i]);
+		if (invalid(args[i], &ret))
 			continue ;
-		}
 		if (args[i][0] == '_' && args[i][1] == '=')
 			continue ;
 		name = get_env_name(args[i]);
