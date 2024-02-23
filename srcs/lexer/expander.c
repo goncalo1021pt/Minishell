@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 16:37:17 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:40:24 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ char	*expander(char *str, char **env)
 	char	*temp;
 
 	new = str;
+	
 	while (check_expander(new))
 	{
 		temp = expand_1(new, env);
 		if (!temp)
 			return (free(new), NULL);
-		free(new);
+		free(new);	
 		new = temp;
 	}
 	if (new[0] == '\0')

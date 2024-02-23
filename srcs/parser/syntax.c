@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:51 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 18:42:31 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:23:45 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_bool	check_syntax(t_list *lst)
 			return (FALSE);
 		tmp = tmp->next;
 	}
-	
 	split_redirects(&lst);
 	return (TRUE);
 }
@@ -87,7 +86,7 @@ t_bool	syntax_2(t_list *tmp2, t_parser *tmp2_parser, t_parser *parser)
 		if (tmp2->next == NULL)
 			return (FALSE);
 		else if (is_redirect(parser->type))
-				 	return (FALSE);
+			return (FALSE);
 	}
 	else if (!tmp2 && parser->type != NODE_COMMAND)
 		return (FALSE);
