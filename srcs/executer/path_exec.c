@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:38 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 16:22:49 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:46:16 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*find_path(char *pname, char **env)
 	path_ar = ft_split(paths, ':');
 	if (!path_ar)
 		return (NULL);
-	i = 1;
+	i = 0;
 	ret = NULL;
 	while (path_ar[i])
 	{
