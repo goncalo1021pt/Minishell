@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:41 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 15:22:56 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:27:09 by goncalo1021      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ int	ft_pipe(t_ast_node *node, char ***env)
 
 	if (pipe(pip) == -1)
 	{
-<<<<<<< HEAD:srcs/pipe.c
-		perror("minishell: ");
-=======
 		perror("minishell:");
->>>>>>> refs/remotes/origin/main:srcs/executer/pipe.c
 		return (errno);
 	}
 	node->left->fd_out = pip[1];
@@ -58,23 +54,13 @@ int	ft_pipe(t_ast_node *node, char ***env)
 	fk1 = fork();
 	if (fk1 < 0)
 	{
-<<<<<<< HEAD:srcs/pipe.c
-		perror("fork");
-		ft_exit (errno);
-=======
 		perror("minishell:");
 		ft_exit(errno);
->>>>>>> refs/remotes/origin/main:srcs/executer/pipe.c
 	}
 	if (fk1 == 0)
 	{
 		close(pip[0]);
-<<<<<<< HEAD:srcs/pipe.c
-		ft_process(node->left, env);
-		ft_exit(0);
-=======
 		ft_exit(ft_process(node->left, env));
->>>>>>> refs/remotes/origin/main:srcs/executer/pipe.c
 	}
 	return (pipe_2(node, env, pip, fk1));
 }
