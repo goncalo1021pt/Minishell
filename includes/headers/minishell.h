@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 17:47:54 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:07:31 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ int						ft_echo(char **arg, int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
 void					ft_exit(int status);
 void					ft_ft_exit(char **args);
+t_bool					ste(char *str, char search);
 int						ft_export(char ***env, char **args, int fd_out);
 char					*get_env_name(char *env);
 int						ft_pwd(int fd_out);

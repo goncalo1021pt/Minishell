@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:03 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 17:56:39 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:06:29 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minishell.h"
+
+//search to equal sign used in export
+t_bool	ste(char *str, char search)
+{
+	if ((ft_strchr(str, search) && ft_strchr(str, search) < ft_strchr(str, '='))
+		|| (ft_strchr(str, search) && !ft_strchr(str, '=')))
+	{
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
 
 static void	fuck_fds(void)
 {

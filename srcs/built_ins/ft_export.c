@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:06 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 17:56:49 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:20:54 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ char	*get_env_name(char *env)
 
 static int	invalid(char *arg, int *ret)
 {
-	if (arg[0] == '=' || (ft_strchr(arg, '-') && ft_strchr(arg,
-				'-') < ft_strchr(arg, '=')) || (ft_strchr(arg, '-')
-			&& !ft_strchr(arg, '=')) || (arg[0] >= '0' && (arg[0] <= '9')))
+	if (!arg[0] || arg[0] == '=' || ste(arg, '-') || ste(arg, '.')
+		|| ste(arg, ':') || ste(arg, ',') || ste(arg, '+') || ste(arg, '\\')
+		|| ste(arg, '!') || (arg[0] >= '0' && (arg[0] <= '9')))
 	{
 		ft_output("minishell: export: `", STDERR_FILENO);
 		ft_output(arg, STDERR_FILENO);
@@ -79,7 +79,7 @@ static int	ft_export_aux(char ***env, char **args)
 	{
 		if (invalid(args[i], &ret))
 			continue ;
-		if (args[i][0] == '_' && args[i][1] == '=')
+		if (args[i][0] == '_' && (args[i][1] == '=' || args[i][1] == '\0'))
 			continue ;
 		name = get_env_name(args[i]);
 		aux = ft_strdup(args[i]);
