@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:28:51 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/23 14:23:45 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 t_bool	check_syntax(t_list *lst)
@@ -73,8 +85,7 @@ t_bool	syntax_2(t_list *tmp2, t_parser *tmp2_parser, t_parser *parser)
 	{
 		if (tmp2->next == NULL)
 			return (FALSE);
-		tmp2_parser = tmp2->next->content;
-		if (tmp2_parser->type != NODE_COMMAND)
+		else if (is_redirect(parser->type))
 			return (FALSE);
 	}
 	else if (!tmp2 && parser->type != NODE_COMMAND)

@@ -1,8 +1,4 @@
 NAME = minishell
-BONUS_NAME = minishell_bonus
-
-BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
-B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 S = main/main main/minishell main/minishell_aux main/prompt main/shell_level lexer/custom_split lexer/expander lexer/expander2 lexer/split_utils \
@@ -11,17 +7,20 @@ S = main/main main/minishell main/minishell_aux main/prompt main/shell_level lex
 	built_ins/ft_cd built_ins/ft_echo built_ins/ft_env built_ins/ft_exit built_ins/ft_export built_ins/ft_pwd built_ins/ft_unset \
 	built_ins/get_current_pwd built_ins/get_env executer/local_exec executer/path_exec executer/pipe executer/process \
 	executer/redirect executer/redirect2 executer/run executer/set_fds
+
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g3# -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3
+SFLAGS = -fsanitize=address
 rd_ln = -lreadline
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
+SOBJS = $(addprefix $(OBJS_DIR_S)/,$(SRCS:srcs/%.c=%.o))
 
 BONUS_OBJS = $(addprefix $(OBJS_DIR_BONUS)/,$(BONUS:bonus/%.c=%.o))
 OBJS_DIR = objs
-OBJS_DIR_BONUS = objs_bonus
+OBJS_DIR_S = s_objs
 
 LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -33,17 +32,15 @@ BLUE = \033[0;34m
 ORANGE = \033[0;33m
 NC = \033[0m 
 
-all: $(NAME) 
-bonus: $(BONUS_NAME)
-
+all: $(NAME)
 
 $(OBJS_DIR)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJS_DIR_BONUS)/%.o: bonus/%.c
+$(OBJS_DIR_S)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(SFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(GREEN)$(NAME)$(NC) compiling..."
@@ -59,9 +56,15 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 	@echo "$(ORANGE)libft$(NC)ready!"
 
+s: fclean $(SOBJS) $(LIBFT)
+	@echo "$(GREEN)$(NAME)$(NC) compiling..."
+	@$(CC) $(CFLAGS) $(SFLAGS) -o $(NAME) $(SOBJS) $(LIBFT) $(rd_ln)
+	@echo "$(GREEN)$(NAME)$(NC) ready!"
+
 clean:
 	@$(RM) -r $(OBJS_DIR)
 	@$(RM) -r $(OBJS_DIR_BONUS)
+	@$(RM) -r $(OBJS_DIR_S)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
 	@echo "$(RED)$(NAME)$(NC)OBJS cleaned!"
 

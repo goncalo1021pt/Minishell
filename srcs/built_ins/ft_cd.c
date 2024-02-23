@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:26:45 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/22 17:01:57 by sergmigu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 #define PWD_MSG "minishell: cd: OLDPWD not set"
 
@@ -18,8 +30,9 @@ static int	change_dir(char *path, char ***env)
 	}
 	else
 	{
-		ft_output("minishell: cd: no such directory: ", STDOUT_FILENO);
-		ft_output_nl(path, STDOUT_FILENO);
+		ft_output("minishell: cd: ", STDERR_FILENO);
+		ft_output(path, STDERR_FILENO);
+		ft_output(": No such file or directory", STDERR_FILENO);
 		return (1);
 	}
 }

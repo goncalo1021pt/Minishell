@@ -1,16 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander2.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:28:10 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/23 18:39:11 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 char	*expand_1(char *str, char **env)
 {
-	int	ctd;
-	int	len;
+	int		ctd;
+	int		len;
+	t_bool	flag;
 
 	ctd = -1;
+	flag = TRUE;
 	while (str[++ctd])
 	{
-		if (str[ctd] == '\'')
+		if (str[ctd] == '\'' && flag)
 			ctd = skip_quotes(str, ctd, '\'');
-		if (str[ctd] == '$')
+		if (str[ctd] == '\"')
+			flag = FALSE;
+		if (str[ctd] == '$' && (ft_isalnum(str[ctd + 1]) || str[ctd
+					+ 1] == '?'))
 		{
 			len = 0;
 			ctd++;

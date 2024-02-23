@@ -1,26 +1,16 @@
-#include "../../includes/headers/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:27:51 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/23 19:25:55 by goncalo1021      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	error_handler(int status)
-{
-	if (status == 0)
-	{
-		err_info(0);
-		return (status);
-	}
-	else
-		err_info(128 + status);
-	if (status == 2)
-	{
-		status = 130;
-		ft_printf("\n");
-	}
-	else if (status == 131)
-		ft_printf("Quit\n");
-	if (status > 255)
-		status = status / 256;
-	err_info(status);
-	return (status);
-}
+#include "../../includes/headers/minishell.h"
 
 char	**ft_get_args(t_ast_node *node)
 {
@@ -34,7 +24,8 @@ char	**ft_get_args(t_ast_node *node)
 	args = NULL;
 	while (aux)
 	{
-		ac++;
+		if (aux->value)
+			ac++;
 		aux = aux->right;
 	}
 	if (my_alloc(sizeof(char *), ac + 1, (void **)(&args)))
@@ -43,11 +34,21 @@ char	**ft_get_args(t_ast_node *node)
 	aux = node;
 	while (i < ac)
 	{
-		args[i] = aux->value;
-		i++;
+		if (aux->value)
+			args[i++] = aux->value;
 		aux = aux->right;
 	}
 	return (args);
+}
+
+int	close_astr_fds(t_ast_node *aux, int ret)
+{
+	while (aux)
+	{
+		close_fds(aux->fd_in, aux->fd_out);
+		aux = aux->left;
+	}
+	return (ret);
 }
 
 int	ft_get_fds(t_ast_node *node)
@@ -62,13 +63,13 @@ int	ft_get_fds(t_ast_node *node)
 		if (aux->type == NODE_REDIRECT_IN)
 			ret = ft_redirect_in(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_IN_HERE)
-			ret = ft_read_del(node, aux->value);
+			ret = ft_recive_fd_in(node, aux);
 		else if (aux->type == NODE_REDIRECT_OUT)
 			ret = ft_redirect_out(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_OUT_APPENDS)
 			ret = ft_append_out(node, aux->value);
 		if (ret)
-			return (ret);
+			return (close_astr_fds(aux, ret));
 		aux = aux->left;
 	}
 	return (ret);
@@ -94,8 +95,8 @@ static int	run_aux(t_ast_node *node, char **args, char ***env)
 		return (ft_env(*env, args, node->fd_out));
 	else if (ft_strcmp(node->value, "exit") == 0)
 	{
-		free(args);
-		ft_exit(EXIT_UNCHANGED);
+		ft_ft_exit(args);
+		return (1);
 	}
 	else
 		return (path_exec(args, *env, node->fd_in, node->fd_out));
@@ -107,21 +108,13 @@ int	ft_run(t_ast_node *node, char ***env)
 	char	**args;
 	int		ret;
 
-	ret = 0;
+	ret = 1;
 	if (!ft_get_fds(node))
 	{
 		args = ft_get_args(node);
 		ret = run_aux(node, args, env);
 		free(args);
 	}
-<<<<<<< HEAD:srcs/run.c
-	waitpid(pid, &status, 0);
-	if (ft_strcmp(node->value, "exit") == 0)
-		ft_exit(0);
-	error_handler(status);
-	return (status);
-=======
 	close_fds(node->fd_in, node->fd_out);
 	return (ret);
->>>>>>> refs/remotes/origin/main:srcs/executer/run.c
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_env.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:26:41 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/22 14:19:35 by sergmigu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 int	add_env(char *new_env, char ***env)
@@ -59,9 +71,9 @@ int	remove_env(char *name, char ***env)
 	size_t	out;
 
 	out = 0;
-	name_e = ft_strjoin(name, "=");
 	if (!env || !(*env) || !(*env)[out])
 		return (0);
+	name_e = ft_strjoin(name, "=");
 	while (ft_strcmp(name, (*env)[out]) &&
 		ft_strncmp(name_e, (*env)[out], ft_strlen(name_e)))
 	{

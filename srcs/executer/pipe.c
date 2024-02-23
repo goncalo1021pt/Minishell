@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:27:41 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/22 15:22:56 by sergmigu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 static int	pipe_2(t_ast_node *node, char ***env, int pip[2], int fk1)
@@ -14,12 +26,14 @@ static int	pipe_2(t_ast_node *node, char ***env, int pip[2], int fk1)
 	if (fk2 == 0)
 	{
 		close(pip[1]);
-		ft_exit(ft_process(node->right, env));
+		status = ft_process(node->right, env);
+		ft_exit(status);
 	}
 	close(pip[1]);
 	close(pip[0]);
 	waitpid(fk1, NULL, 0);
 	waitpid(fk2, &status, 0);
+	status = error_handler(status);
 	return (status);
 }
 

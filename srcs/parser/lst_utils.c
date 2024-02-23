@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:28:46 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/19 18:31:36 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 void	free_all(t_list *list)
@@ -18,7 +30,8 @@ void	free_parse_lst(void *content)
 	t_parser	*parser;
 
 	parser = content;
-	free(parser->str);
+	if (parser->str)
+		free(parser->str);
 	free(parser);
 }
 

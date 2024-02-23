@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:28:27 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/23 13:40:29 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 static char	*minishell_aux_1(void)
@@ -57,8 +69,11 @@ int	minishell(char ***env)
 		line = minishell_aux_1();
 		if (!line)
 			ft_exit(0);
-		if ((!*line || has_argument(line) ) && confirm_free(line))
+		if (!*line || has_argument(line))
+		{
+			confirm_free(line);
 			continue ;
+		}
 		list = minishell_aux_2(line);
 		if (!list || (!check_syntax(list) && display_error(list)))
 			continue ;

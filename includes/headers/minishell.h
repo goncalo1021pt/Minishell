@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/23 14:23:19 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -14,6 +26,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <dirent.h>
 
 # define MAX_PATH_SIZE 4096
 # define TOKEN_LIST "'\"&|;<>,"
@@ -84,6 +97,7 @@ void					create_token(char *str, int ctd, int ctd2, char *out);
 char					**ft_custom_split(char *str);
 char					**skip_str(char *s, char **out, int ctd);
 char					**ft_split_quotes(char const *s);
+void					check_null(t_list *lst);
 t_bool					check_expander(char *str);
 char					*expander(char *str, char **env);
 void					expand_lst(t_list *lst, char **env);
@@ -142,13 +156,16 @@ int						ft_redirect_in(t_ast_node *node, char *fname);
 int						ft_redirect_out(t_ast_node *node, char *fname);
 int						ft_append_out(t_ast_node *node, char *fname);
 int						ft_read_del(t_ast_node *node, char *fname);
+int						ft_recive_fd_in(t_ast_node *node, t_ast_node *cnode);
 char					**ft_get_args(t_ast_node *node);
 int						ft_get_fds(t_ast_node *node);
+int						ft_get_here(t_ast_node *node);
 int						ft_run(t_ast_node *node, char ***env);
 int						set_fd_in(int fd_in);
 int						set_fd_out(int fd_out);
 int						set_fds(int fd_in, int fd_out);
 void					close_fds(int fd_in, int fd_out);
+int						ft_get_here_rec(t_ast_node *node);
 
 // built_ins
 int						add_env(char *new_env, char ***env);
@@ -158,6 +175,8 @@ int						ft_cd(char **arg, char ***env);
 int						ft_echo(char **arg, int fd_out);
 int						ft_env(char **env, char **args, int fd_out);
 void					ft_exit(int status);
+void					ft_ft_exit(char **args);
+t_bool					ste(char *str, char search);
 int						ft_export(char ***env, char **args, int fd_out);
 char					*get_env_name(char *env);
 int						ft_pwd(int fd_out);

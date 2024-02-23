@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:27:43 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/22 16:52:06 by sergmigu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 int	call_process(t_ast_node *node, char ***env)
 {
 	int	ret;
 
+	if (ft_get_here_rec(node))
+		return (1);
 	ret = ft_process(node, env);
 	return (ret);
 }

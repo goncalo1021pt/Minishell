@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_exec.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 18:27:38 by sergmigu          #+#    #+#             */
+/*   Updated: 2024/02/23 18:46:16 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 static int	test_path(char *path, char *pname)
@@ -39,12 +51,12 @@ static char	*find_path(char *pname, char **env)
 	int		i;
 
 	paths = find_env_paths(env);
-	if (!paths)
+	if (!paths || !(*pname))
 		return (NULL);
 	path_ar = ft_split(paths, ':');
 	if (!path_ar)
 		return (NULL);
-	i = 1;
+	i = 0;
 	ret = NULL;
 	while (path_ar[i])
 	{
@@ -66,9 +78,8 @@ static void	path_exec_aux(char **args, char **env, int fd_in, int fd_out)
 	path = find_path(args[0], env);
 	if (!path)
 	{
-		ft_output("Command '", STDERR_FILENO);
 		ft_output(args[0], STDERR_FILENO);
-		ft_output_nl("' not found", STDERR_FILENO);
+		ft_output_nl(": command not found", STDERR_FILENO);
 		free(args);
 		ft_exit(127);
 	}
