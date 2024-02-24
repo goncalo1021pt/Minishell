@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/23 14:23:19 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:26:53 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,10 @@ int						search_logical(t_list *lst, t_list **nod,
 							t_list **prev);
 int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
 
+//wild cards
+
+char					*ft_wild(char *search);
+
 // executer
 int						error_handler(int status);
 int						local_exec(char **args, char **env, int fd_in,
@@ -178,6 +182,8 @@ void					ft_exit(int status);
 void					ft_ft_exit(char **args);
 t_bool					ste(char *str, char search);
 int						ft_export(char ***env, char **args, int fd_out);
+int						check_add(char *arg, int *ret, char ***env);
+int						export_add(char *arg, char ***env);
 char					*get_env_name(char *env);
 int						ft_pwd(int fd_out);
 int						ft_unset(char ***env, char **args);
