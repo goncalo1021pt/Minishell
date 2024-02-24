@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_level.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:32 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:33 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:23:53 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*inc_str(char *i)
 {
 	if (!i)
-		return (ft_itoa(0));
+		return (ft_itoa(1));
 	else
 		return (ft_itoa(ft_atoi(i) + 1));
 }
