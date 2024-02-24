@@ -103,6 +103,8 @@ char	**search_arr(char *search, char **content)
 				free(ret);
 			ret = aux;
 		}
+		else
+			free(content[i]);
 		i++;
 	}
 	return (ret);
