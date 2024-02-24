@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_output.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:29:09 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:47 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:10:27 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,13 @@ void	ft_output_export(char *str, int fd)
 	{
 		write(fd, &(str[i]), 1);
 		if (check == 0 && str[i] == '=')
+		{
 			write(fd, "\"", 1);
+			check = 1;
+		}
 		i++;
 	}
-	write(fd, "\"\n", 2);
+	if (check == 1)
+		write(fd, "\"", 1);
+	write(fd, "\n", 1);
 }
