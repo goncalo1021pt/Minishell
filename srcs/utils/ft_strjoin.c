@@ -12,6 +12,12 @@
 
 #include "../../includes/headers/minishell.h"
 
+static void sj_free(char *f)
+{
+	if (f)
+		free(f);
+}
+
 char	*ft_strjoin_f1(char *s1, char const *s2)
 {
 	int		count;
@@ -20,21 +26,21 @@ char	*ft_strjoin_f1(char *s1, char const *s2)
 
 	aux = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (aux == NULL)
-		return (free (s1), NULL);
+		return (sj_free (s1), NULL);
 	count = 0;
-	while (s1[count])
+	while (s1 && s1[count])
 	{
 		aux[count] = s1[count];
 		count ++;
 	}
 	count2 = 0;
-	while (s2[count2])
+	while (s2 && s2[count2])
 	{
 		aux[count + count2] = s2[count2];
 		count2 ++;
 	}
 	aux[count + count2] = '\0';
-	return (free(s1), aux);
+	return (sj_free(s1), aux);
 }
 
 char	*ft_strjoin_f2(char const *s1, char *s2)
@@ -45,21 +51,21 @@ char	*ft_strjoin_f2(char const *s1, char *s2)
 
 	aux = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (aux == NULL)
-		return (free (s2), NULL);
+		return (sj_free (s2), NULL);
 	count = 0;
-	while (s1[count])
+	while (s1 && s1[count])
 	{
 		aux[count] = s1[count];
 		count ++;
 	}
 	count2 = 0;
-	while (s2[count2])
+	while (s2 && s2[count2])
 	{
 		aux[count + count2] = s2[count2];
 		count2 ++;
 	}
 	aux[count + count2] = '\0';
-	return (free(s2), aux);
+	return (sj_free(s2), aux);
 }
 
 char	*ft_strjoin_f12(char *s1, char *s2)
@@ -70,19 +76,19 @@ char	*ft_strjoin_f12(char *s1, char *s2)
 
 	aux = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (aux == NULL)
-		return (free (s1), free(s2), NULL);
+		return (sj_free (s1), sj_free(s2), NULL);
 	count = 0;
-	while (s1[count])
+	while (s1 && s1[count])
 	{
 		aux[count] = s1[count];
 		count ++;
 	}
 	count2 = 0;
-	while (s2[count2])
+	while (s2 && s2[count2])
 	{
 		aux[count + count2] = s2[count2];
 		count2 ++;
 	}
 	aux[count + count2] = '\0';
-	return (free(s1), free(s2), aux);
+	return (sj_free(s1), sj_free(s2), aux);
 }

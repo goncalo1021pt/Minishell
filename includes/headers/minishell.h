@@ -6,7 +6,7 @@
 /*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/24 15:45:49 by sergio           ###   ########.fr       */
+/*   Updated: 2024/02/24 17:26:53 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,10 @@ void					cmd_parser(t_list *lst, t_ast_node **ast, int first);
 int						search_logical(t_list *lst, t_list **nod,
 							t_list **prev);
 int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
+
+//wild cards
+
+char					*ft_wild(char *search);
 
 // executer
 int						error_handler(int status);
