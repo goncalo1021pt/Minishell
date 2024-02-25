@@ -141,6 +141,6 @@ char	*ft_wild(char *search)
 	if (ret)
 		return (reverse_split(ret));
 	else
-		return (search);
+		return (ft_strdup(search));
 	return (NULL);
 }

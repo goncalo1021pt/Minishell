@@ -6,7 +6,7 @@
 /*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:27 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/24 19:51:25 by sergio           ###   ########.fr       */
+/*   Updated: 2024/02/25 21:21:08 by sergio           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	minishell(char ***env)
 	while (1)
 	{
 		char *wild;
+
 		choose_signal(ROOT);
 		ast = NULL;
 		line = minishell_aux_1();
