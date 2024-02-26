@@ -21,17 +21,20 @@ void expand_wildcard(t_list *list)
 	t_list *new;
 	t_list *temp;
 	t_list *prev;
+	t_bool changed;
 
 	prev = NULL;
+	changed = FALSE;
 	while (list)
 	{
 
 		if (((t_parser *)(list->content))->type == NODE_COMMAND && as_wildcard(((t_parser *)(list->content))->str))
 		{
 			temp = list->next;
-			new = ft_wild(&list);
-			if (new != list)
+			new = ft_wild(((t_parser *)(list->content))->str);
+			if (new)
 			{
+				changed = TRUE;
 				if (prev)
 					prev->next = new;
 				else
@@ -39,8 +42,15 @@ void expand_wildcard(t_list *list)
 				ft_lstlast(new)->next = temp;
 			}
 		}
-		prev = list; 
+		prev = list;
 		list = list->next;
+		if (changed)
+		{
+			changed = FALSE;
+			free_parse_lst(prev->content);
+			free(prev);
+			prev = temp;
+		}
 	}
 }
 

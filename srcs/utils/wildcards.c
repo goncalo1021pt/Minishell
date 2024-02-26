@@ -135,6 +135,8 @@ void	set_list(t_list **list, char **new)
 	t_list		*node;
 
 	i = 0;
+	node = NULL;
+	content = NULL;
 	while(new[i])
 	{
 		content = (t_parser *)malloc(sizeof(t_parser));
@@ -194,30 +196,25 @@ void	add_list(t_list **list, t_list **add)
 }
 
 
-t_list	*ft_wild(t_list **list)
+t_list	*ft_wild(char *search)
 {
 	char	**content;
 	char	**ret;
-	char	*search;
 	t_list	*lst_aux;
 
-	ft_lstiter(*list, print_content);
 	lst_aux = NULL;
-	search = ((t_parser *)((*list)->content))->str;
 	if (!search)
-		return (*list);
+		return (NULL);
 	content = get_dir_content();
 	ret = search_arr(search, content);
 	free(content);
 	if (ret)
 	{
 		set_list(&lst_aux, ret);
-		ft_lstiter(lst_aux, print_content);
-		ft_lstiter(lst_aux, print_content);
 		return(lst_aux);
 	}
 	else
-		return(*list);
+		return(NULL);
 }
 
 /*
