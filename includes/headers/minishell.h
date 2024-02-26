@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/24 17:26:53 by sergio           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:19:13 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
 
 //wild cards
 
-char					*ft_wild(char *search);
+void					ft_wild(t_list **list);
 
 // executer
 int						error_handler(int status);

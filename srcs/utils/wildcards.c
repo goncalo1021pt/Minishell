@@ -128,6 +128,94 @@ char*	reverse_split(char **elm)
 	return (ret);
 }
 
+void	set_list(t_list **list, char **new)
+{
+	size_t		i;
+	t_parser	*content;
+	t_list		*node;
+
+	i = 0;
+	while(new[i])
+	{
+		content = (t_parser *)malloc(sizeof(t_parser));
+		if (content)
+		{
+			node = (t_list *)malloc(sizeof(t_list));
+			if (!node)
+			{
+				free(content);
+				free(new[i]);
+			}
+			else
+			{
+				content->str = new[i];
+				content->type = NODE_COMMAND;
+				node->content = content;
+				ft_lstadd_back(list, node);
+			}
+		}
+		else
+			free(new[i]);
+		i++;
+	}
+}
+
+static void	del_node(t_list *lst)
+{
+	if (lst)
+	{
+		if (lst->content)
+		{
+			if (((t_parser *)(lst->content))->str)
+				free(((t_parser *)(lst->content))->str);
+			free((t_parser *)(lst->content));
+		}
+		free(lst);
+	}
+}
+
+void	add_list(t_list **list, t_list *add)
+{
+	t_list	*aux;
+
+	if (!list || !add)
+	{
+		clean_lst(add);
+		return ;
+	}
+	aux = add;
+	while(aux)
+	{
+		aux = aux->next;
+	}
+	aux->next = (*list)->next;
+	del_node(*list);
+	*list = add;
+
+}
+
+
+void	ft_wild(t_list **list)
+{
+	char	**content;
+	char	**ret;
+	char	*search;
+	t_list	*lst_aux;
+
+	search = ((t_parser *)((*list)->content))->str;
+	if (!search)
+		return ;
+	content = get_dir_content();
+	ret = search_arr(search, content);
+	free(content);
+	if (ret)
+	{
+		set_list(&lst_aux, ret);
+		add_list(list, lst_aux);
+	}
+}
+
+/*
 char	*ft_wild(char *search)
 {
 	char	**content;
@@ -144,3 +232,4 @@ char	*ft_wild(char *search)
 		return (ft_strdup(search));
 	return (NULL);
 }
+*/
