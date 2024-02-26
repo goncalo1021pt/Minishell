@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/23 18:40:24 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:53:22 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	expand_lst(t_list *lst, char **env)
 {
 	t_parser	*content;
+	t_list		*start;
 
 	while (lst != NULL)
 	{
@@ -23,6 +24,9 @@ void	expand_lst(t_list *lst, char **env)
 			content->str = expander(content->str, env);
 		lst = lst->next;
 	}
+	lst = start;
+	expand_wildcard(lst);
+	remove_quotes_lst(lst);
 }
 
 char	*expander(char *str, char **env)
@@ -45,10 +49,10 @@ char	*expander(char *str, char **env)
 		free(new);
 		return (NULL);
 	}
-	temp = remove_quotes(new);
-	if (!temp)
-		return (NULL);
-	new = temp;
+	// temp = remove_quotes(new);
+	// if (!temp)
+	// 	return (NULL);
+	// new = temp;
 	return (new);
 }
 
