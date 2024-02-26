@@ -2,7 +2,7 @@ NAME = minishell
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 S = main/main main/minishell main/minishell_aux main/prompt main/shell_level lexer/custom_split lexer/expander lexer/expander2 lexer/split_utils \
-	lexer/tokenizer parser/ast parser/ast2 parser/lst_utils parser/lst parser/syntax parser/tree signals/signals signals/termios \
+	lexer/tokenizer lexer/wildcard_expand parser/ast parser/ast2 parser/lst_utils parser/lst parser/syntax parser/tree signals/signals signals/termios \
 	utils/ft_astr_dup utils/ft_output utils/ft_strcmp utils/ft_strjoin utils/my_alloc utils/static utils/str_utils built_ins/find_env \
 	built_ins/ft_cd built_ins/ft_echo built_ins/ft_env built_ins/ft_exit built_ins/ft_export built_ins/ft_export_2 built_ins/ft_pwd built_ins/ft_unset \
 	built_ins/get_current_pwd built_ins/get_env executer/local_exec executer/path_exec executer/pipe executer/process \

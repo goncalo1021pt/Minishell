@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:27 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:55:38 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:07:25 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	minishell(char ***env)
 	exit_info(env, &ast);
 	while (1)
 	{
-		choose_signal(ROOT);
+		//choose_signal(ROOT);
 		ast = NULL;
 		line = minishell_aux_1();
 		if (!line)

@@ -188,7 +188,7 @@ void	add_list(t_list **list, t_list *add)
 	{
 		aux = aux->next;
 	}
-	aux->next = (*list)->next;
+	aux = (*list)->next;
 	del_node(*list);
 	*list = add;
 
@@ -202,6 +202,7 @@ void	ft_wild(t_list **list)
 	char	*search;
 	t_list	*lst_aux;
 
+	lst_aux = NULL;
 	search = ((t_parser *)((*list)->content))->str;
 	if (!search)
 		return ;
@@ -212,6 +213,7 @@ void	ft_wild(t_list **list)
 	{
 		set_list(&lst_aux, ret);
 		add_list(list, lst_aux);
+		ft_lstiter(*list, print_content);
 	}
 }
 

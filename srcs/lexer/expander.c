@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:53:22 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:07:34 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	expand_lst(t_list *lst, char **env)
 	t_parser	*content;
 	t_list		*start;
 
+	start = lst;
 	while (lst != NULL)
 	{
 		content = lst->content;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:19:13 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:57:26 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ char					*remove_quotes(char *str);
 int						count_quotes(char *str);
 int						copy_quotes(char *dst, char *src, char quote_type);
 int						skip_quotes(const char *str, int ctd, char quote_type);
+void					remove_quotes_lst(t_list *lst);
+void					expand_wildcard(t_list *list);
 
 // parser
 t_ast_node				*ast_new_node(void *c);
