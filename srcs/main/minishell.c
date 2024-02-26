@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:27 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/25 21:21:08 by sergio           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:13:59 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ int	minishell(char ***env)
 	exit_info(env, &ast);
 	while (1)
 	{
-		char *wild;
+		//char *wild;
 
 		choose_signal(ROOT);
 		ast = NULL;
 		line = minishell_aux_1();
 		if (!line)
 			ft_exit(0);
-		wild = ft_wild(line);
-		printf("%s\n", wild);
-		free(wild);
+		//wild = ft_wild(line);
+		//printf("%s\n", wild);
+		//free(wild);
 		if (!*line || has_argument(line))
 		{
 			confirm_free(line);
@@ -84,7 +84,7 @@ int	minishell(char ***env)
 			continue ;
 		expand_lst(list, *env);
 		parser_to_tree(&list, &ast);
-		//err_info(call_process(ast, env));
+		err_info(call_process(ast, env));
 		ast_free(ast);
 	}
 

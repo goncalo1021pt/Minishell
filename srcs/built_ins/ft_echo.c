@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/24 15:04:48 by sergio           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:21:43 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minishell.h"
-
-static void	echo_aux(char **arg, int fd_out)
-{
-	size_t	i;
-
-	i = 1;
-	while (arg[i])
-	{
-		ft_output(arg[i], fd_out);
-		if (arg[i + 1])
-			ft_output(" ", fd_out);
-		i++;
-	}
-}
 
 static t_bool	check_flag(char *str)
 {
@@ -44,15 +30,33 @@ static t_bool	check_flag(char *str)
 	return (FALSE);
 }
 
+static void	echo_aux(char **arg, int fd_out, int check)
+{
+	size_t	i;
+	
+	i = 1;
+	while (arg[i])
+	{
+		if(check > 0 || !check_flag(arg[i]))
+		{
+			check = 1;
+			ft_output(arg[i], fd_out);
+			if (arg[i + 1])
+				ft_output(" ", fd_out);
+		}
+		i++;
+	}
+}
+
 int	ft_echo(char **arg, int fd_out)
 {
 	if (check_flag(arg[1]))
 	{
-		echo_aux(&(arg[1]), fd_out);
+		echo_aux(&(arg[1]), fd_out, 0);
 	}
 	else
 	{
-		echo_aux(arg, fd_out);
+		echo_aux(arg, fd_out, 1);
 		ft_output_nl("", fd_out);
 	}
 	return (0);
