@@ -18,11 +18,28 @@ static t_bool as_wildcard(char *str)
 
 void expand_wildcard(t_list *list)
 {
+	t_list *new;
+	t_list *temp;
+	t_list *prev;
+
+	prev = NULL;
 	while (list)
 	{
+
 		if (((t_parser *)(list->content))->type == NODE_COMMAND && as_wildcard(((t_parser *)(list->content))->str))
-			ft_wild(&list);
-		printf("%pasd\n", list->next);
+		{
+			temp = list->next;
+			new = ft_wild(&list);
+			if (new != list)
+			{
+				if (prev)
+					prev->next = new;
+				else
+					list = new;
+				ft_lstlast(new)->next = temp;
+			}
+		}
+		prev = list; 
 		list = list->next;
 	}
 }

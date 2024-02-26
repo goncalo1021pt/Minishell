@@ -6,7 +6,7 @@
 /*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:57:26 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:57:33 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
 
 //wild cards
 
-void					ft_wild(t_list **list);
+t_list					*ft_wild(t_list **list);
 
 // executer
 int						error_handler(int status);

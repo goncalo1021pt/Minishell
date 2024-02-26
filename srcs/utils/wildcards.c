@@ -158,6 +158,7 @@ void	set_list(t_list **list, char **new)
 			free(new[i]);
 		i++;
 	}
+	free(new);
 }
 
 static void	del_node(t_list *lst)
@@ -174,47 +175,49 @@ static void	del_node(t_list *lst)
 	}
 }
 
-void	add_list(t_list **list, t_list *add)
+void	add_list(t_list **list, t_list **add)
 {
-	t_list	*aux;
+	t_list	**aux;
 
-	if (!list || !add)
+	if (!list || !(*list) || !add || !(*add))
 	{
-		clean_lst(add);
+		clean_lst(*add);
 		return ;
 	}
 	aux = add;
-	while(aux)
+	while(*aux)
 	{
-		aux = aux->next;
+		*aux = (*aux)->next;
 	}
-	aux = (*list)->next;
+	*aux = (*list)->next;
 	del_node(*list);
-	*list = add;
-
 }
 
 
-void	ft_wild(t_list **list)
+t_list	*ft_wild(t_list **list)
 {
 	char	**content;
 	char	**ret;
 	char	*search;
 	t_list	*lst_aux;
 
+	ft_lstiter(*list, print_content);
 	lst_aux = NULL;
 	search = ((t_parser *)((*list)->content))->str;
 	if (!search)
-		return ;
+		return (*list);
 	content = get_dir_content();
 	ret = search_arr(search, content);
 	free(content);
 	if (ret)
 	{
 		set_list(&lst_aux, ret);
-		add_list(list, lst_aux);
-		ft_lstiter(*list, print_content);
+		ft_lstiter(lst_aux, print_content);
+		ft_lstiter(lst_aux, print_content);
+		return(lst_aux);
 	}
+	else
+		return(*list);
 }
 
 /*
