@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio <sergio@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:38 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/24 14:49:13 by sergio           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:10:26 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*find_env_paths(char **env)
 	while (env[i])
 	{
 		if (ft_strncmp("PATH=", env[i], 5) == 0)
-			return (env[i]);
+			return (env[i] + 5);
 		i++;
 	}
 	return (NULL);
