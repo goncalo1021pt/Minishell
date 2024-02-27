@@ -110,39 +110,17 @@ char	**search_arr(char *search, char **content)
 	return (ret);
 }
 
-char*	reverse_split(char **elm)
+static void	set_list_aux(t_list **list, char **new, int i)
 {
-	size_t	i;
-	char	*ret;
-
-	i = 0;
-	ret = NULL;
-	while (elm[i])
-	{
-		if (ret)
-			ret = ft_strjoin_f1(ret, " ");
-		ret = ft_strjoin_f1(ret, elm[i]);
-		i++;
-	}
-	clean_arr_str(elm);
-	return (ret);
-}
-
-void	set_list(t_list **list, char **new)
-{
-	size_t		i;
 	t_parser	*content;
 	t_list		*node;
 
-	i = 0;
 	node = NULL;
 	content = NULL;
-	while(new[i])
-	{
-		content = (t_parser *)malloc(sizeof(t_parser));
+	content = (t_parser *)malloc(sizeof(t_parser));
 		if (content)
 		{
-			node = (t_list *)malloc(sizeof(t_list));
+			node = ft_lstnew(content);
 			if (!node)
 			{
 				free(content);
@@ -152,49 +130,25 @@ void	set_list(t_list **list, char **new)
 			{
 				content->str = new[i];
 				content->type = NODE_COMMAND;
-				node->content = content;
 				ft_lstadd_back(list, node);
 			}
 		}
 		else
 			free(new[i]);
+}
+
+void	set_list(t_list **list, char **new)
+{
+	size_t		i;
+
+	i = 0;
+	while(new[i])
+	{
+		set_list_aux(list, new, i);
 		i++;
 	}
 	free(new);
 }
-
-static void	del_node(t_list *lst)
-{
-	if (lst)
-	{
-		if (lst->content)
-		{
-			if (((t_parser *)(lst->content))->str)
-				free(((t_parser *)(lst->content))->str);
-			free((t_parser *)(lst->content));
-		}
-		free(lst);
-	}
-}
-
-void	add_list(t_list **list, t_list **add)
-{
-	t_list	**aux;
-
-	if (!list || !(*list) || !add || !(*add))
-	{
-		clean_lst(*add);
-		return ;
-	}
-	aux = add;
-	while(*aux)
-	{
-		*aux = (*aux)->next;
-	}
-	*aux = (*list)->next;
-	del_node(*list);
-}
-
 
 t_list	*ft_wild(char *search)
 {
@@ -233,5 +187,61 @@ char	*ft_wild(char *search)
 	else
 		return (ft_strdup(search));
 	return (NULL);
+}
+*/
+
+/*
+void	add_list(t_list **list, t_list **add)
+{
+	t_list	**aux;
+
+	if (!list || !(*list) || !add || !(*add))
+	{
+		clean_lst(*add);
+		return ;
+	}
+	aux = add;
+	while(*aux)
+	{
+		*aux = (*aux)->next;
+	}
+	*aux = (*list)->next;
+	del_node(*list);
+}
+*/
+
+/*
+char*	reverse_split(char **elm)
+{
+	size_t	i;
+	char	*ret;
+
+	i = 0;
+	ret = NULL;
+	while (elm[i])
+	{
+		if (ret)
+			ret = ft_strjoin_f1(ret, " ");
+		ret = ft_strjoin_f1(ret, elm[i]);
+		i++;
+	}
+	clean_arr_str(elm);
+	return (ret);
+}
+*/
+
+/*
+static void	del_node(t_list *lst)
+{
+	if (lst)
+	{
+		if (lst->content)
+		{
+			if (((t_parser *)(lst->content))->str)
+				free(((t_parser *)(lst->content))->str);
+			free((t_parser *)(lst->content));
+		}
+		free(lst);
+	}
 }
 */
