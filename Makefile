@@ -6,7 +6,7 @@ S = main/main main/minishell main/minishell_aux main/prompt main/shell_level lex
 	utils/ft_astr_dup utils/ft_output utils/ft_strcmp utils/ft_strjoin utils/my_alloc utils/static utils/str_utils built_ins/find_env \
 	built_ins/ft_cd built_ins/ft_echo built_ins/ft_env built_ins/ft_exit built_ins/ft_export built_ins/ft_export_2 built_ins/ft_pwd built_ins/ft_unset \
 	built_ins/get_current_pwd built_ins/get_env executer/local_exec executer/path_exec executer/pipe executer/process \
-	executer/redirect executer/redirect2 executer/run executer/set_fds utils/wildcards
+	executer/redirect executer/redirect2 executer/redirect3 executer/run executer/set_fds utils/wildcards
 
 COMPRESS = ar rcs
 RM = rm -f

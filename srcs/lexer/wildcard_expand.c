@@ -29,9 +29,9 @@ void expand_wildcard(t_list **list)
 	while (current)
 	{
 		content = current->content;
-		if (content->type == NODE_COMMAND && as_wildcard(content->str))
+		if ((content->type == NODE_COMMAND) && as_wildcard(content->str))
 		{
-			new = ft_wild(content->str);
+			new = ft_wild(content->str, content->type);
 			if (new)
 			{
 				if (prev)
