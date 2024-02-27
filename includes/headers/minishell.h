@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 00:02:35 by goncalo1021      ###   ########.fr       */
+/*   Updated: 2024/02/27 14:46:56 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef enum e_node_type
 	NODE_REDIRECT_IN_HERE,
 	NODE_REDIRECT_OUT,
 	NODE_REDIRECT_OUT_APPENDS,
+	NODE_REDIRECT_AMB,
 	NODE_COMMAND,
 	NODE_UNKNOWN,
 }						t_node_type;
@@ -144,7 +145,7 @@ int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
 
 //wild cards
 
-t_list					*ft_wild(char *search);
+t_list					*ft_wild(char *search, t_node_type type);
 
 // executer
 int						error_handler(int status);
@@ -162,6 +163,7 @@ int						ft_redirect_in(t_ast_node *node, char *fname);
 int						ft_redirect_out(t_ast_node *node, char *fname);
 int						ft_append_out(t_ast_node *node, char *fname);
 int						ft_read_del(t_ast_node *node, char *fname);
+int						ft_read_amb(char *value);
 int						ft_recive_fd_in(t_ast_node *node, t_ast_node *cnode);
 char					**ft_get_args(t_ast_node *node);
 int						ft_get_fds(t_ast_node *node);

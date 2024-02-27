@@ -150,7 +150,7 @@ void	set_list(t_list **list, char **new)
 	free(new);
 }
 
-t_list	*ft_wild(char *search)
+t_list	*ft_wild_arg(char *search)
 {
 	char	**content;
 	char	**ret;
@@ -169,6 +169,47 @@ t_list	*ft_wild(char *search)
 	}
 	else
 		return(NULL);
+}
+
+t_list	*ft_wild_red(char *search, t_node_type type)
+{
+	char	**content;
+	char	**ret;
+	t_list	*lst_aux;
+
+	lst_aux = NULL;
+	if (!search)
+		return (NULL);
+	content = get_dir_content();
+	ret = search_arr(search, content);
+	free(content);
+	if (ret && ret[0])
+	{
+		if (ret[1])
+		{
+			lst_aux = ft_lstnew(ft_strdup(search));
+			((t_parser *)(lst_aux->content))->type = NODE_REDIRECT_AMB;
+		}
+		else
+		{
+			lst_aux = ft_lstnew(ft_strdup(ret[0]));
+			((t_parser *)(lst_aux->content))->type = type;
+		}
+		return(clean_arr_str(ret), lst_aux);
+	}
+	return(NULL);
+}
+
+t_list	*ft_wild(char *search, t_node_type type)
+{
+	if (type == NODE_COMMAND)
+	{
+		return(ft_wild_arg(search));
+	}
+	else
+	{
+		return(ft_wild_red(search, type));
+	}
 }
 
 /*

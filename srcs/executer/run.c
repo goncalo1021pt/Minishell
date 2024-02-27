@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:51 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 15:13:17 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:46:48 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	ft_get_fds(t_ast_node *node)
 	aux = node->left;
 	while (aux)
 	{
+		printf("val:%s$\n", aux->value);
 		if (aux->type == NODE_REDIRECT_IN)
 			ret = ft_redirect_in(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_IN_HERE)
@@ -68,6 +69,8 @@ int	ft_get_fds(t_ast_node *node)
 			ret = ft_redirect_out(node, aux->value);
 		else if (aux->type == NODE_REDIRECT_OUT_APPENDS)
 			ret = ft_append_out(node, aux->value);
+		else if (aux->type == NODE_REDIRECT_AMB)
+			ret = ft_read_amb(aux->value);
 		if (ret)
 			return (close_astr_fds(aux, ret));
 		aux = aux->left;

@@ -51,7 +51,7 @@ void expand_wildcard(t_list **list)
 		content = current->content;
 		if (as_wildcard(content->str))
 		{
-			new = ft_wild(content->str);
+			new = ft_wild(content->str, content->type);
 			if (new)
 			{
 				if (prev && prev_exists(&temp, &new, &current, &prev))
