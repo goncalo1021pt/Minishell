@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/22 17:55:26 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:04:14 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,47 @@ static int	del_eof(int pip)
 	return (errno);
 }
 
-static int	ft_read_del_aux(int fd_out, char *fname)
+static void	write_expander(char *line, int fd_out, int mode)
+{
+	char	*aux;
+	char	*aux2;
+	
+	if (!line)
+		return ;
+	if (mode == 1)
+	{
+		aux2 = ft_strdup(line);
+		aux = expander(aux2, *exit_info(NULL, NULL).env);
+		write(fd_out, aux, ft_strlen(aux));	
+		if(aux)
+			free(aux);
+	}
+	else
+		write(fd_out, line, ft_strlen(line));	
+}
+
+static void	ft_read_del_aux(int fd_out, char *fname,int mode)
 {
 	char	*line;
 
 	choose_signal(HEREDOC);
 	line = readline("> ");
 	if (!line)
-		return (del_eof(fd_out));
+		ft_exit(del_eof(fd_out));
 	while (ft_strcmp(line, fname) != 0)
 	{
-		write(fd_out, line, ft_strlen(line));
+		write_expander(line, fd_out, mode);
 		write(fd_out, "\n", 1);
 		free(line);
 		line = readline("> ");
 		if (!line)
 			ft_exit(del_eof(fd_out));
 	}
+	if (!mode && fname)
+		free(fname);
 	free(line);
 	close(fd_out);
-	return (0);
+	ft_exit(0);
 }
 
 int	ft_read_del(t_ast_node *node, char *fname)
@@ -66,28 +87,13 @@ int	ft_read_del(t_ast_node *node, char *fname)
 	if (fk == 0)
 	{
 		close(pip[0]);
-		ft_exit(ft_read_del_aux(pip[1], fname));
+		if (ft_strchr(fname, '\'') || ft_strchr(fname, '\"'))
+			ft_read_del_aux(pip[1], remove_quotes(ft_strdup(fname)), 0);
+		else
+			ft_read_del_aux(pip[1], fname, 1);
 	}
 	close(pip[1]);
 	waitpid(fk, &status, 0);
 	node->fd_in = pip[0];
 	return (status);
-}
-
-int	ft_get_here(t_ast_node *node)
-{
-	t_ast_node	*aux;
-	int			ret;
-
-	ret = 0;
-	aux = node->left;
-	while (aux)
-	{
-		if (aux->type == NODE_REDIRECT_IN_HERE && aux->value)
-			ret = ft_read_del(aux, aux->value);
-		if (ret)
-			return (ret);
-		aux = aux->left;
-	}
-	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:12 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:44:56 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:37:19 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	count_quotes(char *str)
 
 	count = 0;
 	ctd = 0;
-	while (str[ctd])
+	while (str && str[ctd])
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
 		{
@@ -75,7 +75,7 @@ char	*remove_quotes(char *str)
 		return (NULL);
 	ctd = 0;
 	ctd2 = 0;
-	while (str[ctd])
+	while (str && str[ctd])
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
 		{
@@ -86,7 +86,8 @@ char	*remove_quotes(char *str)
 		else
 			out[ctd2++] = str[ctd++];
 	}
-	free(str);
+	if(str)
+		free(str);
 	return (out);
 }
 

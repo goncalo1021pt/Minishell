@@ -5,7 +5,7 @@ static t_bool	as_wildcard(char *str)
 	int	ctd;
 
 	ctd = 0;
-	while (str[ctd])
+	while (str && str[ctd])
 	{
 		if (str[ctd] == '\'' || str[ctd] == '\"')
 			ctd = skip_quotes(str, ctd, str[ctd]);
@@ -54,7 +54,7 @@ void	expand_wildcard(t_list **list)
 	while (current)
 	{
 		content = current->content;
-		if (as_wildcard(content->str))
+		if (as_wildcard(content->str) && content->type != NODE_REDIRECT_IN_HERE)
 		{
 			new = ft_wild(content->str, content->type);
 			ft_lstiter(new, print_content);
@@ -82,13 +82,8 @@ void	remove_quotes_lst(t_list *lst)
 		content = lst->content;
 		if (content->type != NODE_REDIRECT_IN_HERE)
 		{
-			content->str = remove_quotes(content->str);
-			if (!content->str)
-			{
-				free_all(start);
-				err_info(ENOMEM);
-				return ;
-			}
+			if (content->str)
+				content->str = remove_quotes(content->str);
 		}
 		lst = lst->next;
 	}

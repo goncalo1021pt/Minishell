@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 17:53:30 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:37:56 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_bool	check_flag(char *str)
 				return (FALSE);
 			i++;
 		}
-		printf("boasfim\n");
 		return (TRUE);
 	}
 	return (FALSE);

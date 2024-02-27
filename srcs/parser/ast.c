@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:41 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/19 18:31:35 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:47:42 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	ast_free(t_ast_node *node)
 		return ;
 	ast_free(node->left);
 	ast_free(node->right);
-	free(node->value);
+	if (node->value)
+		free(node->value);
 	free(node);
 }
