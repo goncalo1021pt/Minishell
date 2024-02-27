@@ -1,6 +1,6 @@
 #include "../../includes/headers/minishell.h"
 
-static t_bool as_wildcard(char *str)
+static t_bool	as_wildcard(char *str)
 {
 	int	ctd;
 
@@ -16,33 +16,38 @@ static t_bool as_wildcard(char *str)
 	return (FALSE);
 }
 
-t_bool prev_exists(t_list **temp, t_list **new, t_list **current, t_list **prev)
+static t_bool	prev_exists(t_list **new, t_list **current, t_list **prev)
 {
-	*temp = ft_lstlast(*new);
-	(*temp)->next = (*current)->next;
+	t_list		*temp;
+
+	temp = ft_lstlast(*new);
+	temp->next = (*current)->next;
 	(*prev)->next = *new;
 	free_parse_lst((*current)->content);
 	free(*current);
-	*current = (*temp)->next;
-	*prev = *temp;
+	*current = temp->next;
+	*prev = temp;
 	return (TRUE);
 }
 
-void prev_doesnt_exist(t_list **new, t_list **current, t_list **list)
+void	prev_doesnt_exist(t_list **new, t_list **current, t_list **list)
 {
-	ft_lstlast(*new)->next = (*current)->next;
+	t_list		*temp;
+
+	temp = ft_lstlast(*new);
+	temp->next = (*current)->next;
 	*list = *new;
 	free_parse_lst((*current)->content);
 	free(*current);
+	*current = temp;
 }
 
-void expand_wildcard(t_list **list)
+void	expand_wildcard(t_list **list)
 {
-	t_list *current;
-	t_parser *content;
-	t_list *prev;
-	t_list *new;
-	t_list *temp;
+	t_list		*current;
+	t_parser	*content;
+	t_list		*prev;
+	t_list		*new;
 
 	current = *list;
 	prev = NULL;
@@ -52,10 +57,11 @@ void expand_wildcard(t_list **list)
 		if (as_wildcard(content->str))
 		{
 			new = ft_wild(content->str, content->type);
+			ft_lstiter(new, print_content);
 			if (new)
 			{
-				if (prev && prev_exists(&temp, &new, &current, &prev))
-					continue;
+				if (prev && prev_exists(&new, &current, &prev))
+					continue ;
 				else
 					prev_doesnt_exist(&new, &current, list);
 			}
@@ -65,45 +71,7 @@ void expand_wildcard(t_list **list)
 	}
 }
 
-// void expand_wildcard(t_list **list)
-// {
-// 	t_list *new;
-// 	t_list *temp;
-// 	t_list *prev;
-// 	t_bool changed;
-
-// 	prev = NULL;
-// 	changed = FALSE;
-// 	while (list)
-// 	{
-
-// 		if (((t_parser *)(list->content))->type == NODE_COMMAND && as_wildcard(((t_parser *)(list->content))->str))
-// 		{
-// 			temp = list->next;
-// 			new = ft_wild(((t_parser *)(list->content))->str);
-// 			if (new)
-// 			{
-// 				changed = TRUE;
-// 				if (prev)
-// 					prev->next = new;
-// 				else
-// 					list = new;
-// 				ft_lstlast(new)->next = temp;
-// 			}
-// 		}
-// 		prev = list;
-// 		list = list->next;
-// 		if (changed)
-// 		{
-// 			changed = FALSE;
-// 			free_parse_lst(prev->content);
-// 			free(prev);
-// 			prev = temp;
-// 		}
-// 	}
-// }
-
-void remove_quotes_lst(t_list *lst)
+void	remove_quotes_lst(t_list *lst)
 {
 	t_list		*start;
 	t_parser	*content;

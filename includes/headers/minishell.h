@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 14:46:56 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:01:24 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void					remove_quotes_lst(t_list *lst);
 void					expand_wildcard(t_list **list);
 
 // parser
+t_parser				*new_parser(char *str, t_node_type type);
 t_ast_node				*ast_new_node(void *c);
 void					add_full_right(t_ast_node *current, t_ast_node *node);
 void					add_full_left(t_ast_node *current, t_ast_node *node);
@@ -145,6 +146,11 @@ int						search_pipe(t_list *lst, t_list **nod, t_list **prev);
 
 //wild cards
 
+char					**get_dir_content(void);
+char					*get_search(char *search);
+t_bool					search_w(char *search, char *where);
+char					**search_arr(char *search, char **content);
+void					set_list(t_list **list, char **new);
 t_list					*ft_wild(char *search, t_node_type type);
 
 // executer

@@ -12,7 +12,7 @@
 
 #include "../../includes/headers/minishell.h"
 
-static void sj_free(char *f)
+static void	sj_free(char *f)
 {
 	if (f)
 		free(f);

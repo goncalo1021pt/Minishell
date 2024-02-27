@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:27 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 23:51:53 by goncalo1021      ###   ########.fr       */
+/*   Updated: 2024/02/27 18:12:26 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	minishell(char ***env)
 	exit_info(env, &ast);
 	while (1)
 	{
-		//choose_signal(ROOT);
+		choose_signal(ROOT);
 		ast = NULL;
 		line = minishell_aux_1();
 		if (!line)

@@ -1,154 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/27 17:52:20 by gfontao-          #+#    #+#             */
+/*   Updated: 2024/02/27 18:05:38 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
-
-char	**get_dir_content()
-{
-	DIR				*dir;
-	struct dirent	*read;
-	char			**ret;
-	char			**aux;
-	char			*path;
-	
-	ret = NULL;
-	path = get_current_pwd();
-	if (!path)
-		return (NULL);
-	dir = opendir(path);
-	free(path);
-	if (!dir)
-		return (NULL);
-	read = readdir(dir);
-	while (read)
-	{
-		aux = ft_astr_extend(ret, ft_strdup(read->d_name));
-		if (ret)
-			free(ret);
-		ret = aux;
-		read = readdir(dir);
-	}
-	closedir(dir);
-	return(ret);
-}
-
-char	*get_search(char *search)
-{
-	size_t	i;
-	char	*str;
-
-	i = 0;
-	while(search[i] && search[i] != '*')
-	{
-		i++;
-	}
-	if (my_alloc(sizeof(char), i + 1, (void **)(&str)))
-		return (NULL);
-	while (i > 0)
-	{
-		i--;
-		str[i] = search[i];
-	}
-	return(str);
-}
-
-t_bool	search_w(char *search, char *where)
-{
-	char	*aux;
-	size_t	i;
-
-	i = 0;
-	while (1)
-	{
-		if (search[i] == '\0')
-			return(TRUE);
-		if (search[i] == '*')
-		{
-			i++;
-			aux = get_search(&search[i]);
-			where = ft_strnstr(where, aux , ft_strlen(where));
-			i += ft_strlen(aux);
-			if (!where || (!search[i] && ft_strncmp(aux, &where[ft_strlen(where) - ft_strlen(aux)], ft_strlen(aux))))
-			{
-				free(aux);
-				return(FALSE);
-			}
-			free(aux);
-		}
-		else
-		{
-			aux = get_search(&search[i]);
-			if (ft_strncmp(aux, where, ft_strlen(aux)))
-			{
-				free(aux);
-				return (FALSE);
-			}
-			i += ft_strlen(aux);
-			free(aux);
-		}
-	}
-}
-
-char	**search_arr(char *search, char **content)
-{
-	char	**ret;
-	char	**aux;
-	size_t	i;
-
-	ret = NULL;
-	i = 0;
-	while(content[i])
-	{
-		if (!(content[i][0] == '.') && search_w(search, content[i]))
-		{
-			aux = ft_astr_extend(ret, content[i]);
-			if (ret)
-				free(ret);
-			ret = aux;
-		}
-		else
-			free(content[i]);
-		i++;
-	}
-	return (ret);
-}
-
-static void	set_list_aux(t_list **list, char **new, int i)
-{
-	t_parser	*content;
-	t_list		*node;
-
-	node = NULL;
-	content = NULL;
-	content = (t_parser *)malloc(sizeof(t_parser));
-		if (content)
-		{
-			node = ft_lstnew(content);
-			if (!node)
-			{
-				free(content);
-				free(new[i]);
-			}
-			else
-			{
-				content->str = new[i];
-				content->type = NODE_COMMAND;
-				ft_lstadd_back(list, node);
-			}
-		}
-		else
-			free(new[i]);
-}
-
-void	set_list(t_list **list, char **new)
-{
-	size_t		i;
-
-	i = 0;
-	while(new[i])
-	{
-		set_list_aux(list, new, i);
-		i++;
-	}
-	free(new);
-}
 
 t_list	*ft_wild_arg(char *search)
 {
@@ -165,10 +27,22 @@ t_list	*ft_wild_arg(char *search)
 	if (ret)
 	{
 		set_list(&lst_aux, ret);
-		return(lst_aux);
+		return (lst_aux);
 	}
 	else
-		return(NULL);
+		return (NULL);
+}
+
+t_parser	*new_parser(char *str, t_node_type type)
+{
+	t_parser	*aux;
+
+	aux = (t_parser *)malloc(sizeof(t_parser));
+	if (!aux)
+		return (NULL);
+	aux->str = str;
+	aux->type = type;
+	return (aux);
 }
 
 t_list	*ft_wild_red(char *search, t_node_type type)
@@ -187,28 +61,27 @@ t_list	*ft_wild_red(char *search, t_node_type type)
 	{
 		if (ret[1])
 		{
-			lst_aux = ft_lstnew(ft_strdup(search));
-			((t_parser *)(lst_aux->content))->type = NODE_REDIRECT_AMB;
+			lst_aux = ft_lstnew(new_parser(ft_strdup(search),
+						NODE_REDIRECT_AMB));
 		}
 		else
 		{
-			lst_aux = ft_lstnew(ft_strdup(ret[0]));
-			((t_parser *)(lst_aux->content))->type = type;
+			lst_aux = ft_lstnew(new_parser(ft_strdup(ret[0]), type));
 		}
-		return(clean_arr_str(ret), lst_aux);
+		return (clean_arr_str(ret), lst_aux);
 	}
-	return(NULL);
+	return (NULL);
 }
 
 t_list	*ft_wild(char *search, t_node_type type)
 {
 	if (type == NODE_COMMAND)
 	{
-		return(ft_wild_arg(search));
+		return (ft_wild_arg(search));
 	}
 	else
 	{
-		return(ft_wild_red(search, type));
+		return (ft_wild_red(search, type));
 	}
 }
 
