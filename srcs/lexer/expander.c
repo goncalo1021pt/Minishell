@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 00:02:30 by goncalo1021      ###   ########.fr       */
+/*   Updated: 2024/02/27 12:47:09 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,6 @@ char	*expander(char *str, char **env)
 		free(new);
 		return (NULL);
 	}
-	// temp = remove_quotes(new);
-	// if (!temp)
-	// 	return (NULL);
-	// new = temp;
 	return (new);
 }
 

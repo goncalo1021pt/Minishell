@@ -36,8 +36,14 @@ void expand_wildcard(t_list **list)
 			{
 				if (prev)
 				{
-					ft_lstlast(new)->next = current->next;
+					temp = ft_lstlast(new);
+					temp->next = current->next;
 					prev->next = new;
+					free_parse_lst(current->content);
+					free(current);
+					current = temp->next;
+					prev = temp;
+					continue;
 				}
 				else
 				{
