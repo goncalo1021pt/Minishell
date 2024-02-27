@@ -16,6 +16,26 @@ static t_bool as_wildcard(char *str)
 	return (FALSE);
 }
 
+t_bool prev_exists(t_list **temp, t_list **new, t_list **current, t_list **prev)
+{
+	*temp = ft_lstlast(*new);
+	(*temp)->next = (*current)->next;
+	(*prev)->next = *new;
+	free_parse_lst((*current)->content);
+	free(*current);
+	*current = (*temp)->next;
+	*prev = *temp;
+	return (TRUE);
+}
+
+void prev_doesnt_exist(t_list **new, t_list **current, t_list **list)
+{
+	ft_lstlast(*new)->next = (*current)->next;
+	*list = *new;
+	free_parse_lst((*current)->content);
+	free(*current);
+}
+
 void expand_wildcard(t_list **list)
 {
 	t_list *current;
@@ -29,29 +49,15 @@ void expand_wildcard(t_list **list)
 	while (current)
 	{
 		content = current->content;
-		if (content->type == NODE_COMMAND && as_wildcard(content->str))
+		if (as_wildcard(content->str))
 		{
 			new = ft_wild(content->str);
 			if (new)
 			{
-				if (prev)
-				{
-					temp = ft_lstlast(new);
-					temp->next = current->next;
-					prev->next = new;
-					free_parse_lst(current->content);
-					free(current);
-					current = temp->next;
-					prev = temp;
+				if (prev && prev_exists(&temp, &new, &current, &prev))
 					continue;
-				}
 				else
-				{
-					ft_lstlast(new)->next = current->next;
-					temp = *list;
-					*list = new;
-					free_parse_lst(temp->content);
-				}
+					prev_doesnt_exist(&new, &current, list);
 			}
 		}
 		prev = current;
