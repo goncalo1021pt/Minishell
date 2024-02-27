@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:27 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 17:07:25 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/26 23:51:53 by goncalo1021      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	minishell(char ***env)
 		list = minishell_aux_2(line);
 		if (!list || (!check_syntax(list) && display_error(list)))
 			continue ;
-		expand_lst(list, *env);
+		expand_lst(&list, *env);
 		parser_to_tree(&list, &ast);
 		err_info(call_process(ast, env));
 		ast_free(ast);

@@ -16,43 +16,80 @@ static t_bool as_wildcard(char *str)
 	return (FALSE);
 }
 
-void expand_wildcard(t_list *list)
+void expand_wildcard(t_list **list)
 {
+	t_list *current;
+	t_parser *content;
+	t_list *prev;
 	t_list *new;
 	t_list *temp;
-	t_list *prev;
-	t_bool changed;
 
+	current = *list;
 	prev = NULL;
-	changed = FALSE;
-	while (list)
+	while (current)
 	{
-
-		if (((t_parser *)(list->content))->type == NODE_COMMAND && as_wildcard(((t_parser *)(list->content))->str))
+		content = current->content;
+		if (content->type == NODE_COMMAND && as_wildcard(content->str))
 		{
-			temp = list->next;
-			new = ft_wild(((t_parser *)(list->content))->str);
+			new = ft_wild(content->str);
 			if (new)
 			{
-				changed = TRUE;
 				if (prev)
+				{
+					ft_lstlast(new)->next = current->next;
 					prev->next = new;
+				}
 				else
-					list = new;
-				ft_lstlast(new)->next = temp;
+				{
+					ft_lstlast(new)->next = current->next;
+					temp = *list;
+					*list = new;
+					free_parse_lst(temp->content);
+				}
 			}
 		}
-		prev = list;
-		list = list->next;
-		if (changed)
-		{
-			changed = FALSE;
-			free_parse_lst(prev->content);
-			free(prev);
-			prev = temp;
-		}
+		prev = current;
+		current = current->next;
 	}
 }
+
+// void expand_wildcard(t_list **list)
+// {
+// 	t_list *new;
+// 	t_list *temp;
+// 	t_list *prev;
+// 	t_bool changed;
+
+// 	prev = NULL;
+// 	changed = FALSE;
+// 	while (list)
+// 	{
+
+// 		if (((t_parser *)(list->content))->type == NODE_COMMAND && as_wildcard(((t_parser *)(list->content))->str))
+// 		{
+// 			temp = list->next;
+// 			new = ft_wild(((t_parser *)(list->content))->str);
+// 			if (new)
+// 			{
+// 				changed = TRUE;
+// 				if (prev)
+// 					prev->next = new;
+// 				else
+// 					list = new;
+// 				ft_lstlast(new)->next = temp;
+// 			}
+// 		}
+// 		prev = list;
+// 		list = list->next;
+// 		if (changed)
+// 		{
+// 			changed = FALSE;
+// 			free_parse_lst(prev->content);
+// 			free(prev);
+// 			prev = temp;
+// 		}
+// 	}
+// }
 
 void remove_quotes_lst(t_list *lst)
 {

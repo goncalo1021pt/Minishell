@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:08 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 19:47:46 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/27 00:02:30 by goncalo1021      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minishell.h"
 
-void	expand_lst(t_list *lst, char **env)
+void	expand_lst(t_list **lst, char **env)
 {
 	t_parser	*content;
 	t_list		*start;
 
-	start = lst;
-	while (lst != NULL)
+	start = *lst;
+	while (start != NULL)
 	{
-		content = lst->content;
+		content = start->content;
 		if (content->type != NODE_REDIRECT_IN_HERE)
 			content->str = expander(content->str, env);
-		lst = lst->next;
+		start = start->next;
 	}
-	lst = start;
 	expand_wildcard(lst);
-	remove_quotes_lst(lst);
+	remove_quotes_lst(*lst);
 }
 
 char	*expander(char *str, char **env)

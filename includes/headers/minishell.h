@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: goncalo1021pt <goncalo1021pt@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/26 19:37:15 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/27 00:02:35 by goncalo1021      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char					**ft_split_quotes(char const *s);
 void					check_null(t_list *lst);
 t_bool					check_expander(char *str);
 char					*expander(char *str, char **env);
-void					expand_lst(t_list *lst, char **env);
+void					expand_lst(t_list **lst, char **env);
 char					*expand_1(char *str, char **env);
 char					*handle_variable(char *str, char **env, int ctd,
 							int len);
@@ -113,7 +113,7 @@ int						count_quotes(char *str);
 int						copy_quotes(char *dst, char *src, char quote_type);
 int						skip_quotes(const char *str, int ctd, char quote_type);
 void					remove_quotes_lst(t_list *lst);
-void					expand_wildcard(t_list *list);
+void					expand_wildcard(t_list **list);
 
 // parser
 t_ast_node				*ast_new_node(void *c);
