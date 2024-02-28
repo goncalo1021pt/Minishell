@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcard_expand.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/28 13:14:47 by gfontao-          #+#    #+#             */
+/*   Updated: 2024/02/28 13:14:48 by gfontao-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/headers/minishell.h"
 
 static t_bool	as_wildcard(char *str)
@@ -57,7 +69,6 @@ void	expand_wildcard(t_list **list)
 		if (as_wildcard(content->str) && content->type != NODE_REDIRECT_IN_HERE)
 		{
 			new = ft_wild(content->str, content->type);
-			ft_lstiter(new, print_content);
 			if (new)
 			{
 				if (prev && prev_exists(&new, &current, &prev))

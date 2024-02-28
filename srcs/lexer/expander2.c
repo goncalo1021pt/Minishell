@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:10 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 19:32:06 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:15:30 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char	*expand_1(char *str, char **env)
 			ctd = skip_quotes(str, ctd, '\'');
 		if (str[ctd] == '\"')
 			flag = FALSE;
-		if (str[ctd] == '$' && (ft_isalnum(str[ctd + 1]) || str[ctd + 1] == '_' || str[ctd
-					+ 1] == '?'))
+		if (str[ctd] == '$' && (ft_isalnum(str[ctd + 1]) || str[ctd + 1] == '_'
+				|| str[ctd + 1] == '?'))
 		{
 			len = 0;
 			ctd++;

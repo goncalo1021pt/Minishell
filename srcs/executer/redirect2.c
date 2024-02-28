@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 21:04:14 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:14:14 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ static void	write_expander(char *line, int fd_out, int mode)
 {
 	char	*aux;
 	char	*aux2;
-	
+
 	if (!line)
 		return ;
 	if (mode == 1)
 	{
 		aux2 = ft_strdup(line);
 		aux = expander(aux2, *exit_info(NULL, NULL).env);
-		write(fd_out, aux, ft_strlen(aux));	
-		if(aux)
+		write(fd_out, aux, ft_strlen(aux));
+		if (aux)
 			free(aux);
 	}
 	else
-		write(fd_out, line, ft_strlen(line));	
+		write(fd_out, line, ft_strlen(line));
 }
 
-static void	ft_read_del_aux(int fd_out, char *fname,int mode)
+static void	ft_read_del_aux(int fd_out, char *fname, int mode)
 {
 	char	*line;
 

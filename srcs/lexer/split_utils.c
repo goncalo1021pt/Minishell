@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:28:12 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 19:37:19 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:15:12 by gfontao-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*remove_quotes(char *str)
 		else
 			out[ctd2++] = str[ctd++];
 	}
-	if(str)
+	if (str)
 		free(str);
 	return (out);
 }
