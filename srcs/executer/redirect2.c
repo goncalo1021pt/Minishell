@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/28 13:14:14 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:37:37 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ static void	ft_read_del_aux(int fd_out, char *fname, int mode)
 	choose_signal(HEREDOC);
 	line = readline("> ");
 	if (!line)
+	{
+		free_hd(fname, mode);
 		ft_exit(del_eof(fd_out));
+	}
 	while (ft_strcmp(line, fname) != 0)
 	{
 		write_expander(line, fd_out, mode);
@@ -61,10 +64,12 @@ static void	ft_read_del_aux(int fd_out, char *fname, int mode)
 		free(line);
 		line = readline("> ");
 		if (!line)
+		{
+			free_hd(fname, mode);
 			ft_exit(del_eof(fd_out));
+		}
 	}
-	if (!mode && fname)
-		free(fname);
+	free_hd(fname, mode);
 	free(line);
 	close(fd_out);
 	ft_exit(0);

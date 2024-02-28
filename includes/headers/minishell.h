@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:29 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 20:38:16 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:38:07 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,5 +230,6 @@ void					print_arr_str(char **astr);
 t_bool					is_in_array(char c, char *arr);
 int						ft_arrlen(char **arr);
 void					*free_arr_str(char **out, int ctd);
+void					free_hd(char *fname, int mode);
 
 #endif

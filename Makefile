@@ -75,7 +75,7 @@ fclean: clean
 	@echo "$(RED)$(NAME)$(NC)cleaned!"
 
 v: 
-	make re && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions="supression.supp" ./$(NAME)
+	make re && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --suppressions="supression.supp" ./$(NAME)
 
 fcount:
 	@echo "you wrote $(RED)$(shell cat $(SRCS) | wc -l)$(NC)lines of code"

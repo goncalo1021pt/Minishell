@@ -6,11 +6,17 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:39:18 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 20:00:28 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:36:59 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minishell.h"
+
+void	free_hd(char *fname, int mode)
+{
+	if (!mode && fname)
+		free(fname);
+}
 
 int	ft_get_here(t_ast_node *node)
 {
