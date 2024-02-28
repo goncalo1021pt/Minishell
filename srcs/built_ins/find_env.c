@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfontao- <gfontao-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:26:41 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/27 14:30:20 by gfontao-         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:04:56 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	change_env(char *name, char *new, char ***env)
 	if (where)
 	{
 		if (!strchr(new, '=') && strchr(*where, '='))
-			return (0);
+			return (1);
 		free(*where);
 		*where = new;
 		if (where)

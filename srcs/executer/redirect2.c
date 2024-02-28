@@ -6,7 +6,7 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 18:27:48 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/28 14:37:37 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:56:55 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void	ft_read_del_aux(int fd_out, char *fname, int mode)
 	line = readline("> ");
 	if (!line)
 	{
-		free_hd(fname, mode);
 		ft_exit(del_eof(fd_out));
 	}
 	while (ft_strcmp(line, fname) != 0)
@@ -65,11 +64,9 @@ static void	ft_read_del_aux(int fd_out, char *fname, int mode)
 		line = readline("> ");
 		if (!line)
 		{
-			free_hd(fname, mode);
 			ft_exit(del_eof(fd_out));
 		}
 	}
-	free_hd(fname, mode);
 	free(line);
 	close(fd_out);
 	ft_exit(0);
@@ -92,10 +89,7 @@ int	ft_read_del(t_ast_node *node, char *fname)
 	if (fk == 0)
 	{
 		close(pip[0]);
-		if (ft_strchr(fname, '\'') || ft_strchr(fname, '\"'))
-			ft_read_del_aux(pip[1], remove_quotes(ft_strdup(fname)), 0);
-		else
-			ft_read_del_aux(pip[1], fname, 1);
+		ft_read_del_aux(pip[1], fname, set_quotes_here(fname));
 	}
 	close(pip[1]);
 	waitpid(fk, &status, 0);

@@ -6,16 +6,24 @@
 /*   By: sergmigu <sergmigu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:39:18 by sergmigu          #+#    #+#             */
-/*   Updated: 2024/02/28 14:36:59 by sergmigu         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:57:18 by sergmigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/headers/minishell.h"
 
-void	free_hd(char *fname, int mode)
+int	set_quotes_here(char *fname)
 {
-	if (!mode && fname)
-		free(fname);
+	char	*aux;
+
+	if (ft_strchr(fname, '\'') || ft_strchr(fname, '\"'))
+	{
+		aux = remove_quotes(ft_strdup(fname));
+		ft_strcpy(fname, aux);
+		free(aux);
+		return (0);
+	}
+	return (1);
 }
 
 int	ft_get_here(t_ast_node *node)
